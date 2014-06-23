@@ -37,10 +37,9 @@ function addEvent(io) {
             console.log('addDesk');
             console.log(desk);
             var a = [role.base, role.monitor];
-
-            io.sockets.in(a[1]);
-            io.sockets.in(a[0]);
-
+            a.forEach(function (item) {
+                io.sockets.in(item);
+            })
             io.sockets.emit(event.addDesk, desk);
         });
     });

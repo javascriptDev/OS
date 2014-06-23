@@ -36,15 +36,15 @@ function addEvent(io) {
         socket.on(event.addDesk, function (desk) {
             console.log('addDesk');
             console.log(desk);
-            var a = [role.base, role.display];
-            io.sockets.in(a).emit(event.addDesk, desk);
+            var a = [role.base, role.monitor];
+
+            io.sockets.in(a[1]);
+            io.sockets.in(a[0]);
+
+            io.sockets.emit(event.addDesk, desk);
         });
     });
-    a
-
     io.on('disconnect', function (reason) {
-
-
 
     });
 

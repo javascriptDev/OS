@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="client/util/js/components/tab.js"></script>
 
 </head>
 <body>
+
 
 <button id="ad">加</button>
 
@@ -22,7 +24,6 @@
         //终端，点菜器
         terminal: 'terminal'
     }
-
     //事件类型
     var ne = {
         addDesk: 'addDesk',
@@ -30,21 +31,15 @@
         loginSuccess: 'ls'
 
     }
-
     var me = {
         role: role.terminal,
         id: Math.random() * 1989
     }
-
     socket.emit(ne.login, me);
     socket.on(ne.loginSuccess, function (o) {
         if (o.id == me.id) {
             console.log(me);
         }
-    })
-
-    socket.on(ne.add, function (desk) {
-
     })
     document.querySelector('#ad').onclick = function () {
         socket.emit(ne.addDesk, {
@@ -52,6 +47,11 @@
             b: 2
         });
     }
+
+    var tab = new tab({
+        tab: ['家常菜', '饺子'],
+        content: []
+    });
 
 
 </script>

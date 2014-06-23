@@ -1,6 +1,7 @@
 /**
  * Created by a2014 on 14-6-23.
  */
+//var db = require('./db/dbHelper').help;
 
 
 //终端类型

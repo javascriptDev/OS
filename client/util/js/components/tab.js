@@ -2,8 +2,13 @@
  * Created by a2014 on 14-6-23.
  */
 function query(c, s, isAll) {
-    var el = isAll ? ( Array.prototype.slice(c ? c.querySelectorAll(s) : doucment.querySelectorAll(s))) : (c ? c.querySelector(s) : document.querySelector(s));
-    return el;
+    if (isAll) {
+        return c.querySelectorAll(s);
+    } else {
+        return c.querySelector(s);
+    }
+
+
 }
 function tab(o) {
     this.el = {};
@@ -34,6 +39,8 @@ tab.prototype = {
         tabs.forEach(function (tab) {
             me.tabs.appendChild(me.newTab(tab));
         })
+        //默认选中第一个
+        query(this.tabs, '.tab', true)[0].className += ' selected';
         document.body.appendChild(this.el);
 
     },
@@ -50,9 +57,12 @@ tab.prototype = {
         return c;
     },
     addEvent: function () {
+        var me = this;
         this.tabEvent = function (e) {
             var index = e.target.dataset['index'];
-            query('.selected').className.replace('selected', ' ');
+            var selected = query(me.tabs, '.selected');
+
+            selected.className = selected.className.replace('selected', '').replace(/(^\s+)|(\s+$)/g, '');
             e.target.className += ' selected';
         }
         this.tabs.addEventListener('click', this.tabEvent);

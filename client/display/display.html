@@ -24,14 +24,28 @@
 
     //事件类型
     var event = {
-        addDesk: 'addDesk'
+        addDesk: 'addDesk',
+        login: 'login',
+        loginSuccess: 'ls'
 
     }
+    var me = {
+        role: role.monitor,
+        id: Math.random() * 1989
+    }
 
-    socket.on(event.add, function (desk) {
-
+    //发送登陆事件
+    socket.emit(event.login, me);
+    //登陆成功回调
+    socket.on(event.loginSuccess, function (o) {
+        if (o.id == me.id) {
+            console.log('login success');
+        }
     })
-    socket.emit(event.addDesk, this);
+
+    socket.on(event.addDesk, function (o) {
+        console.log(o);
+    })
 
 </script>
 </body>

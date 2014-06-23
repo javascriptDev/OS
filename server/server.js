@@ -2,7 +2,6 @@
  * Created by a2014 on 14-6-20.
  */
 var http = require('http');
-
 var sf = require('./staticFile');
 var ws = require('./webServices');
 var se = require('./socketEvent');

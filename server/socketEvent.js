@@ -14,23 +14,36 @@ var role = {
 }
 
 //连接到服务器的成员
-var member = [];
+var allMember = [];
 //事件类型
 var event = {
-    addDesk: 'addDesk'
+    addDesk: 'addDesk',
+    login: 'login',
+    loginSuccess: 'ls'
 
 }
 function addEvent(io) {
     io.on('connection', function (socket) {
         socket.on(event.login, function (member) {
-            i, socket.join(member.role);
-
+            socket.join(member.role);
+            allMember.push(member);
+            io.emit(event.loginSuccess, {
+                success: true,
+                id: member.id
+            });
         })
-        socket.on(event.addDesk, function (member) {
 
-            io.sockets.in(member.role).emit(event.addDesk, member.desk);
-
+        socket.on(event.addDesk, function (desk) {
+            console.log('addDesk');
+            console.log(desk);
+            var a = [role.base, role.display];
+            io.sockets.in(a).emit(event.addDesk, desk);
         });
+    });
+    a
+
+    io.on('disconnect', function (reason) {
+
 
 
     });

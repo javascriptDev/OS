@@ -1,3 +1,5 @@
+
+
 .tabs {
     display: inline-block;
     vertical-align: top;
@@ -15,6 +17,7 @@
     transition: 0.2 linear;
     -webkit-transform: skew(0, 20deg);
     position: relative;
+    font-size: 15px;
 }
 
 .selected {
@@ -27,7 +30,7 @@
     -webkit-transform: skew(0, -20deg);
     height: 100%;
     width: 100%;
-    padding: 0 7px;
+    padding: 0 5px;
     box-sizing: border-box;
     writing-mode: vertical-rl;
     -webkit-writing-mode: vertical-rl;
@@ -38,8 +41,8 @@
 }
 
 .contents {
-    display: inline-block;
-    width: -webkit-calc(100% - 32px);
+
+    width: -webkit-calc(100% - 30px);
     border: 1px solid red;
-    margin-left: 32px;
+    margin-left: 30px;
 }

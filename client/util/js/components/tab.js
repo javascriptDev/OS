@@ -19,11 +19,11 @@ function tab(o) {
 tab.prototype = {
     initBase: function () {
         var div = document.createElement('div');
-        div.innerHTML = '<div class="tabs"></div><div class="contents"></div>';
+        div.innerHTML = '<div class="tabs"></div><div class="contents wrapper"><div id="scroller"></div></div>';
         div.className = 'tab-c';
         this.el = div;
         this.tabs = query(div, '.tabs');
-        this.contents = query(div, '.contents');
+        this.contents = query(div, '#scroller');
     },
     init: function () {
         this.initBase();
@@ -84,16 +84,21 @@ tab.prototype = {
             } else {
                 c.style.display = 'block';
             }
+
         })
     },
     addEvent: function () {
         var me = this;
         this.tabEvent = function (e) {
+            e.preventDefault();
             var t = e.target.offsetParent;
             var index = t.dataset['index'];
             me.switchTab(index, t);
+            var scroll = new IScroll('.contents', {
+                scrollY: true
+            });
         }
-        this.tabs.addEventListener('click', this.tabEvent);
         this.tabs.addEventListener('touchstart', this.tabEvent);
+
     }
 }

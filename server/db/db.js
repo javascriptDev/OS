@@ -30,7 +30,7 @@ function createDB(dbName, collections) {
     })
 }
 
-function delDb(dbName){
+function delDb(dbName) {
 
 }
 

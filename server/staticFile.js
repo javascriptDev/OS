@@ -21,7 +21,6 @@ function staticFile(req, res) {
         bmp: 'image/bmp',
         jpg: 'image/jpg'
     }
-
     var filePath = url;
     var ct = 'text/html';
     if (url == '/' || url == enter.base) {

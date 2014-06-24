@@ -1,7 +1,7 @@
 * {
     padding: 0;
     margin: 0;
-    -webkit-user-select:none;
+    -webkit-user-select: none;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -12,13 +12,15 @@ html {
     -webkit-text-size-adjust: none;
     -ms-touch-action: none;
 }
-body{
+
+body {
     overflow: hidden;
 }
-#scroll{
+
+#scroll {
     position: absolute;
     z-index: 1;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     /*width: 2000px;*/
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
@@ -37,7 +39,8 @@ body{
     text-size-adjust: none;
     background: #fff;
 }
-.wrapper{
+
+.wrapper {
 
     position: absolute;
     z-index: 1;
@@ -45,5 +48,5 @@ body{
     bottom: 0px;
     left: 0;
     width: 100%;
-    background: #ccc;
-    overflow: hidden;}
+    overflow: hidden;
+}

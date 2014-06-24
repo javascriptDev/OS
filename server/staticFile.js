@@ -43,9 +43,9 @@ function staticFile(req, res) {
     if (filePath != '') {
         ct = ct + ';charset=utf-8';
         console.log(filePath);
-        fs.readFile(filePath, 'utf8', function (err, data) {
+        fs.readFile(filePath, 'binary', function (err, data) {
             res.writeHead(200, {'Content-Type': ct});
-            res.write(data);
+            res.write(data, 'binary');
             res.end();
         });
     }

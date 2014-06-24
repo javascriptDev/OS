@@ -46,7 +46,7 @@ body {
     z-index: 1;
     top: 0px;
     bottom: 0px;
-    left: 0;
+    left: 30px;
     width: 100%;
     overflow: hidden;
 }

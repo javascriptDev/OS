@@ -4,13 +4,14 @@
     vertical-align: top;
     width: 30px;
     position: fixed;
+    height: 0;
 }
 
-.tab {
+.tab-item {
     writing-mode: tb;
     background: royalblue;
     color: white;
-    height: 80px;
+    height: 100px;
     text-align: center;
     width: 100%;
     transition: 0.2 linear;
@@ -22,7 +23,6 @@
 .selected {
     background: green;
     color: yellow;
-
 }
 
 .inner-text {
@@ -40,7 +40,6 @@
 }
 
 .contents {
-
     width: -webkit-calc(100% - 30px);
     margin-left: 30px;
 }

@@ -48,7 +48,7 @@ tab.prototype = {
     newTab: function (text, index) {
         var tab = document.createElement('div');
         tab.innerHTML = '<div class="inner-text">' + text + '</div>';
-        tab.className = 'tab';
+        tab.className = 'tab-item';
         tab.setAttribute('data-index', index);
         return tab;
     },
@@ -65,7 +65,7 @@ tab.prototype = {
         var me = this;
         var selected = query(me.tabs, '.selected');
         if (!selected) {
-            query(this.tabs, '.tab', true)[index].className += ' selected';
+            query(this.tabs, '.tab-item', true)[parseInt(index)].className += ' selected';
             me.switchContent(index);
         } else {
             if (selected.dataset['index'] != index) {
@@ -90,13 +90,17 @@ tab.prototype = {
     addEvent: function () {
         var me = this;
         this.tabEvent = function (e) {
+
             e.preventDefault();
+
             var t = e.target.offsetParent;
-            var index = t.dataset['index'];
-            me.switchTab(index, t);
-            var scroll = new IScroll('.contents', {
-                scrollY: true
-            });
+            if (t.className.indexOf('tab-item') != -1) {
+                var index = t.dataset['index'];
+                me.switchTab(index, t);
+                var scroll = new IScroll('.contents', {
+                    scrollY: true
+                });
+            }
         }
         this.tabs.addEventListener('touchstart', this.tabEvent);
 

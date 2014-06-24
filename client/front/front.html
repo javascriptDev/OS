@@ -19,10 +19,6 @@
     <link href="client/util/css/base.css" rel="stylesheet">
 </head>
 <body>
-
-
-<button id="ad">加</button>
-
 <script>
     var ip = 'http://192.168.165.31';
     var socket = io.connect(ip);
@@ -54,12 +50,6 @@
             console.log(me);
         }
     })
-    document.querySelector('#ad').onclick = function () {
-        socket.emit(ne.addDesk, {
-            a: 1,
-            b: 2
-        });
-    }
 
     var tpl = {
         'a': "<%for (var i=0;i<list.length;i++) {%>" +

@@ -44,9 +44,9 @@ body {
 
     position: absolute;
     z-index: 1;
-    top: 0px;
-    bottom: 0px;
-    left: 30px;
+    top: 0;
+    bottom: 0;
+    left: 0;
     width: 100%;
     overflow: hidden;
 }

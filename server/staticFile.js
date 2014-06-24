@@ -14,8 +14,14 @@ function staticFile(req, res) {
     var mime = {
         js: 'application/x-javascript',
         css: 'text/css',
-        html: 'text/html'
+        html: 'text/html',
+        png: 'image/png',
+        gif: 'image/gif',
+        jpeg: 'image/jpeg',
+        bmp: 'image/bmp',
+        jpg: 'image/jpg'
     }
+
     var filePath = url;
     var ct = 'text/html';
     if (url == '/' || url == enter.base) {
@@ -25,16 +31,16 @@ function staticFile(req, res) {
     } else if (url == enter.front) {
         filePath = 'client/front/front.html';
     } else { //其他正常路径的js css html
-        if (url == '/favicon.ico' || url == '/socket.io/socket.io.js') {
-            url = '';
+        var fileType = filePath.split('.')[1];
+        if (url == '/socket.io/socket.io.js') {
+            filePath = '';
             res.end('');
-        } else {
-            var fileType = url.split('.')[1];
+        } else {//js css html image
             filePath = filePath.substr(1, filePath.length);
             ct = mime[fileType];
         }
     }
-    if (url != '') {
+    if (filePath != '') {
         ct = ct + ';charset=utf-8';
         console.log(filePath);
         fs.readFile(filePath, 'utf8', function (err, data) {

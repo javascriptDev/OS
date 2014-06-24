@@ -1,0 +1,45 @@
+.tabs {
+    display: inline-block;
+    vertical-align: top;
+    width: 30px;
+    position: fixed;
+}
+
+.tab {
+    writing-mode: tb;
+    background: royalblue;
+    color: white;
+    height: 80px;
+    text-align: center;
+    width: 100%;
+    transition: 0.2 linear;
+    -webkit-transform: skew(0, 20deg);
+    position: relative;
+}
+
+.selected {
+    background: green;
+    color: yellow;
+
+}
+
+.inner-text {
+    -webkit-transform: skew(0, -20deg);
+    height: 100%;
+    width: 100%;
+    padding: 0 7px;
+    box-sizing: border-box;
+    writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+    -moz-writing-mode: vertical-rl; /* 未対応 */
+    -o-writing-mode: vertical-rl; /* 未対応 */
+    -ms-writing-mode: vertical-rl; /* 未対応 */
+    -epub-writing-mode: vertical-rl;
+}
+
+.contents {
+    display: inline-block;
+    width: -webkit-calc(100% - 32px);
+    border: 1px solid red;
+    margin-left: 32px;
+}

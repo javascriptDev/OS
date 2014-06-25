@@ -20,36 +20,62 @@ var allMember = [];
 var event = {
     addDesk: 'addDesk',
     login: 'login',
-    loginSuccess: 'ls'
-
+    loginSuccess: 'ls',
+    makeOver: 'mo'
 }
 
+//所有餐桌的订单
 var deskArr = [];
+//制作完成菜单的desk
+var overDesk = [];
 function addEvent(io) {
     io.on('connection', function (socket) {
-        socket.on(event.login, function (member) {
-            socket.join(member.role);
-            allMember.push(member);
-            io.emit(event.loginSuccess, {
-                success: true,
-                id: member.id
-            });
-            if (deskArr.length > 0) {
-                socket.emit(event.addDesk, deskArr)
-            }
-        })
 
-        socket.on(event.addDesk, function (desk) {
-            desk.id = Math.random() * 1909;
-            deskArr.push(desk);
-            //  db.add(desk.data);
-            var a = [role.base, role.monitor];
-            a.forEach(function (item) {
-                io.sockets.in(item);
+            //登陆
+            socket.on(event.login, function (member) {
+                socket.join(member.role);
+                allMember.push(member);
+                io.emit(event.loginSuccess, {
+                    success: true,
+                    id: member.id
+                });
+                if (deskArr.length > 0) {
+                    socket.emit(event.addDesk, deskArr)
+                }
             })
-            io.sockets.emit(event.addDesk, desk);
-        });
-    });
+
+            //前端点餐
+            socket.on(event.addDesk, function (desk) {
+                desk.id = Math.random() * 1909;
+                deskArr.push(desk);
+                //  db.add(desk.data);
+                var a = [role.base, role.monitor];
+                a.forEach(function (item) {
+                    io.sockets.in(item);
+                })
+                io.sockets.emit(event.addDesk, desk);
+            });
+
+            //后厨按照菜单 制作好
+            socket.on(event.makeOver, function (data) {
+                var id = data.id;
+                deskArr.forEach(function (item, index) {
+                    if (item.id == id) {
+                        overDesk.push(data);
+                        deskArr.splice(index, 1);
+                    }
+                })
+                io.sockets.in(role.monitor);
+                io.sockets.emit(event.makeOver, {
+                    success: true,
+                    id: id
+                })
+            })
+
+
+        }
+    )
+    ;
     io.on('disconnect', function (reason) {
 
     });

@@ -37,9 +37,16 @@
 
         }
 
-        .selected {
-            background: greenyellow;
-            color: white;
+        .selected:after {
+            content: '';
+            width: 12px;
+            height: 6px;
+            border-left: 1px solid red;
+            border-bottom: 1px solid red;
+            -webkit-transform: rotate(-40deg);
+            position: absolute;
+            right: 10px;;
+            top: 0;
         }
     </style>
 </head>
@@ -49,7 +56,7 @@
 <script>
     var socket = io.connect(msj.ip);
     var role = msj.role,
-            event = msj.et,
+            et = msj.et,
             tpl = msj.tpl;
     var me = {
         role: role.monitor,
@@ -57,16 +64,16 @@
     }
 
     //发送登陆事件
-    socket.emit(event.login, me);
+    socket.emit(et.login, me);
     //登陆成功回调
-    socket.on(event.loginSuccess, function (o) {
+    socket.on(et.loginSuccess, function (o) {
         if (o.id == me.id) {
             console.log('login success');
         }
     })
 
     var body = document.querySelector('.c');
-    socket.on(event.addDesk, function (desk) {
+    socket.on(et.addDesk, function (desk) {
         console.log(desk);
         if (Object.prototype.toString.call(desk) == '[object Array]') {
             desk.forEach(function (item) {
@@ -75,8 +82,18 @@
         } else {
             addDesk(desk);
         }
-
-
+    })
+    // 菜单制作完成，删除菜单
+    socket.on(et.makeOver, function (data) {
+        debugger;
+        if (data.success) {
+            var id = data.id;
+            Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (item) {
+                if (item.cdata.id == id) {
+                    item.parentNode.removeChild(item);
+                }
+            })
+        }
     })
     function addDesk(desk) {
         var order = desk.data,
@@ -88,14 +105,23 @@
         var html = '<div class="title">' + number + ' 号桌订单</div>';
         html += template.compile(tpl.c)(order);
         list.innerHTML = html;
-        list.data = desk;
+        list.cdata = desk;
         body.appendChild(list);
 
-        list.addEventListener('touchstart', function () {
-                
+        list.addEventListener('touchstart', function (e) {
+            var el = e.target.offsetParent;
+
+            if (el.className.indexOf('selected') == -1) {
+                el.className += ' selected';
+            } else {
+                el.className = 'list-item';
+            }
+            if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
+                socket.emit(et.makeOver, list.cdata);
+            } else {
+
+            }
         })
-
-
     }
 
 </script>

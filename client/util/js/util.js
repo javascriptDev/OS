@@ -41,7 +41,8 @@ msj = {
     et: {
         addDesk: 'addDesk',
         login: 'login',
-        loginSuccess: 'ls'
+        loginSuccess: 'ls',
+        makeOver: 'mo'
 
     },
     tpl: {

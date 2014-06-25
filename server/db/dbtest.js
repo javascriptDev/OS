@@ -6,8 +6,8 @@ var db = require('./dbHelper').help;
 
 
 var tn = 'order';
-function addData() {
-    db.insert(tn, {name: 1, age: 2}, function (err, result) {
+function addData(data) {
+    db.insert(tn, data, function (err, result) {
         console.log(result);
     });
 }
@@ -23,4 +23,10 @@ function deleteData(where) {
         console.log(result);
     })
 }
-addData({name: 111, age: 234234});
+
+var help = {
+    add: addData,
+    select: getData,
+    del: deleteData
+}
+exports.dbh = help

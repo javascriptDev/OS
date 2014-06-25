@@ -4,31 +4,16 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="client/util/js/util.js"></script>
 
 </head>
 <body>
 
 
 <script>
-    var ip = 'http://localhost';
-    var socket = io.connect(ip);
-    //终端类型
-    var role = {
-        //显示设备
-        monitor: 'monitor',
-        //记账
-        base: 'base',
-        //终端，点菜器
-        terminal: 'terminal'
-    }
 
-    //事件类型
-    var event = {
-        addDesk: 'addDesk',
-        login: 'login',
-        loginSuccess: 'ls'
-
-    }
+    var socket = io.connect(msj.ip);
+    var role = msj.role, event = msj.et;
     var me = {
         role: role.base,
         id: Math.random() * 1989
@@ -45,8 +30,6 @@
     socket.on(event.addDesk, function (desk) {
         console.log(desk);
     })
-
-
 </script>
 </body>
 </html>

@@ -13,7 +13,7 @@ Ol.prototype = {
         var div = document.createElement('div');
         div.className = 'list-order';
         div.style.webkitTransform = 'translate3d(0,0,0)';
-        div.innerHTML = '<div class="title">订单<div class="close">X</div></div><div class="ol-scroller"><div class="list-inner"></div></div><div class="ol-foot"><button class="submit">提交</button></div>'
+        div.innerHTML = '<div class="title">订单<div class="close">X</div></div><div class="desk-number">桌号:<input type="text" class="d-n"></div> <div class="ol-scroller"><div class="list-inner"></div></div><div class="ol-foot"><button class="submit">提交</button></div>'
 
         this.c = div.querySelector('.list-inner');
         this.scrollC = div.querySelector('.ol-scroller');
@@ -21,6 +21,7 @@ Ol.prototype = {
         this.title = div.querySelector('.title');
         this.subBtn = div.querySelector('.submit');
         this.close = div.querySelector('.close');
+        this.deskNumber = div.querySelector('.d-n');
 
         this.addEvent();
         this.render();
@@ -63,10 +64,14 @@ Ol.prototype = {
         this.render();
     },
     hide: function () {
-        this.animate(this.el, this.el.offsetHeight - 20);
+        this.animate(this.el, this.el.offsetHeight - 40);
     },
     submit: function (e) {
-        this.opt.submit && this.opt.submit(this.data);
+        var me = this;
+        this.opt.submit && this.opt.submit({
+            data: me.data,
+            dn: me.deskNumber.value || 0
+        });
         this.data.list = [];
         this.c.innerHTML = '';
         this.hide();

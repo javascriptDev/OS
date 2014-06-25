@@ -23,6 +23,8 @@ var event = {
     loginSuccess: 'ls'
 
 }
+
+var deskArr = [];
 function addEvent(io) {
     io.on('connection', function (socket) {
         socket.on(event.login, function (member) {
@@ -32,11 +34,15 @@ function addEvent(io) {
                 success: true,
                 id: member.id
             });
+            if (deskArr.length > 0) {
+                socket.emit(event.addDesk, deskArr)
+            }
         })
 
         socket.on(event.addDesk, function (desk) {
-            db.add(desk.list);
-//            console.log(desk);
+            desk.id = Math.random() * 1909;
+            deskArr.push(desk);
+            //  db.add(desk.data);
             var a = [role.base, role.monitor];
             a.forEach(function (item) {
                 io.sockets.in(item);

@@ -23,20 +23,31 @@
             border-radius: 10px;
             margin: 10px;
         }
-    </style>
 
+        .title {
+            border-radius: 10px;
+            background: yellowgreen;
+            color: white;;
+            height: 30px;
+            line-height: 30px;;
+        }
+
+        .list-item {
+            position: relative;
+
+        }
+
+        .selected {
+            background: greenyellow;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-
 <div class="c">
-
 </div>
-
 <script>
-
     var socket = io.connect(msj.ip);
-    //终端类型
-
     var role = msj.role,
             event = msj.et,
             tpl = msj.tpl;
@@ -54,15 +65,38 @@
         }
     })
 
-
     var body = document.querySelector('.c');
     socket.on(event.addDesk, function (desk) {
         console.log(desk);
+        if (Object.prototype.toString.call(desk) == '[object Array]') {
+            desk.forEach(function (item) {
+                addDesk(item);
+            })
+        } else {
+            addDesk(desk);
+        }
+
+
+    })
+    function addDesk(desk) {
+        var order = desk.data,
+                number = desk.dn,
+                statue = desk.statue;
+
         var list = document.createElement('div');
         list.className = 'order-list';
-        list.innerHTML = template.compile(tpl.a)(desk);
+        var html = '<div class="title">' + number + ' 号桌订单</div>';
+        html += template.compile(tpl.c)(order);
+        list.innerHTML = html;
+        list.data = desk;
         body.appendChild(list);
-    })
+
+        list.addEventListener('touchstart', function () {
+                
+        })
+
+
+    }
 
 </script>
 </body>

@@ -22,7 +22,7 @@
 
     <link href="client/util/css/tab.css" rel="stylesheet">
     <link href="client/util/css/list.css" rel="stylesheet">
-    <link href="client/util/css/base.css" rel="stylesheet">
+    <link href="client/util/css/common.css" rel="stylesheet">
     <link href="client/util/css/ol.css" rel="stylesheet">
 </head>
 <body>
@@ -277,6 +277,7 @@ var tab = new tab({
     ol: new Ol({tpl: tpl.b,
         data: {list: []},
         submit: function (data) {
+            data.statue = 'open';
             socket.emit(ne.addDesk, data);
         }})
 });

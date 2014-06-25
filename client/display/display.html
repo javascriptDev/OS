@@ -85,7 +85,6 @@
     })
     // 菜单制作完成，删除菜单
     socket.on(et.makeOver, function (data) {
-        debugger;
         if (data.success) {
             var id = data.id;
             Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (item) {

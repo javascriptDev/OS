@@ -41,3 +41,20 @@
     height: 30px;
     text-align: center;
 }
+
+.ol-text, .ol-price {
+    display: inline-block;
+    border-bottom: 1px solid darkolivegreen;
+
+}
+
+.ol-text {
+    width: 80%;
+}
+
+.ol-price {
+    width: 20%;
+}
+.ol-list-item{
+    width: 100%;
+}

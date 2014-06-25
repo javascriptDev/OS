@@ -23,21 +23,14 @@ Ol.prototype = {
 
         this.addEvent();
         this.render();
+        this.hide();
     },
     render: function () {
         this.c.innerHTML = template.compile(this.itemTpl)(this.data);
         document.body.appendChild(this.el);
-
         var scroll = new IScroll('.ol-scroller', {
             scrollY: true
         });
-        this.hide();
-
-        //修复渲染完scroll,容器高度为0的bug
-        // this.el.style.height = this.c.offsetHeight + 'px';
-
-
-        //  scroll.scrollTo(0, this.el.offsetHeight - 30, 0);
     },
     animate: function (el, distance) {
         var s = 'translate3d(0,' + distance + 'px,0) ';
@@ -47,8 +40,8 @@ Ol.prototype = {
     },
     addEvent: function () {
         var me = this;
-        this.subBtn.onclick = function () {
-            me.submit && me.submit(me.data);
+        this.subBtn.onclick = function (e) {
+            me.submit.call(me, e);
         }
         this.title.onclick = function () {
             me.show();
@@ -62,9 +55,17 @@ Ol.prototype = {
     show: function () {
         this.animate(this.el, 0)
     },
+    reRender: function (data) {
+        this.data.list.push(data);
+        this.render();
+    },
     hide: function () {
         this.animate(this.el, this.el.offsetHeight - 20);
     },
-    submit: function () {
+    submit: function (e) {
+        this.opt.submit && this.opt.submit(this.data);
+        this.data.list = [];
+        this.c.innerHTML = '';
+        this.hide();
     }
 }

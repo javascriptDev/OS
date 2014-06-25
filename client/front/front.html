@@ -59,13 +59,14 @@ var tpl = {
     'a': "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class=list-item>" +
             "<img class=food src='<%= list[i].img %>' />" +
-            "<div> <%=list[i].text%></div>" +
+            "<div class=text> <%=list[i].text%></div>" +
             "<div class=price><%= list[i].price%></div>" +
             "</div>" +
             "<%}%>",
     b: "<%for (var i=0;i<list.length;i++) {%>" +
-            "<div class=list-item>" +
-            "<div> <%=list[i].text%></div>" +
+            "<div class='list-item ol-list-item'>" +
+            "<div class=ol-text> <%=list[i].text%></div>" +
+            "<div class=ol-price><%= list[i].value%></div>" +
             "</div>" +
             "<%}%>"
 }
@@ -296,36 +297,16 @@ var data = [
 ]
 
 var tab = new tab({
-    tab: data
-});
-setTimeout(function () {
-    var scroll = new IScroll('.contents', {
-        scrollY: true,
-        scrollX: false
-    });
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault();
-    }, false);
-    window.scrollTo(0, 1);
-}, 100)
-var ol = new Ol({
-    tpl: tpl.b,
-    data: {list: [
-        {text: '小鸡'},
-        {text: '宫保鸡丁'},
-        {text: '鱼香肉丝'},
-        {text: '红烧茄子'},
-        {text: '干煸豆角'},
-        {text: '大丰收'},
-        {text: '水煮鱼'},
-        {text: '大盘鸡'},
-        {text: '地三鲜'},
-        {text: '鱼香茄子'}
-    ],
+    tab: data,
+    ol: new Ol({tpl: tpl.b,
+        data: {list: []},
         submit: function (data) {
             socket.emit(ne.addDesk, data);
-        }}
+        }})
 });
+
+//加滚动
+
 
 </script>
 </body>

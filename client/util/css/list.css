@@ -1,10 +1,9 @@
 .list-item {
     width: 33.33%;
-
+    position: relative;
     display: inline-block;
 }
 
 .list-item .food {
-    width: 80%;
-
+    width: 90%;
 }

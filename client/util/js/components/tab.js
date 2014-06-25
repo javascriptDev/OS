@@ -14,6 +14,7 @@ function tab(o) {
     this.tabs = [];
     this.contents = [];
     this.opt = o;
+    this.ol = o.ol;
     this.init();
 }
 tab.prototype = {
@@ -89,10 +90,9 @@ tab.prototype = {
     },
     addEvent: function () {
         var me = this;
-        this.tabEvent = function (e) {
 
+        function tabEvent(e) {
             e.preventDefault();
-
             var t = e.target.offsetParent;
             if (t.className.indexOf('tab-item') != -1) {
                 var index = t.dataset['index'];
@@ -102,7 +102,35 @@ tab.prototype = {
                 });
             }
         }
-        this.tabs.addEventListener('touchstart', this.tabEvent);
+
+        this.tabs.addEventListener('touchstart', tabEvent);
+
+
+        setTimeout(function () {
+            var scroll = new IScroll('.contents', {
+                scrollY: true,
+                scrollX: false,
+                tap: 'itemTap'
+            });
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, false);
+            window.scrollTo(0, 1);
+        }, 100)
+
+        this.contents.addEventListener('itemTap', function (e) {
+            if (me.ol) {
+                var el = e.target.offsetParent;
+                if (el.className.indexOf('list-item') != -1) {
+                    var data = {
+                        text: el.querySelector('.text').innerHTML,
+                        value: el.querySelector('.price').innerHTML
+                    }
+                    me.ol.reRender(data);
+                }
+            }
+        })
+
 
     }
 }

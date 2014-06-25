@@ -9,12 +9,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 
-    <title></title>
-    <script src="client/util/js/lib/iscroll.js"></script>
+    <title>订单系统</title>
+
     <script src="/socket.io/socket.io.js"></script>
+
+    <script src="client/uitl/js/util.js"></script>
+    <script src="client/util/js/lib/iscroll.js"></script>
     <script src="client/util/js/lib/tpl.js"></script>
     <script src="client/util/js/components/tab.js"></script>
     <script src="client/util/js/components/orderList.js"></script>
+
 
 
     <link href="client/util/css/tab.css" rel="stylesheet">
@@ -24,24 +28,11 @@
 </head>
 <body>
 <script>
-var ip = 'http://192.168.165.31';
-var socket = io.connect(ip);
-//终端类型
-var role = {
-    //显示设备
-    monitor: 'monitor',
-    //记账
-    base: 'base',
-    //终端，点菜器
-    terminal: 'terminal'
-}
-//事件类型
-var ne = {
-    addDesk: 'addDesk',
-    login: 'login',
-    loginSuccess: 'ls'
 
-}
+var role = msj.role,
+        socket = io.connect(msj.ip),
+        ne = msj.et,
+        tpl = msj.tpl;
 var me = {
     role: role.terminal,
     id: Math.random() * 1989
@@ -55,21 +46,7 @@ socket.on(ne.loginSuccess, function (o) {
     }
 })
 
-var tpl = {
-    'a': "<%for (var i=0;i<list.length;i++) {%>" +
-            "<div class=list-item>" +
-            "<img class=food src='<%= list[i].img %>' />" +
-            "<div class=text> <%=list[i].text%></div>" +
-            "<div class=price><%= list[i].price%></div>" +
-            "</div>" +
-            "<%}%>",
-    b: "<%for (var i=0;i<list.length;i++) {%>" +
-            "<div class='list-item ol-list-item'>" +
-            "<div class=ol-text> <%=list[i].text%></div>" +
-            "<div class=ol-price><%= list[i].value%></div>" +
-            "</div>" +
-            "<%}%>"
-}
+
 var data = [
     {
         tab: '家常菜',

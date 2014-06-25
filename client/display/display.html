@@ -5,6 +5,7 @@
     <title></title>
     <script src="client/util/js/lib/tpl.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="client/util/js/util.js"></script>
     <style type="text/css">
         .c {
             width: 1000px;
@@ -20,7 +21,7 @@
             float: left;
             border: 1px solid red;
             border-radius: 10px;
-            margin:10px;
+            margin: 10px;
         }
     </style>
 
@@ -32,25 +33,12 @@
 </div>
 
 <script>
-    var ip = 'http://localhost';
-    var socket = io.connect(ip);
+
+    var socket = io.connect(msj.ip);
     //终端类型
-    var role = {
-        //显示设备
-        monitor: 'monitor',
-        //记账
-        base: 'base',
-        //终端，点菜器
-        terminal: 'terminal'
-    }
 
-    //事件类型
-    var event = {
-        addDesk: 'addDesk',
-        login: 'login',
-        loginSuccess: 'ls'
-
-    }
+    var role = msj.role,
+            event = msj.et;
     var me = {
         role: role.monitor,
         id: Math.random() * 1989
@@ -66,20 +54,6 @@
     })
 
 
-    var tpl = {
-        a: "<%for (var i=0;i<list.length;i++) {%>" +
-                "<div class=list-item>" +
-                "<div class=text> <%=list[i].text%></div>" +
-                "<div class=price><%= list[i].price%></div>" +
-                "</div>" +
-                "<%}%>",
-        b: "<%for (var i=0;i<list.length;i++) {%>" +
-                "<div class='list-item ol-list-item'>" +
-                "<div class=ol-text> <%=list[i].text%></div>" +
-                "<div class=ol-price><%= list[i].value%></div>" +
-                "</div>" +
-                "<%}%>"
-    }
     var body = document.querySelector('.c');
     socket.on(event.addDesk, function (desk) {
         console.log(desk);

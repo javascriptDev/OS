@@ -3,11 +3,33 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script src="client/util/js/lib/tpl.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <style type="text/css">
+        .c {
+            width: 1000px;
+            height: 400px;
+            border: 1px solid red;
+            padding: 10px;
+        }
+
+        .order-list {
+            width: 100px;
+            height: auto;
+            display: inline-block;
+            float: left;
+            border: 1px solid red;
+            border-radius: 10px;
+            margin:10px;
+        }
+    </style>
 
 </head>
 <body>
 
+<div class="c">
+
+</div>
 
 <script>
     var ip = 'http://localhost';
@@ -43,8 +65,28 @@
         }
     })
 
+
+    var tpl = {
+        a: "<%for (var i=0;i<list.length;i++) {%>" +
+                "<div class=list-item>" +
+                "<div class=text> <%=list[i].text%></div>" +
+                "<div class=price><%= list[i].price%></div>" +
+                "</div>" +
+                "<%}%>",
+        b: "<%for (var i=0;i<list.length;i++) {%>" +
+                "<div class='list-item ol-list-item'>" +
+                "<div class=ol-text> <%=list[i].text%></div>" +
+                "<div class=ol-price><%= list[i].value%></div>" +
+                "</div>" +
+                "<%}%>"
+    }
+    var body = document.querySelector('.c');
     socket.on(event.addDesk, function (desk) {
         console.log(desk);
+        var list = document.createElement('div');
+        list.className = 'order-list';
+        list.innerHTML = template.compile(tpl.a)(desk);
+        body.appendChild(list);
     })
 
 </script>

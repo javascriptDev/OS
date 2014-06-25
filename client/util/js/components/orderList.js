@@ -16,6 +16,7 @@ Ol.prototype = {
         div.innerHTML = '<div class="title">订单<div class="close">X</div></div><div class="ol-scroller"><div class="list-inner"></div></div><div class="ol-foot"><button class="submit">提交</button></div>'
 
         this.c = div.querySelector('.list-inner');
+        this.scrollC = div.querySelector('.ol-scroller');
         this.el = div;
         this.title = div.querySelector('.title');
         this.subBtn = div.querySelector('.submit');
@@ -31,6 +32,8 @@ Ol.prototype = {
         var scroll = new IScroll('.ol-scroller', {
             scrollY: true
         });
+        var dis = this.scrollC.offsetHeight - this.c.offsetHeight - 16;
+        scroll.scrollTo(0, dis, 100);
     },
     animate: function (el, distance) {
         var s = 'translate3d(0,' + distance + 'px,0) ';

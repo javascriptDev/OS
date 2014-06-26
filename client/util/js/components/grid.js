@@ -64,7 +64,7 @@ Grid.prototype = {
             "<div class='list-item'>";
         this.fields.forEach(function (item) {
             tpl += "<div class='g-filed " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
-            me.fieldEl.innerHTML += '<div class="g-filed">' + item.cn + '</div>';
+            me.fieldEl.innerHTML += '<div class="g-filed g-f">' + item.cn + '</div>';
         })
         tpl += "</div>" +
             "<%}%>";

@@ -6,6 +6,7 @@
 .g-fields {
     background: goldenrod;
     color: white;
+    text-align: left;
 }
 
 .list-item {
@@ -53,5 +54,9 @@
     background: cornflowerblue;
     display: inline-block;
     line-height: 30px;
+    text-align: center;
+}
+.g-f{
+    border-left: 1px solid white;
     text-align: center;
 }

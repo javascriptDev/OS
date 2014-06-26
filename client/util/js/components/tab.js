@@ -20,11 +20,11 @@ function tab(o) {
 tab.prototype = {
     initBase: function () {
         var div = document.createElement('div');
-        div.innerHTML = '<div class="tabs"></div><div class="contents wrapper"><div id="scroller"></div></div>';
+        div.innerHTML = '<div class="tabs"></div><div class="contents wrapper"></div>';
         div.className = 'tab-c';
         this.el = div;
         this.tabs = query(div, '.tabs');
-        this.contents = query(div, '#scroller');
+        this.contents = query(div, '.wrapper');
     },
     init: function () {
         this.initBase();
@@ -75,6 +75,11 @@ tab.prototype = {
                 me.switchContent(index);
             }
         }
+        var el = this.contents.querySelectorAll('.content')[index];
+        if (el && !el.style.webkitTransform) {
+            addScrollEvent(el);
+        }
+
     },
     //切换 对应tab的content 显示隐藏
     switchContent: function (index) {
@@ -97,28 +102,13 @@ tab.prototype = {
             if (t.className.indexOf('tab-item') != -1) {
                 var index = t.dataset['index'];
                 me.switchTab(index, t);
-                var scroll = new IScroll('.contents', {
-                    scrollY: true
-                });
             }
         }
 
         this.tabs.addEventListener('touchstart', tabEvent);
 
 
-        setTimeout(function () {
-            var scroll = new IScroll('.contents', {
-                scrollY: true,
-                scrollX: false,
-                tap: 'itemTap'
-            });
-            document.addEventListener('touchmove', function (e) {
-                e.preventDefault();
-            }, false);
-            window.scrollTo(0, 1);
-        }, 100)
-
-        this.contents.addEventListener('itemTap', function (e) {
+        function itemTap() {
             if (me.ol) {
                 var el = e.target.offsetParent;
                 if (el.className.indexOf('list-item') != -1) {
@@ -129,8 +119,8 @@ tab.prototype = {
                     me.ol.reRender(data);
                 }
             }
-        })
-
+        }
+       
 
     }
 }

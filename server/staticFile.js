@@ -7,9 +7,9 @@ var fs = require('fs');
 function staticFile(req, res) {
     var url = req.url;
     var enter = {
-        base: '/!base',
-        display: '/!display',
-        front: '/!front'
+        base: '/!b',
+        display: '/!d',
+        front: '/!f'
     }
     var mime = {
         js: 'application/x-javascript',
@@ -42,7 +42,7 @@ function staticFile(req, res) {
     if (filePath != '') {
         ct = ct + ';charset=utf-8';
         //console.log(filePath);
-   //     console.log(filePath);
+        //     console.log(filePath);
         fs.readFile(filePath, 'binary', function (err, data) {
             res.writeHead(200, {'Content-Type': ct});
             res.write(data, 'binary');

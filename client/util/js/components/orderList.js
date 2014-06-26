@@ -13,7 +13,7 @@ Ol.prototype = {
         var div = document.createElement('div');
         div.className = 'list-order';
         div.style.webkitTransform = 'translate3d(0,0,0)';
-        div.innerHTML = '<div class="title">订单<div class="close">X</div></div><div class="desk-number">桌号:<input type="text" class="d-n"> <div class="ol-scroller"><div class="list-inner"></div></div><div class="ol-foot"><button class="submit">提交</button></div>'
+        div.innerHTML = '<div class="title">订单<div class="close">X</div></div><div class="desk-number">桌号:<input type="number" class="d-n"> <div class="ol-scroller"><div class="list-inner"></div></div><div class="ol-foot"><button class="submit">提交</button></div>'
 
         this.c = div.querySelector('.list-inner');
         this.scrollC = div.querySelector('.ol-scroller');
@@ -70,6 +70,7 @@ Ol.prototype = {
         });
         this.data.list = [];
         this.c.innerHTML = '';
+        this.deskNumber.value='';
         this.hide();
     }
 }

@@ -77,6 +77,8 @@ tab.prototype = {
         }
         var el = this.contents.querySelectorAll('.content')[index];
         if (el && !el.style.webkitTransform) {
+
+            //添加滚动事件
             addScrollEvent(el, {
                     tap: {
                         item: me.contents,

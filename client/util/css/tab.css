@@ -1,4 +1,8 @@
 
+.tab-c,body{
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
 .tabs {
     display: inline-block;
     vertical-align: top;

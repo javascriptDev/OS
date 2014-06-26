@@ -115,7 +115,9 @@ queue = {
     },
     isStop: function () {
         var base = queue.queueBak;
-
+        if (base.length < 2) {
+            return true;
+        }
         return Math.abs(base[base.length - 2].y - base[base.length - 1].y) < 3;
     }
 

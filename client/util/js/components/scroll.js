@@ -1,7 +1,7 @@
 /**
  * Created by a2014 on 14-6-26.
  */
-function addScrollEvent(el) {
+function addScrollEvent(el, o) {
 
     var isMove = false;
     var that = this;
@@ -9,8 +9,13 @@ function addScrollEvent(el) {
     var beginY = 0;
     var state = '';
 
-    el.addEventListener('touchstart', function (e) {
+    var tap = o.tap,
+        tapEl,
+        tapFn = tap.fn;
+    var bt, et;
+    var outValue = 10;
 
+    el.addEventListener('touchstart', function (e) {
         sx = e.touches[0].pageX;
         sy = e.touches[0].pageY;
         var y = parseInt(el.style.webkitTransform.split(',')[1]);
@@ -20,7 +25,8 @@ function addScrollEvent(el) {
         } else {
             beginY = 0;
         }
-        queue.add({x: 0, y: beginY, direction: 'y', timeStamp: new Date().getTime()});
+        bt = new Date().getTime();
+        queue.add({x: 0, y: beginY, direction: 'y', timeStamp: bt});
         queue.start(el);
 
     }, false);
@@ -33,37 +39,44 @@ function addScrollEvent(el) {
         if (isMove) {
             var x = e.touches[0].pageX,
                 y = e.touches[0].pageY;
-            moveY = beginY + (y - sy);
+
             //判断上边界超出
             if (parseInt(el.style.webkitTransform.split(',')[1]) > 0) {
-                // moveY = (beginY + (y - sy));
                 state = 'up';
-            }
+                moveY = beginY + (y - sy);
 
-            //判断下边界超出
-            if ((Math.abs(beginY) - (e.touches[0].pageY - sy)) - (queue.el.offsetHeight - el.parentNode.offsetHeight ) > 5) {
-                moveY = -(queue.el.offsetHeight - el.parentNode.offsetHeight.offsetHeight);
+            } else if ((Math.abs(beginY) - (e.touches[0].pageY - sy)) - (queue.el.offsetHeight - el.parentNode.offsetHeight ) > 5) {
+                //  moveY = -(queue.el.offsetHeight - el.parentNode.offsetHeight.offsetHeight);
                 state = 'down'
+                moveY = beginY + (y - sy)
+
+            } else {
+                moveY = beginY + (y - sy);
             }
             queue.add({x: 0, y: moveY, direction: 'y', timeStamp: new Date().getTime()});
         }
     }, false);
 
     el.addEventListener('touchend', function (e) {
-        //  console.log(state);
+
+        outValue = 10;
+        var et = new Date().getTime();
         isMove = false;
         var moveY;
         if (state != '') {
             if (state == 'up') {
                 moveY = 0;
             } else {
-                moveY = -(queue.el.offsetHeight - jex.instancesManager.getCmp('viewport').element.offsetHeight + 80);
+                moveY = -(queue.el.offsetHeight - el.parentNode.offsetHeight);
             }
-            queue.add({x: 0, y: moveY, direction: 'y', timeStamp: new Date().getTime()});
+            queue.add({x: 0, y: moveY, direction: 'y', timeStamp: et });
             state = '';
         }
         //console.dir(queue.queueBak);
         queue.slowDown();
 
+        if (et - bt < 80) {
+            tapFn(e);
+        }
     }, false);
 }

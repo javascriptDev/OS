@@ -77,11 +77,29 @@ tab.prototype = {
         }
         var el = this.contents.querySelectorAll('.content')[index];
         if (el && !el.style.webkitTransform) {
-            addScrollEvent(el);
+            addScrollEvent(el, {
+                    tap: {
+                        item: me.contents,
+                        fn: function (e) {
+                            if (me.ol) {
+                                var el = e.target.offsetParent;
+                                if (el.className.indexOf('list-item') != -1) {
+                                    var data = {
+                                        text: el.querySelector('.text').innerHTML,
+                                        value: el.querySelector('.price').innerHTML
+                                    }
+                                    me.ol.reRender(data);
+                                }
+                            }
+                        }
+                    }
+                }
+            )
+            ;
         }
 
     },
-    //切换 对应tab的content 显示隐藏
+//切换 对应tab的content 显示隐藏
     switchContent: function (index) {
 
         query(this.contents, '.content', true).forEach(function (c) {
@@ -107,20 +125,6 @@ tab.prototype = {
 
         this.tabs.addEventListener('touchstart', tabEvent);
 
-
-        function itemTap() {
-            if (me.ol) {
-                var el = e.target.offsetParent;
-                if (el.className.indexOf('list-item') != -1) {
-                    var data = {
-                        text: el.querySelector('.text').innerHTML,
-                        value: el.querySelector('.price').innerHTML
-                    }
-                    me.ol.reRender(data);
-                }
-            }
-        }
-       
 
     }
 }

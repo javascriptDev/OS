@@ -23,7 +23,7 @@ Ol.prototype = {
         this.close = div.querySelector('.close');
         this.deskNumber = div.querySelector('.d-n');
 
-        this.addEvent();
+        this.addEvent()
         this.render();
         this.hide();
     },
@@ -39,18 +39,8 @@ Ol.prototype = {
         el.style.mozTransform = s;
         el.style.transform = s;
     },
-    addEvent: function () {
+    addScroll: function () {
         var me = this;
-        this.subBtn.onclick = function (e) {
-            me.submit.call(me, e);
-        }
-        this.title.onclick = function () {
-            me.show();
-        }
-        this.close.onclick = function (e) {
-            e.stopPropagation();
-            me.hide();
-        }
         addScrollEvent(this.c, {
             tap: {
                 item: me.c,
@@ -66,6 +56,20 @@ Ol.prototype = {
                 }
             }
         });
+    },
+    addEvent: function () {
+        var me = this;
+        this.subBtn.onclick = function (e) {
+            me.submit.call(me, e);
+        }
+        this.title.onclick = function () {
+            me.show();
+        }
+        this.close.onclick = function (e) {
+            e.stopPropagation();
+            me.hide();
+        }
+
 
     },
     show: function () {

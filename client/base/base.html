@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="client/util/js/lib/tpl.js"></script>
     <script src="client/util/js/util.js"></script>
-
+    <script src="client/util/js/components/grid.js"></script>
     <link href="client/util/css/base.css" rel="stylesheet">
+    <link href="client/util/css/grid.css" rel="stylesheet">
 </head>
 <body>
 
@@ -15,9 +17,7 @@
     <nav>
         <ul>
             <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
+
         </ul>
     </nav>
 </header>
@@ -42,11 +42,34 @@
         if (o.id == me.id) {
             console.log('login success');
         }
-    })
+    });
 
     socket.on(event.addDesk, function (desk) {
         console.log(desk);
-    })
+    });
+    var datas = [];
+    for (var i = 0; i < 10; i++) {
+        datas.push({
+            cm: i,
+            price: i + 10,
+            count: 1
+        })
+    }
+
+    grid = new Grid({
+        parent: '.right',
+        title: 'asd',
+        fields: [
+            {en: 'cm', cn: '菜名'},
+            {en: 'price', cn: '价钱'},
+            {en: 'count', cn: '份数'}
+        ],
+        data: {list: datas},
+        isQuery: false,
+        height: 400,
+        width: 500
+    });
+
 
 </script>
 </body>

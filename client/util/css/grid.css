@@ -1,0 +1,57 @@
+.g-filed {
+    display: inline-block;
+    width: 33%;
+}
+
+.g-fields {
+    background: goldenrod;
+    color: white;
+}
+
+.list-item {
+    padding: 5px 0;
+    border-bottom: 1px dashed yellowgreen;
+}
+
+.g-query {
+    display: inline-block;
+
+}
+
+.g-tools {
+    padding: 5px 0;
+    border: 1px solid gainsboro;
+
+}
+
+.g-title {
+    text-align: center;
+    background: dodgerblue;
+    color: white;
+    padding: 5px 0;
+}
+
+.page {
+    width: 66%;
+    border: 1px solid green;
+    height: 30px;
+    display: inline-block;
+
+}
+
+.data-info {
+    width: 32%;
+    border: 1px solid red;
+    height: 30px;
+    display: inline-block;
+}
+
+.last, .next ,.p{
+    width: 30px;;
+    height: 30px;
+    border-radius: 15px;
+    background: cornflowerblue;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+}

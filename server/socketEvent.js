@@ -30,6 +30,7 @@ var deskArr = [];
 var overDesk = [];
 function addEvent(io) {
     io.on('connection', function (socket) {
+            console.log(io.sockets.sockets.length);
 
             //登陆
             socket.on(event.login, function (member) {
@@ -42,7 +43,7 @@ function addEvent(io) {
                 if (deskArr.length > 0) {
                     socket.emit(event.addDesk, deskArr)
                 }
-            })
+            });
 
             //前端点餐
             socket.on(event.addDesk, function (desk) {
@@ -70,16 +71,14 @@ function addEvent(io) {
                     success: true,
                     id: id
                 })
-            })
+            });
 
-
+            socket.on('disconnect', function (a) {
+                var a = '';
+                //客户端socket 断开，需要手动 从io中删除备份的socket
+            });
         }
     )
-    ;
-    io.on('disconnect', function (reason) {
-
-    });
-
 }
 
 

@@ -1,1 +1,14 @@
 
+.left{
+    width: 14%;
+    border: 1px solid red;
+    height: 400px;
+    display: inline-block;
+}
+.right{
+    width: 85%;
+    border: 1px solid red;
+    height: 400px;
+    display: inline-block;
+
+}

@@ -49,19 +49,20 @@ msj = {
         a: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class=list-item>" +
             "<img class=food src='<%= list[i].img %>' />" +
-            "<div class=text> <%=list[i].text%></div>" +
+            "<div class=text><%=list[i].text%></div>" +
             "<div class=price><%= list[i].price%></div>" +
             "</div>" +
             "<%}%>",
         b: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class='list-item ol-list-item'>" +
-            "<div class=ol-text> <%=list[i].text%></div>" +
-            "<div class=ol-price><%= list[i].value%></div>" +
+            "<div class=ol-text><%=list[i].text%></div>" +
+            "<div class=ol-price><%=list[i].value%></div>" +
+            "<div class=ol-del data-text=<%=list[i].text%> >X</div>" +
             "</div>" +
             "<%}%>",
         c: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class='list-item'>" +
-            "<div class=text> <%=list[i].text%></div>" +
+            "<div class=text><%=list[i].text%></div>" +
 
             "</div>" +
             "<%}%>"

@@ -31,6 +31,7 @@ Ol.prototype = {
         this.c.innerHTML = template.compile(this.itemTpl)(this.data);
         document.body.appendChild(this.el);
 
+
     },
     animate: function (el, distance) {
         var s = 'translate3d(0,' + distance + 'px,0) ';
@@ -50,6 +51,22 @@ Ol.prototype = {
             e.stopPropagation();
             me.hide();
         }
+        addScrollEvent(this.c, {
+            tap: {
+                item: me.c,
+                fn: function (e) {
+                    if (e.target.className == 'ol-del') {
+                        me.data.list.forEach(function (item, index) {
+                            if (item.text == e.target.dataset['text']) {
+                                me.data.list.splice(index, 1);
+                            }
+                        })
+                        me.render();
+                    }
+                }
+            }
+        });
+
     },
     show: function () {
         this.animate(this.el, 0)
@@ -70,7 +87,7 @@ Ol.prototype = {
         });
         this.data.list = [];
         this.c.innerHTML = '';
-        this.deskNumber.value='';
+        this.deskNumber.value = '';
         this.hide();
     }
 }

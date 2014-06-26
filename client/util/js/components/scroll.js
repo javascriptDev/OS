@@ -9,13 +9,15 @@ function addScrollEvent(el, o) {
     var beginY = 0;
     var state = '';
 
-    var tap = o.tap,
+    var tap = o && o.tap,
         tapEl,
-        tapFn = tap.fn;
+        tapFn = tap && tap.fn;
     var bt, et;
     var outValue = 10;
 
     el.addEventListener('touchstart', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
         sx = e.touches[0].pageX;
         sy = e.touches[0].pageY;
         var y = parseInt(el.style.webkitTransform.split(',')[1]);
@@ -32,6 +34,8 @@ function addScrollEvent(el, o) {
     }, false);
 
     el.addEventListener('touchmove', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
         isMove = true;
         e.preventDefault();
         e.stopPropagation();
@@ -58,7 +62,8 @@ function addScrollEvent(el, o) {
     }, false);
 
     el.addEventListener('touchend', function (e) {
-
+        e.stopPropagation();
+        e.preventDefault();
         outValue = 10;
         var et = new Date().getTime();
         isMove = false;
@@ -76,7 +81,7 @@ function addScrollEvent(el, o) {
         queue.slowDown();
 
         if (et - bt < 80) {
-            tapFn(e);
+            tapFn && tapFn(e);
         }
     }, false);
 }

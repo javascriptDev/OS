@@ -88,7 +88,8 @@ tab.prototype = {
                                 if (el.className.indexOf('list-item') != -1) {
                                     var data = {
                                         text: el.querySelector('.text').innerHTML,
-                                        value: el.querySelector('.price').innerHTML
+                                        value: el.querySelector('.price').innerHTML,
+                                        id: Math.random() * 1990
                                     }
                                     me.ol.reRender(data);
                                 }

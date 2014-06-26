@@ -57,7 +57,7 @@ Ol.prototype = {
                 fn: function (e) {
                     if (e.target.className == 'ol-del') {
                         me.data.list.forEach(function (item, index) {
-                            if (item.text == e.target.dataset['text']) {
+                            if (item.id == e.target.dataset['id']) {
                                 me.data.list.splice(index, 1);
                             }
                         })

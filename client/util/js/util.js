@@ -57,7 +57,7 @@ msj = {
             "<div class='list-item ol-list-item'>" +
             "<div class=ol-text><%=list[i].text%></div>" +
             "<div class=ol-price><%=list[i].value%></div>" +
-            "<div class=ol-del data-text=<%=list[i].text%> >X</div>" +
+            "<div class=ol-del data-id=<%=list[i].id%> >X</div>" +
             "</div>" +
             "<%}%>",
         c: "<%for (var i=0;i<list.length;i++) {%>" +

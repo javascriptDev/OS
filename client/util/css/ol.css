@@ -6,8 +6,7 @@
 
 .list-inner {
     position: relative;
-    background: red;
-}
+    }
 
 .ol-scroller {
     margin: 10px 0;
@@ -24,7 +23,7 @@
 
     width: 100%;
     background: #eee;
-    overflow: hidden;
+
     padding: 0 0px 10px;
     -webkit-transition: .2s cubic-bezier(0, 1.01, 0, 1);
     transtion: .2s cubic-bezier(0, 1.01, 0, 1);

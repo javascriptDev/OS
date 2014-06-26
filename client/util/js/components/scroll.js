@@ -48,7 +48,6 @@ function addScrollEvent(el, o) {
             if (parseInt(el.style.webkitTransform.split(',')[1]) > 0) {
                 state = 'up';
                 moveY = beginY + (y - sy);
-
             } else if ((Math.abs(beginY) - (e.touches[0].pageY - sy)) - (queue.el.offsetHeight - el.parentNode.offsetHeight ) > 5) {
                 //  moveY = -(queue.el.offsetHeight - el.parentNode.offsetHeight.offsetHeight);
                 state = 'down'

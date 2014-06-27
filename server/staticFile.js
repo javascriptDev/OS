@@ -1,5 +1,15 @@
 /**
  * Created by a2014 on 14-6-23.
+ *
+ * 请求静态文件处理函数
+ * 类型:
+ *
+ * html
+ * js
+ * css
+ * image - [bmp,png,jpg,jpeg,gif]
+ *
+ *
  */
 var fs = require('fs');
 

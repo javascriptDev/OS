@@ -1,5 +1,11 @@
 /**
  * Created by a2014 on 14-6-23.
+ *
+ * 数据库操作
+ * add
+ * del
+ * update
+ * remove
  */
 
 var client = require('mongodb').MongoClient;

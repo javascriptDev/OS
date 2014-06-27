@@ -1,5 +1,9 @@
 /**
  * Created by a2014 on 14-6-23.
+ *
+ * 创建数据库
+ *
+ *
  */
 var Db = require('mongodb').Db,
     Server = require('mongodb').Server;

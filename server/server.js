@@ -1,5 +1,7 @@
 /**
  * Created by a2014 on 14-6-20.
+ *
+ * Server(静态文件 + web services + web socket server);
  */
 var http = require('http');
 var sf = require('./staticFile').sf;
@@ -18,5 +20,6 @@ var server = http.createServer(function (req, res) {
 });
 server.listen(8000, null);
 
+//挂 web socket
 var io = require('socket.io').listen(server);
 se.addEvent(io);

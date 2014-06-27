@@ -36,7 +36,7 @@ function Grid(o) {
     this.controls = {};
     this.selectItem = [];
     this.isMulti = o.isMulti;
-    this.page = o.page || { count: 10, page: 0, all: 0};
+    this.page = o.page || { count: 10, page: 0, all: 0, ci: 0};
     this.init();
 }
 
@@ -46,9 +46,10 @@ Grid.prototype = {
         this.setTitle();
         this.setToolBar();
         this.setField();
-        this.setContent();
-        this.paging();
+        this.setContent(this.page.ci);
         this.setFoot();
+        this.paging();
+        this.setInfo();
         this.addEvent();
         this.render();
         this.setCss();
@@ -108,16 +109,22 @@ Grid.prototype = {
         //根据字段生成模板
         this.tpl = tpl;
     },
-    setContent: function () {
-        var html = template.compile(this.tpl)(this.data);
+    setContent: function (pageIndex) {
+        var me = this;
+        if (!pageIndex) pageIndex = 0;
+        var data = {list: me.data.list.splice(pageIndex * me.page.count, me.page.count) || []};
+        var html = template.compile(this.tpl)(data);
         this.contentEl.innerHTML = html;
     },
     setFoot: function () {
-        var html = '<div class="page"><div class="last"><</div><div class="p">1</div><div class="p">2</div><div class="p">3</div><div class="next">></div></div><div class="data-info"></div>'
+        var html = '<div class="page"><div class="last p-bar"><</div><div class="middle-bar"></div><div class="next p-bar">></div></div><div class="data-info"></div>'
         this.footEl.innerHTML = html;
 
         this.controls.info = this.footEl.querySelector('.data-info');
-        this.setInfo();
+        this.pagingBarEl = this.footEl.querySelector('.middle-bar');
+        this.lastPageEl = this.footEl.querySelector('.last');
+        this.nextPageEl = this.footEl.querySelector('.next');
+
     },
     //设置右下角数据总数
     setInfo: function () {
@@ -147,12 +154,24 @@ Grid.prototype = {
         this.contentEl.appendChild(el);
         this.setInfo();
     },
+    createPagingBar: function (i) {
+        var div = document.createElement('div');
+        div.className = 'p-bar';
+        div.setAttribute('data-index', i);
+        div.innerHTML = i;
+        return div;
+    },
     paging: function () {
-        var pages = Math.floor(this.data.list.length / this.page.count);
-        this.page.pages = pages;
+        var pages;
+        var pagesTem = this.data.list.length / this.page.count;
+        /^-?[1-9]d*$/.test(pagesTem) ? pages = pagesTem : pages = Math.ceil(pagesTem);
+        this.page.pageCount = pages;
         this.page.all = this.data.list.length;
-
-
+        var forCount = 0;
+        pages > 4 ? forCount = 4 : forCount = pages;
+        for (var i = 0; i <= pages; i++) {
+            this.pagingBarEl.appendChild(this.createPagingBar(i));
+        }
     },
     sort: function () {
     },
@@ -200,6 +219,19 @@ Grid.prototype = {
                 }
             }
 
+        }
+        //分页事件
+        //上一页
+        this.lastPageEl.onclick = function () {
+            if (this.page.ci != 0) {
+
+            }
+        };
+        //下一页
+        this.nextPageEl.onclick = function () {
+            if (this.page.ci < this.page.pageCount) {
+
+            }
         }
 
     }

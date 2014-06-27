@@ -64,7 +64,7 @@ div {
     float: right;
 }
 
-.last, .next, .p {
+.last, .next, .p-bar {
     width: 30px;;
     height: 30px;
     border-radius: 15px;
@@ -90,5 +90,13 @@ div {
 }
 
 .item-selected {
-    background: gainsboro   ;
+    background: gainsboro;
+}
+
+.p-bar, .middle-bar {
+    display: inline-block;
+}
+
+.middle-bar .p-bar {
+    margin: 0 2px;
 }

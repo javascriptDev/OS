@@ -233,7 +233,6 @@ Grid.prototype = {
         this.lastPageEl.onclick = function () {
             if (me.page.ci > 0) {
                 me.page.ci -= 1;
-                console.log(me.page.ci);
                 me.setContent(me.page.ci);
             }
         };
@@ -241,10 +240,7 @@ Grid.prototype = {
         this.nextPageEl.onclick = function () {
             if (me.page.ci < me.page.pageCount - 1) {
                 me.page.ci++;
-                console.log(me.page.ci);
                 me.setContent(me.page.ci);
-
-
             }
         }
 

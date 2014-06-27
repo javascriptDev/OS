@@ -1,5 +1,26 @@
 /**
  * Created by addison on 14-6-26.
+ *
+ *json data grid
+ *
+ * 结构
+ * -----------------------------
+ * -         title             -
+ * -----------------------------
+ * -         toolbar           -
+ * -----------------------------
+ * -        fields             -
+ * -----------------------------
+ * -                           -
+ * -        content            -
+ * -                           -
+ * -----------------------------
+ * -   page     -   data info  -
+ * -----------------------------
+ *
+ *
+ *
+ *
  */
 function Grid(o) {
     //title
@@ -36,6 +57,7 @@ Grid.prototype = {
         var cs = this.contentEl.style;
         cs.height = this.height - this.titleEl.offsetHeight - this.fieldEl.offsetHeight - this.toolbarEl.offsetHeight - this.footEl.offsetHeight + 'px';
     },
+    //创建骨架dom
     createBase: function () {
         var div = document.createElement('div');
         div.className = 'a-grid';
@@ -94,8 +116,9 @@ Grid.prototype = {
         this.controls.info = this.footEl.querySelector('.data-info');
         this.setInfo();
     },
+    //设置右下角数据总数
     setInfo: function () {
-        this.controls.info.innerHTML = 'all:' + this.data.list.length + ' 条数据';
+        this.controls.info.innerHTML = '全部:' + this.data.list.length + ' 条数据';
     },
     render: function () {
         this.parent.appendChild(this.el);
@@ -131,8 +154,29 @@ Grid.prototype = {
             price: 100,
             count: 1
         };
+        //添加数据
         this.controls.addBtn.onclick = function () {
             me.addData(data);
+        }
+        //删除数据
+        this.controls.delBtn.onclick = function () {
+
+        }
+        //list item click
+        this.contentEl.onclick = function (e) {
+            var target = e.target.offsetParent;
+            var el = me.contentEl.querySelector('.item-selected');
+            if (!el) {
+                target.className += ' item-selected';
+            } else {
+                if (el == target) {
+                    target.className = target.className.replace('item-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+                } else {
+                    el.className = el.className.replace('item-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+                    target.className += ' item-selected';
+                }
+            }
+
         }
     }
 };

@@ -1,5 +1,5 @@
 /**
- * Created by a2014 on 14-6-23.
+ * Created by addison on 14-6-23.
  * 处理  web socket 请求 handler
  *
  * --------- 客户端角色:-------------

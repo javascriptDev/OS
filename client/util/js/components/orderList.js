@@ -1,5 +1,5 @@
 /**
- * Created by a2014 on 14-6-24.
+ * Created by addison on 14-6-24.
  */
 function Ol(o) {
     this.itemTpl = o.tpl;

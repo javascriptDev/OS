@@ -50,7 +50,7 @@
         console.log(desk);
     });
     var datas = [];
-    for (var i = 0; i < 14; i++) {
+    for (var i = 0; i < 1000000; i++) {
         datas.push({
             cm: i,
             price: i + 10,
@@ -72,9 +72,9 @@
         height: 300,
         width: 500,
         //是否启用多选
-        isMulti: true,
+        isMulti: false,
         page: {
-            count: 5
+            count: 20
         }
     });
 

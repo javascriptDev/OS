@@ -45,6 +45,7 @@ function staticFile(req, res) {
     } else { //其他正常路径的js css html
         var fileType = filePath.split('.')[1];
         if (url == '/socket.io/socket.io.js') {
+            //排除 socket.io.client
             filePath = '';
             res.end('');
         } else {//js css html image
@@ -52,6 +53,7 @@ function staticFile(req, res) {
             ct = mime[fileType];
         }
     }
+
     if (filePath != '') {
         ct = ct + ';charset=utf-8';
         //console.log(filePath);

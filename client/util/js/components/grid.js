@@ -46,13 +46,17 @@ Grid.prototype = {
         this.setTitle();
         this.setToolBar();
         this.setField();
+        this.update();
+        this.addEvent();
+        this.render();
+        this.setCss();
+    },
+    update: function () {
+        //todo: 每次添加一条数据，都要执行这个。有点浪费资源
         this.setContent(this.page.ci);
         this.setFoot();
         this.paging();
         this.setInfo();
-        this.addEvent();
-        this.render();
-        this.setCss();
     },
     setCss: function () {
         this.el.style.width = this.width + 'px';
@@ -124,6 +128,7 @@ Grid.prototype = {
         this.contentEl.innerHTML = html;
     },
     setFoot: function () {
+        var me = this;
         var html = '<div class="page"><div class="last p-bar"><</div><div class="middle-bar"></div><div class="next p-bar">></div></div><div class="data-info"></div>'
 
         //
@@ -133,10 +138,34 @@ Grid.prototype = {
         this.lastPageEl = this.footEl.querySelector('.last');
         this.nextPageEl = this.footEl.querySelector('.next');
 
+        //分页事件
+        //上一页
+        this.lastPageEl.onclick = function () {
+            if (me.page.ci > 0) {
+                me.page.ci -= 1;
+                me.setContent(me.page.ci);
+            }
+        };
+        //下一页
+        this.nextPageEl.onclick = function () {
+            if (me.page.ci < me.page.pageCount - 1) {
+                me.page.ci++;
+                me.setContent(me.page.ci);
+            }
+        }
+        //分页中间的12345...
+        this.pagingBarEl.onclick = function (e) {
+            if (e.target.className == 'p-bar') {
+                var index = parseInt(e.target.dataset['index']);
+                me.page.ci = index;
+                me.setContent(index);
+            }
+        }
+
     },
     //设置右下角数据总数
     setInfo: function () {
-        this.controls.info.innerHTML = '全部:' + this.data.list.length + ' 条数据';
+        this.controls.info.innerHTML = '共:' + this.page.pageCount + '页 | 全部:' + this.data.list.length + ' 条';
     },
     render: function () {
         this.parent.appendChild(this.el);
@@ -151,7 +180,9 @@ Grid.prototype = {
             }
         }
         this.data.list.push(data);
-        this.addItem({list: [data]});
+        // this.addItem({list: [data]});
+        this.update();
+
     },
     addItem: function (data) {
         var html = template.compile(this.tpl)(data);
@@ -177,9 +208,12 @@ Grid.prototype = {
         this.page.all = this.data.list.length;
         var forCount = 0;
         pages > 4 ? forCount = 4 : forCount = pages;
-        for (var i = 0; i < pages; i++) {
+        for (var i = 0; i < forCount; i++) {
             this.pagingBarEl.appendChild(this.createPagingBar(i));
         }
+    },
+    setPageBarSelect: function () {
+
     },
     sort: function () {
     },
@@ -228,29 +262,7 @@ Grid.prototype = {
             }
 
         }
-        //分页事件
-        //上一页
-        this.lastPageEl.onclick = function () {
-            if (me.page.ci > 0) {
-                me.page.ci -= 1;
-                me.setContent(me.page.ci);
-            }
-        };
-        //下一页
-        this.nextPageEl.onclick = function () {
-            if (me.page.ci < me.page.pageCount - 1) {
-                me.page.ci++;
-                me.setContent(me.page.ci);
-            }
-        }
-        //分页中间的12345...
-        this.pagingBarEl.onclick = function (e) {
-            if (e.target.className == 'p-bar') {
-                var index = parseInt(e.target.dataset['index']);
-                me.page.ci = index;
-                me.setContent(index);
-            }
-        }
+
 
     }
 };

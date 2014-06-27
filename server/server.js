@@ -15,6 +15,7 @@ var server = http.createServer(function (req, res) {
     if (url.indexOf('#ws') != -1) {//static file
         ws(res);
     } else {
+        //web services
         sf(req, res);
     }
 });

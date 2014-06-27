@@ -8,7 +8,7 @@ var se = require('./socketEvent');
 
 
 var server = http.createServer(function (req, res) {
-
+    console.log(req.socket.remoteAddress);
     var url = req.url;
     if (url.indexOf('#ws') != -1) {//static file
         ws(res);

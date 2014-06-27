@@ -7,6 +7,8 @@
     <script src="client/util/js/lib/tpl.js"></script>
     <script src="client/util/js/util.js"></script>
     <script src="client/util/js/components/grid.js"></script>
+
+
     <link href="client/util/css/base.css" rel="stylesheet">
     <link href="client/util/css/grid.css" rel="stylesheet">
 </head>
@@ -48,7 +50,7 @@
         console.log(desk);
     });
     var datas = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 5; i++) {
         datas.push({
             cm: i,
             price: i + 10,
@@ -66,7 +68,7 @@
         ],
         data: {list: datas},
         isQuery: false,
-        height: 400,
+        height: 300,
         width: 500
     });
 

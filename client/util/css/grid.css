@@ -1,3 +1,7 @@
+div {
+    box-sizing: border-box;
+}
+
 .g-filed {
     display: inline-block;
     width: 33%;
@@ -19,9 +23,15 @@
 
 }
 
+.g-foot {
+    height: 40px;
+    padding: 5px 0;
+}
+
 .g-tools {
     padding: 5px 0;
-    border: 1px solid gainsboro;
+
+    height: 40px;
 
 }
 
@@ -30,24 +40,27 @@
     background: dodgerblue;
     color: white;
     padding: 5px 0;
+    height: 30px;
 }
 
 .page {
     width: 66%;
-    border: 1px solid green;
+
     height: 30px;
     display: inline-block;
+    vertical-align: top;
 
 }
 
 .data-info {
     width: 32%;
-    border: 1px solid red;
+
     height: 30px;
     display: inline-block;
+    vertical-align: top;
 }
 
-.last, .next ,.p{
+.last, .next, .p {
     width: 30px;;
     height: 30px;
     border-radius: 15px;
@@ -56,7 +69,19 @@
     line-height: 30px;
     text-align: center;
 }
-.g-f{
+
+.g-f {
     border-left: 1px solid white;
     text-align: center;
+}
+
+.a-grid {
+    border: 1px solid cornflowerblue;
+    box-sizing: border-box;
+}
+
+.g-list {
+    overflow-x: hidden;
+    overflow-y: scroll;
+
 }

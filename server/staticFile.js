@@ -31,6 +31,9 @@ function staticFile(req, res) {
         bmp: 'image/bmp',
         jpg: 'image/jpg'
     }
+
+    var cache = [];
+
     var filePath = url;
     var ct = 'text/html';
     if (url == '/' || url == enter.base) {
@@ -53,11 +56,17 @@ function staticFile(req, res) {
         ct = ct + ';charset=utf-8';
         //console.log(filePath);
         //     console.log(filePath);
-        fs.readFile(filePath, 'binary', function (err, data) {
-            res.writeHead(200, {'Content-Type': ct});
-            res.write(data, 'binary');
-            res.end();
-        });
+        fs.exists(filePath, function (a) {
+            if (a) {
+                fs.readFile(filePath, 'binary', function (err, data) {
+                    res.writeHead(200, {'Content-Type': ct});
+                    res.write(data, 'binary');
+                    res.end();
+                });
+            } else {
+                res.end("not resource");
+            }
+        })
     }
 }
 exports.sf = staticFile;

@@ -8,18 +8,17 @@
  * -         title             -
  * -----------------------------
  * -         toolbar           -
- * -----------------------------
- * -        fields             -
- * -----------------------------
- * -                           -
- * -        content            -
- * -                           -
- * -----------------------------
+ * -----------------------------  - -
+ * -        fields             -  c -
+ * -----------------------------  o -
+ * -                           -  n -
+ * -        content            -  t -
+ * -                           -  e -
+ * -                           -  n -
+ * -                           -  t -
+ * -----------------------------  - -
  * -   page     -   data info  -
  * -----------------------------
- *
- *
- *
  *
  */
 function Grid(o) {
@@ -35,6 +34,9 @@ function Grid(o) {
     this.opt = o;
     this.parent = document.querySelector(o.parent);
     this.controls = {};
+    this.selectItem = [];
+    this.isMulti = o.isMulti;
+    this.page = o.page || { count: 10, page: 0, all: 0};
     this.init();
 }
 
@@ -45,6 +47,7 @@ Grid.prototype = {
         this.setToolBar();
         this.setField();
         this.setContent();
+        this.paging();
         this.setFoot();
         this.addEvent();
         this.render();
@@ -124,7 +127,6 @@ Grid.prototype = {
         this.parent.appendChild(this.el);
     },
     addData: function (data) {
-
         for (var i = 0, len = this.fields.length; i < len; i++) {
             //确保添加的数据包含所有 该有的字段
             if (!data.hasOwnProperty(this.fields[i].en)) {
@@ -135,8 +137,6 @@ Grid.prototype = {
         }
         this.data.list.push(data);
         this.addItem({list: [data]});
-
-
     },
     addItem: function (data) {
         var html = template.compile(this.tpl)(data);
@@ -146,6 +146,15 @@ Grid.prototype = {
         c = null;
         this.contentEl.appendChild(el);
         this.setInfo();
+    },
+    paging: function () {
+        var pages = Math.floor(this.data.list.length / this.page.count);
+        this.page.pages = pages;
+        this.page.all = this.data.list.length;
+
+
+    },
+    sort: function () {
     },
     addEvent: function () {
         var me = this;
@@ -160,23 +169,38 @@ Grid.prototype = {
         }
         //删除数据
         this.controls.delBtn.onclick = function () {
-
+            var selectItem = me.contentEl.querySelectorAll('.item-selected');
+            //todo:删除数据是否数据加 UUID
         }
         //list item click
         this.contentEl.onclick = function (e) {
             var target = e.target.offsetParent;
-            var el = me.contentEl.querySelector('.item-selected');
-            if (!el) {
-                target.className += ' item-selected';
-            } else {
-                if (el == target) {
-                    target.className = target.className.replace('item-selected', '').replace(/(^\s+)|(\s+$)/g, '');
-                } else {
-                    el.className = el.className.replace('item-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+            //单选模式
+            if (!me.isMulti) {
+                var el = me.contentEl.querySelector('.item-selected');
+                if (!el) {
                     target.className += ' item-selected';
+                } else {
+                    if (el == target) {
+                        target.className = target.className.replace('item-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+                    } else {
+                        el.className = el.className.replace('item-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+                        target.className += ' item-selected';
+                        //    me.selectItem.push(target);
+                    }
+                }
+            } else {//多选模式
+
+                if (target.className.indexOf('item-selected') == -1) {
+                    target.className += ' item-selected';
+                    //  me.selectItem.push(target);
+                } else {
+                    target.className = target.className.replace('item-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+                    //me.selectItem
                 }
             }
 
         }
+
     }
 };

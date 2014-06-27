@@ -243,6 +243,14 @@ Grid.prototype = {
                 me.setContent(me.page.ci);
             }
         }
+        //分页中间的12345...
+        this.pagingBarEl.onclick = function (e) {
+            if (e.target.className == 'p-bar') {
+                var index = parseInt(e.target.dataset['index']);
+                me.page.ci = index;
+                me.setContent(index);
+            }
+        }
 
     }
 };

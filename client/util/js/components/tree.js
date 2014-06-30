@@ -9,6 +9,7 @@ function Tree(cfg) {
     this.data = cfg.data || [];
     this.mdata = cfg.mdata || [];
     this.dragStart = cfg.dragStart;
+    this.leafClick=cfg.leafClick;
     this.structureIndex = 0;
     this.init();
 }
@@ -142,20 +143,26 @@ Tree.prototype = {
             if (cls) {
                 if (cls == 'node-dom') {
                     me.nodeClick(e.target);
+                } else if (cls == 'leaf-dom') {
+                    me.leafClick && me.leafClick(e);
                 }
             }
         }
-        this.el.ondragstart = function (e) {
-            var cls = e.target.className;
-            if (cls) {
-                if (cls == 'leaf-dom') {
-                    me.leafEventHandler.call(me, e);
+        if (this.isDrag) {
+            this.el.ondragstart = function (e) {
+                var cls = e.target.className;
+                if (cls) {
+                    if (cls == 'leaf-dom') {
+                        me.leafEventHandler.call(me, e);
+                    }
                 }
             }
         }
-        this.el.addEventListener('contextmenu', function (e) {
-            me.addMenuEvent(e);
-        }, false);
+        if (this.mdata.length > 0) {
+            this.el.addEventListener('contextmenu', function (e) {
+                me.addMenuEvent(e);
+            }, false);
+        }
     },
     //add context menu event
     addMenuEvent: function (e) {

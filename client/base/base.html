@@ -168,13 +168,17 @@
 
     window.left = new Tree({
         dragStart: function (e) {
-         //   e.dataTransfer.setData("type", e.target.dataset['name']);
+            //   e.dataTransfer.setData("type", e.target.dataset['name']);
             //  e.dataTransfer.setData("id", e.target.id);
             e.preventDefault();
             e.stopPropagation();
         },
         data: data,
-        parent: '.left'
+        parent: '.left',
+        isDrag: false,
+        leafClick: function (e) {
+                console.log(e);
+        }
 
     });
 

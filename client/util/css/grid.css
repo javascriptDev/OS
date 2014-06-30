@@ -6,7 +6,7 @@ div {
     display: inline-block;
     width: 25%;
 }
-.line{
+.line,.line-field{
     width: 40px;
 }
 

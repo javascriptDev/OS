@@ -29,7 +29,7 @@ function Grid(o) {
     //是否启用查询
     this.isQuery = o.isQuery || true;
     //需要汇总的字段
-    this.sumsField = [];
+    this.sumField = [];
     //list fields
     this.fields = o.fields || [];
     this.data = o.data || [];
@@ -55,8 +55,8 @@ Grid.prototype = {
     },
     update: function () {
         //todo: 每次添加一条数据，都要执行这个。有点浪费资源
-        this.setContent(this.page.ci);
         this.setFoot();
+        this.setContent(this.page.ci);
         this.paging();
         this.setInfo();
     },
@@ -104,17 +104,20 @@ Grid.prototype = {
     setField: function () {
         var me = this;
         var fields = '';
+        //模板
         var tpl =
             "<%for (var i=0;i<list.length;i++) {%>" +
-            "<div class='list-item'><div class='g-field line'>" + i + "</div>";
+            "<div class='list-item'><div class='g-field line'></div>";
+
+        //生成模板，添加表头
         this.fields.forEach(function (item) {
             //添加到模板
             tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
             //添加到fields 用于生成表头
-            fields == '' ? (fields += '<div class="g-field line">序号</div>') : null;
+            fields == '' ? (fields += '<div class="g-field line-field">序号</div>') : null;
             fields += '<div class="g-field g-f">' + item.cn + '</div>';
             //找出需要汇总的字段
-            item.sum && me.sumsField.push(item);
+            item.sum && me.sumField.push(item.en);
         })
         me.fieldEl.innerHTML = fields;
         tpl += "</div>" +
@@ -132,19 +135,46 @@ Grid.prototype = {
                 return me.data.list[currentIndex];
             }
         });
+
         var data = {list: pageData || []};
         var html = template.compile(this.tpl)(data);
         this.contentEl.innerHTML = html;
+
+        this.setLineNumber();
+        this.setSum(pageData);
     },
     //设置行号
-    setLineNumber:function(){
+    setLineNumber: function () {
+        var index = this.page.ci;
+        var countPerPage = this.page.count;
+        Array.prototype.forEach.call(this.contentEl.querySelectorAll('.line'), function (line, i) {
+            line.innerHTML = index * countPerPage + i + 1;
+        })
+    },
+    //生成汇总行
+    setSum: function (data) {
+        var sf = this.sumField;
+        var o = {};
+        this.fields.forEach(function (f) {
+            if (sf.join('').indexOf(f.en) == -1) {
+                o[f.en] = '-';
+            } else {
+                o[f.en] = 0;
+            }
+        })
+        data.forEach(function (item) {
+            sf.forEach(function (field) {
+                o[field] += parseInt(item[field]);
+            })
+        })
+        this.addItem({list: [o]}, function beforeAdd(dom) {
+            dom.firstChild.innerHTML = '总计';
+        });
 
     },
     setFoot: function () {
         var me = this;
         var html = '<div class="page"><div class="last p-bar"><</div><div class="middle-bar"></div><div class="next p-bar">></div></div><div class="data-info"></div>'
-
-        //
         this.footEl.innerHTML = html;
         this.controls.info = this.footEl.querySelector('.data-info');
         this.pagingBarEl = this.footEl.querySelector('.middle-bar');
@@ -197,12 +227,13 @@ Grid.prototype = {
         this.update();
 
     },
-    addItem: function (data) {
+    addItem: function (data, beforeAdd) {
         var html = template.compile(this.tpl)(data);
         var c = document.createElement('div');
         c.innerHTML = html;
-        var el = c.childNodes[0];
+        var el = c.firstChild;
         c = null;
+        beforeAdd && beforeAdd(el);
         this.contentEl.appendChild(el);
         this.setInfo();
     },

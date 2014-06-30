@@ -3,7 +3,7 @@
  *
  *json data grid
  *
- * 结构
+ * 控件dom结构
  * -----------------------------
  * -         title             -
  * -----------------------------
@@ -19,6 +19,27 @@
  * -----------------------------  - -
  * -   page     -   data info  -
  * -----------------------------
+ *
+ *
+ * 用法:
+ * var grid = new Grid({
+        parent: '.right',                            * 父容器选择器
+        title: 'grid demo',                          * grid title
+        fields: [                                    * grid 显示的字段
+            {en: 'cm', cn: '菜名'},                       1.页面显示的字段
+            {en: 'price', sum: true, cn: '价钱'},         2.数据字段
+            {en: 'count', cn: '份数'}                     3.sum:开启汇总
+        ],
+        data: {list: datas},                         * grid 数据
+        isQuery: false,                              * 是否开启查询
+        height: 500,                                 * 控件高度
+        width: 1024,                                 * 控件宽度
+        isMulti: false,                              * 是否启用多选
+        page: {
+            count: 15                                * 分页煤业显示的数据条目数
+        }
+    });
+ *
  *
  */
 function Grid(o) {
@@ -136,12 +157,13 @@ Grid.prototype = {
             }
         });
 
+
         var data = {list: pageData || []};
         var html = template.compile(this.tpl)(data);
         this.contentEl.innerHTML = html;
 
         this.setLineNumber();
-        this.setSum(pageData);
+        this.sumField.length > 0 ? this.setSum(pageData) : null;
     },
     //设置行号
     setLineNumber: function () {
@@ -226,7 +248,6 @@ Grid.prototype = {
         this.data.list.push(data);
         // this.addItem({list: [data]});
         this.update();
-
     },
     addItem: function (data, beforeAdd) {
         var html = template.compile(this.tpl)(data);

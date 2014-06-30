@@ -6,25 +6,32 @@
 </head>
 <body>
 
-<div draggable="true" style="width: 100px;height: 100px;border: 1px solid red;" class="b"></div>
+<div draggable="true" style="width: 100px;height: 100px;border: 1px solid red;" class="baaa"></div>
 
-<div style="height: 300px;width: 300px;border: 1px solid green;" class="a"></div>
+<div style="height: 300px;width: 300px;border: 1px solid green;" class="asdasa"></div>
 
 <script>
 
-    var b = document.querySelector('.b'),
-            a = document.querySelector('.a');
-    b.ondragstart = function (e) {
+//    var b = document.querySelector('.b'),
+//            a = document.querySelector('.a');
+//    b.ondragstart = function (e) {
+//
+//        e.dataTransfer.setData('a', b.className);
+//    }
+//
+//    a.ondragover = function (e) {
+//        e.preventDefault();
+//    }
+//    a.ondrop = function (e) {
+//        a.appendChild(document.querySelector('.' + e.dataTransfer.getData('a')))
+//    }
 
-        e.dataTransfer.setData('a', b.className);
-    }
+//    g = function () {
+//        H = 3
+//        console.log(H+H)
+//        return H + H
+//    }
 
-    a.ondragover = function (e) {
-        e.preventDefault();
-    }
-    a.ondrop = function (e) {
-       a.appendChild(document.querySelector('.'+e.dataTransfer.getData('a')))
-    }
 
 </script>
 

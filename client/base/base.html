@@ -50,30 +50,37 @@
     socket.on(event.addDesk, function (desk) {
         console.log(desk);
     });
-    var datas = [];
-    for (var i = 0; i < 230; i++) {
-        datas.push({
-            cm: 'adqwd' + i,
-            price: i + 10,
-            count: 1,
-            id: 'asdasd' + i,
-            aa: Math.random(),
-            bb: Math.random(),
-            cc: Math.random()
-        })
+    function num(length) {
+        return  Math.pow(Math.floor(Math.random() * 100), length);
+    }
+
+    function randomData() {
+        var datas = [];
+        for (var i = 0; i < 230; i++) {
+            datas.push({
+                cm: num(5),
+                price: num(4),
+                count: num(4),
+                id: 'asdasd' + i,
+                aa: num(4),
+                bb: num(4),
+                cc: num(4)
+            })
+        }
+        return datas;
     }
     var grid = new Grid({
         parent: '.right',
         title: 'grid demo',
         fields: [
-            {en: 'cm', cn: '菜名'},
+            {en: 'cm', cn: '菜名',sum: true},
             {en: 'price', sum: true, cn: '价钱'},
             {en: 'count', cn: '份数'},
             {en: 'aa', sum: true, cn: '测试1'},
             {en: 'bb', sum: true, cn: '测试2'},
             {en: 'cc', sum: true, cn: '测试3'}
         ],
-        data: {list: datas},
+        data: {list: randomData()},
         isQuery: false,
         height: 500,
         width: 1024,
@@ -177,7 +184,8 @@
         parent: '.left',
         isDrag: false,
         leafClick: function (e) {
-                console.log(e);
+            grid.data.list = randomData();
+            grid.update();
         }
 
     });

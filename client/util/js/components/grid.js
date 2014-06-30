@@ -280,10 +280,11 @@ Grid.prototype = {
         }
     },
     setPageBarSelect: function () {
-        var el = document.querySelector('.pb-selected');
+        var el = this.pagingBarEl.querySelector('.pb-selected');
         if (el)  el.className = el.className.replace('pb-selected', '').replace(/(^\s+)|(\s+$)/g, '');
         try {
-            this.pagingBarEl.childNodes[this.page.ci].className += ' pb-selected';
+            var bar = this.pagingBarEl.querySelector('[data-index="' + this.page.ci + '"]');
+            bar && (bar.className += ' pb-selected');
         } catch (e) {
             throw new Error(e.message);
         }

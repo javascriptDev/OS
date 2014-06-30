@@ -167,6 +167,7 @@ Grid.prototype = {
                 o[field] += parseInt(item[field]);
             })
         })
+        //添加总计dom
         this.addItem({list: [o]}, function beforeAdd(dom) {
             dom.firstChild.innerHTML = '总计';
         });

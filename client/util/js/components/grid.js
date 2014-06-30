@@ -158,11 +158,11 @@ Grid.prototype = {
             }
         });
 
-
         var data = {list: pageData || []};
         var html = template.compile(this.tpl)(data);
         this.contentEl.innerHTML = html;
 
+        //设置行号
         this.setLineNumber();
         this.sumField.length > 0 ? this.setSum(pageData) : null;
         this.setPageBarSelect();
@@ -188,14 +188,14 @@ Grid.prototype = {
         })
         data.forEach(function (item) {
             sf.forEach(function (field) {
-                o[field] += parseInt(item[field]);
+                o[field] += item[field];
             })
         })
         //添加总计dom
         this.addItem({list: [o]}, function beforeAdd(dom) {
+            dom.className+=' g-sum';
             dom.firstChild.innerHTML = '总计';
         });
-
     },
     setFoot: function () {
         var me = this;
@@ -229,7 +229,6 @@ Grid.prototype = {
                 me.setContent(index);
             }
         }
-
     },
     //设置右下角数据总数
     setInfo: function () {

@@ -55,7 +55,10 @@
             cm: 'adqwd' + i,
             price: i + 10,
             count: 1,
-            id: 'asdasd' + i
+            id: 'asdasd' + i,
+            aa: Math.random(),
+            bb: Math.random(),
+            cc: Math.random()
         })
     }
     var grid = new Grid({
@@ -64,7 +67,10 @@
         fields: [
             {en: 'cm', cn: '菜名'},
             {en: 'price', sum: true, cn: '价钱'},
-            {en: 'count', cn: '份数'}
+            {en: 'count', cn: '份数'},
+            {en: 'aa', sum: true, cn: '测试1'},
+            {en: 'bb', sum: true, cn: '测试2'},
+            {en: 'cc', sum: true, cn: '测试3'}
         ],
         data: {list: datas},
         isQuery: false,
@@ -73,7 +79,7 @@
         //是否启用多选
         isMulti: false,
         page: {
-            count: 15
+            count: 22
         }
     });
 </script>

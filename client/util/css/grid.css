@@ -4,13 +4,17 @@ div {
 
 .g-field {
     display: inline-block;
-    width: 25%;
+    width: 16%;
 }
 
 .line, .line-field {
     width: 40px;
 }
 
+.g-sum{
+    background:silver;
+    color: white;
+}
 .middle-bar .pb-selected {
     background: firebrick;
     color: white;

@@ -15,7 +15,7 @@
     font-weight: bold;
 
     margin-top: 6px;
-    border: 1px solid #ef4140;
+    /*border: 1px solid #ef4140;*/
     background: cornflowerblue; /* Old browsers */
     text-shadow: none;
     padding: 4px 16px 4px 16px;
@@ -66,7 +66,7 @@
     display: block;
     color: #3a3a3a;
     text-decoration: none;
-    border: 1px solid #fff;
+    /*border: 1px solid #fff;*/
     background: #e0e0e0; /* Old browsers */
 
     box-shadow: -1px -1px 0 #b3b3b3, 1px -1px 0 #b3b3b3, -1px 1px 0 #b3b3b3, 1px 1px 0 #b3b3b3;

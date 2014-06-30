@@ -110,14 +110,68 @@
                     id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d222'
                 }
             ]
+        },
+        {
+            node: 'control',
+            id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d345',
+            items: [
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list',
+                    text: 'list1',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d23f'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list2',
+                    text: 'list2',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d231'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list3',
+                    text: 'list3',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d233'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list4',
+                    text: 'list4',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d222'
+                }
+            ]
+        },
+        {
+            node: 'control',
+            id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d345',
+            items: [
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list',
+                    text: 'list1',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d23f'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list2',
+                    text: 'list2',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d231'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list3',
+                    text: 'list3',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d233'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list4',
+                    text: 'list4',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d222'
+                }
+            ]
         }
 
     ]
 
     window.left = new Tree({
         dragStart: function (e) {
-            e.dataTransfer.setData("type", e.target.dataset['name']);
+         //   e.dataTransfer.setData("type", e.target.dataset['name']);
             //  e.dataTransfer.setData("id", e.target.id);
+            e.preventDefault();
+            e.stopPropagation();
         },
         data: data,
         parent: '.left'

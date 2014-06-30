@@ -131,10 +131,14 @@ Grid.prototype = {
             if (currentIndex >= min && currentIndex < max) {
                 return me.data.list[currentIndex];
             }
-        })
+        });
         var data = {list: pageData || []};
         var html = template.compile(this.tpl)(data);
         this.contentEl.innerHTML = html;
+    },
+    //设置行号
+    setLineNumber:function(){
+
     },
     setFoot: function () {
         var me = this;

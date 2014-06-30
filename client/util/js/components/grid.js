@@ -77,9 +77,10 @@ Grid.prototype = {
     update: function () {
         //todo: 每次添加一条数据，都要执行这个。有点浪费资源
         this.setFoot();
-        this.setContent(this.page.ci);
         this.paging();
+        this.setContent(this.page.ci);
         this.setInfo();
+
     },
     setCss: function () {
         this.el.style.width = this.width + 'px';
@@ -164,6 +165,7 @@ Grid.prototype = {
 
         this.setLineNumber();
         this.sumField.length > 0 ? this.setSum(pageData) : null;
+        this.setPageBarSelect();
     },
     //设置行号
     setLineNumber: function () {
@@ -279,7 +281,9 @@ Grid.prototype = {
         }
     },
     setPageBarSelect: function () {
-
+        var el = document.querySelector('.pb-selected');
+        if (el)  el.className = el.className.replace('pb-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+        this.pagingBarEl.childNodes[this.page.ci].className += ' pb-selected';
     },
     sort: function () {
 

@@ -6,8 +6,14 @@ div {
     display: inline-block;
     width: 25%;
 }
-.line,.line-field{
+
+.line, .line-field {
     width: 40px;
+}
+
+.middle-bar .pb-selected {
+    background: firebrick;
+    color: white;
 }
 
 .g-fields {

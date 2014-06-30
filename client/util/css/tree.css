@@ -1,0 +1,109 @@
+
+* {
+    padding: 0px;
+    margin: 0;
+}
+
+.j-tree {
+
+}
+
+.node-dom {
+    font-size: 23px;
+    line-height: normal;
+    color: #fff;
+    font-weight: bold;
+
+    margin-top: 6px;
+    border: 1px solid #ef4140;
+    background: cornflowerblue; /* Old browsers */
+    text-shadow: none;
+    padding: 4px 16px 4px 16px;
+}
+
+.node-dom + .leaf-container {
+    /*margin-left: 50px;*/
+}
+
+.leaf-container .node-dom {
+    background: #ffeef4;
+}
+
+.leaf-container .node-dom + .leaf-container {
+    margin-left: 60px;
+}
+
+.leaf-container .node-dom + .leaf-container .node-dom {
+    background: #62ddd5;
+
+}
+
+.leaf-container .node-dom + .leaf-container .node-dom + .leaf-container {
+    margin-left: 110px;
+}
+
+.leaf-container {
+
+    /*display: none;*/
+}
+
+.leaf-dom {
+    display: block;
+    color: #3a3a3a;
+    text-decoration: none;
+    border: 1px solid #fff;
+    background: #f1f1f1; /* Old browsers */
+    background: #878787;
+
+    /* IE6-9 */
+    box-shadow: -1px -1px 0 #b3b3b3, 1px -1px 0 #b3b3b3, -1px 1px 0 #b3b3b3, 1px 1px 0 #b3b3b3;
+    border-radius: 3px;
+    padding: 4px 16px 4px 16px;
+    text-shadow: -1px -1px 0 #f2f0f0, 1px -1px 0 #f2f0f0, -1px 1px 0 #f2f0f0, 1px 1px 0 #f2f0f0;
+}
+
+.middle-dom {
+    display: block;
+    color: #3a3a3a;
+    text-decoration: none;
+    border: 1px solid #fff;
+    background: #e0e0e0; /* Old browsers */
+
+    box-shadow: -1px -1px 0 #b3b3b3, 1px -1px 0 #b3b3b3, -1px 1px 0 #b3b3b3, 1px 1px 0 #b3b3b3;
+    border-radius: 3px;
+    padding: 4px 16px 4px 16px;
+    text-shadow: -1px -1px 0 #f2f0f0, 1px -1px 0 #f2f0f0, -1px 1px 0 #f2f0f0, 1px 1px 0 #f2f0f0;
+}
+
+.leaf-dom:hover {
+    border: 1px solid #676b6f;
+    background: #878787; /* Old browsers */
+    color: white;
+    box-shadow: -1px -1px 0 #2a2a2a, 1px -1px 0 #2a2a2a, -1px 1px 0 #2a2a2a, 1px 1px 0 #2a2a2a;
+    color: #fff;
+    text-shadow: -1px -1px 0 #191919, 1px -1px 0 #191919, -1px 1px 0 #191919, 1px 1px 0 #191919;
+}
+
+.icon {
+    display: block;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    border-width: 6px;
+    float: left;
+    right: 5px;
+    top: 5px;
+    border-style: dashed dashed dashed solid;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.collapse {
+    border-color: transparent transparent transparent #4c4c4c;
+    border-style: dashed dashed dashed solid;
+}
+
+.expand {
+    border-color: #4c4c4c transparent transparent transparent;
+    border-style: solid dashed dashed dashed;
+}

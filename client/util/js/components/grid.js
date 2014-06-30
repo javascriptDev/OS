@@ -193,7 +193,7 @@ Grid.prototype = {
         })
         //添加总计dom
         this.addItem({list: [o]}, function beforeAdd(dom) {
-            dom.className+=' g-sum';
+            dom.className += ' g-sum';
             dom.firstChild.innerHTML = '总计';
         });
     },
@@ -282,9 +282,17 @@ Grid.prototype = {
     setPageBarSelect: function () {
         var el = document.querySelector('.pb-selected');
         if (el)  el.className = el.className.replace('pb-selected', '').replace(/(^\s+)|(\s+$)/g, '');
-        this.pagingBarEl.childNodes[this.page.ci].className += ' pb-selected';
+        try {
+            this.pagingBarEl.childNodes[this.page.ci].className += ' pb-selected';
+        } catch (e) {
+            throw new Error(e.message);
+        }
     },
     sort: function () {
+
+
+    },
+    query: function () {
 
 
     },

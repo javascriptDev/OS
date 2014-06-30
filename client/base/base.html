@@ -7,10 +7,12 @@
     <script src="client/util/js/lib/tpl.js"></script>
     <script src="client/util/js/util.js"></script>
     <script src="client/util/js/components/grid.js"></script>
+    <script src="client/util/js/components/tree.js"></script>
 
 
     <link href="client/util/css/base.css" rel="stylesheet">
     <link href="client/util/css/grid.css" rel="stylesheet">
+    <link href="client/util/css/tree.css" rel="stylesheet">
 </head>
 <body>
 
@@ -19,7 +21,6 @@
     <nav>
         <ul>
             <li>1</li>
-
         </ul>
     </nav>
 </header>
@@ -82,6 +83,48 @@
             count: 22
         }
     });
+
+    var data = [
+        {
+            node: 'control',
+            id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d345',
+            items: [
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list',
+                    text: 'list1',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d23f'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list2',
+                    text: 'list2',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d231'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list3',
+                    text: 'list3',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d233'
+                },
+                {
+                    name: 'hornbill/web/script-ss/cms/component/list4',
+                    text: 'list4',
+                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d222'
+                }
+            ]
+        }
+
+    ]
+
+    window.left = new Tree({
+        dragStart: function (e) {
+            e.dataTransfer.setData("type", e.target.dataset['name']);
+            //  e.dataTransfer.setData("id", e.target.id);
+        },
+        data: data,
+        parent: '.left'
+
+    });
+
+
 </script>
 </body>
 </html>

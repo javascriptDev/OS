@@ -216,6 +216,8 @@ Grid.prototype = {
 
     },
     sort: function () {
+
+
     },
     addEvent: function () {
         var me = this;
@@ -262,7 +264,5 @@ Grid.prototype = {
             }
 
         }
-
-
     }
 };

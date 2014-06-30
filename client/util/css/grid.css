@@ -2,9 +2,12 @@ div {
     box-sizing: border-box;
 }
 
-.g-filed {
+.g-field {
     display: inline-block;
-    width: 33%;
+    width: 25%;
+}
+.line{
+    width: 40px;
 }
 
 .g-fields {

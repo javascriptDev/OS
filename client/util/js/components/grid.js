@@ -28,6 +28,8 @@ function Grid(o) {
     this.height = o.height || 400;
     //是否启用查询
     this.isQuery = o.isQuery || true;
+    //需要汇总的字段
+    this.sumsField = [];
     //list fields
     this.fields = o.fields || [];
     this.data = o.data || [];
@@ -101,13 +103,20 @@ Grid.prototype = {
     },
     setField: function () {
         var me = this;
+        var fields = '';
         var tpl =
             "<%for (var i=0;i<list.length;i++) {%>" +
-            "<div class='list-item'>";
+            "<div class='list-item'><div class='g-field line'>" + i + "</div>";
         this.fields.forEach(function (item) {
-            tpl += "<div class='g-filed " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
-            me.fieldEl.innerHTML += '<div class="g-filed g-f">' + item.cn + '</div>';
+            //添加到模板
+            tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
+            //添加到fields 用于生成表头
+            fields == '' ? (fields += '<div class="g-field line">序号</div>') : null;
+            fields += '<div class="g-field g-f">' + item.cn + '</div>';
+            //找出需要汇总的字段
+            item.sum && me.sumsField.push(item);
         })
+        me.fieldEl.innerHTML = fields;
         tpl += "</div>" +
             "<%}%>";
         //根据字段生成模板

@@ -50,7 +50,7 @@
         console.log(desk);
     });
     var datas = [];
-    for (var i = 0; i < 1000000; i++) {
+    for (var i = 0; i < 100; i++) {
         datas.push({
             cm: i,
             price: i + 10,
@@ -58,14 +58,15 @@
             id: 'asdasd' + i
         })
     }
-    grid = new Grid({
+    var grid = new Grid({
         parent: '.right',
         title: 'grid demo',
         fields: [
             {en: 'cm', cn: '菜名'},
-            {en: 'price', cn: '价钱'},
+            {en: 'price', sum: true, cn: '价钱'},
             {en: 'count', cn: '份数'}
         ],
+
         data: {list: datas},
         isQuery: false,
         height: 300,
@@ -76,8 +77,6 @@
             count: 5
         }
     });
-
-
 </script>
 </body>
 </html>

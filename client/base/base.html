@@ -54,9 +54,9 @@
         return  Math.pow(Math.floor(Math.random() * 100), length);
     }
 
-    function randomData() {
+    function randomData(c) {
         var datas = [];
-        for (var i = 0; i < 230; i++) {
+        for (var i = 0; i < c; i++) {
             datas.push({
                 cm: num(5),
                 price: num(4),
@@ -73,21 +73,21 @@
         parent: '.right',
         title: 'grid demo',
         fields: [
-            {en: 'cm', cn: '菜名',sum: true},
+            {en: 'cm', cn: '菜名', sum: true},
             {en: 'price', sum: true, cn: '价钱'},
             {en: 'count', cn: '份数'},
             {en: 'aa', sum: true, cn: '测试1'},
             {en: 'bb', sum: true, cn: '测试2'},
             {en: 'cc', sum: true, cn: '测试3'}
         ],
-        data: {list: randomData()},
+        data: {list: randomData(1000000)},
         isQuery: false,
         height: 500,
         width: 1024,
         //是否启用多选
         isMulti: false,
         page: {
-            count: 22
+            count: 100
         }
     });
 
@@ -174,17 +174,11 @@
     ]
 
     window.left = new Tree({
-        dragStart: function (e) {
-            //   e.dataTransfer.setData("type", e.target.dataset['name']);
-            //  e.dataTransfer.setData("id", e.target.id);
-            e.preventDefault();
-            e.stopPropagation();
-        },
         data: data,
         parent: '.left',
         isDrag: false,
         leafClick: function (e) {
-            grid.data.list = randomData();
+            grid.data.list = randomData(100000);
             grid.update();
         }
 

@@ -285,6 +285,8 @@ Grid.prototype = {
         try {
             var bar = this.pagingBarEl.querySelector('[data-index="' + this.page.ci + '"]');
             bar && (bar.className += ' pb-selected');
+            //默认内容从上往下阅读
+            this.contentEl.scrollTop = 0;
         } catch (e) {
             throw new Error(e.message);
         }

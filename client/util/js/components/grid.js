@@ -37,7 +37,11 @@
         isMulti: false,                              * 是否启用多选
         page: {
             count: 15                                * 分页煤业显示的数据条目数
-        }
+        },
+        isToolbar: false,                            * 是否加载toolbar
+        isFooter: false,                             * 是否加载foot
+        isTitle: false,                              * 是否加载title
+
     });
  *
  *

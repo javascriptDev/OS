@@ -47,13 +47,12 @@ var event = {
 var deskArr = [];
 //制作完成菜单的desk
 var overDesk = [];
-function newGuid()
-{
+function newGuid() {
     var guid = "a";
-    for (var i = 1; i <= 31; i++){
-        var n = Math.floor(Math.random()*16.0).toString(16);
-        guid +=    n;
-        if((i==8)||(i==12)||(i==16)||(i==20))
+    for (var i = 1; i <= 31; i++) {
+        var n = Math.floor(Math.random() * 16.0).toString(16);
+        guid += n;
+        if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
             guid += "-";
     }
     return guid;
@@ -77,7 +76,7 @@ function addEvent(io) {
 
             //前端点餐
             socket.on(event.addDesk, function (desk) {
-                desk.id =newGuid();
+                desk.id = newGuid();
                 deskArr.push(desk);
                 //  db.add(desk.data);
                 var a = [role.base, role.monitor];

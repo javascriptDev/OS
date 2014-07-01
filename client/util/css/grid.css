@@ -29,8 +29,7 @@ div {
 .list-item {
     border-bottom: 1px dashed yellowgreen;
     position: relative;
-    height: 30px;
-    line-height: 30px;
+    vertical-align: middle;
 }
 
 .g-query {
@@ -121,4 +120,7 @@ div {
     -ms-user-select: none; /*IE10*/
     -khtml-user-select: none; /*早期浏览器*/
     user-select: none;
+}
+.hidden{
+    display: none;
 }

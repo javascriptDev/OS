@@ -87,7 +87,8 @@ Ol.prototype = {
         var me = this;
         this.opt.submit && this.opt.submit({
             data: me.data,
-            dn: me.deskNumber.value || 0
+            dn: me.deskNumber.value || 0,
+            statue: 'open'
         });
         this.data.list = [];
         this.c.innerHTML = '';

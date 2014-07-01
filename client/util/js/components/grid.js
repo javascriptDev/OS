@@ -134,7 +134,11 @@ Grid.prototype = {
         //生成模板，添加表头
         this.fields.forEach(function (item) {
             //添加到模板
-            tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
+            if (item.isHide) {
+                tpl += "<div class='g-field hidden' id='<%=list[i]['" + item.en + "']%>'></div>";
+            } else {
+                tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
+            }
             //添加到fields 用于生成表头
             fields == '' ? (fields += '<div class="g-field line-field">序号</div>') : null;
             fields += '<div class="g-field g-f">' + item.cn + '</div>';
@@ -237,19 +241,25 @@ Grid.prototype = {
     render: function () {
         this.parent.appendChild(this.el);
     },
+    //操作本地data，重新生成grid
     addData: function (data) {
-        for (var i = 0, len = this.fields.length; i < len; i++) {
-            //确保添加的数据包含所有 该有的字段
-            if (!data.hasOwnProperty(this.fields[i].en)) {
-                console.log('add data failed');
-                break;
-                return;
+        var me = this;
+        data.forEach(function (item) {
+            for (var i = 0, len = me.fields.length; i < len; i++) {
+                //确保添加的数据包含所有 该有的字段
+                if (!item.hasOwnProperty(me.fields[i].en)) {
+                    console.log('add data failed');
+                    break;
+                    return;
+                }
             }
-        }
-        this.data.list.push(data);
+            me.data.list.push(item);
+        })
+
         // this.addItem({list: [data]});
         this.update();
     },
+    //当前分页加载一行数据，不操作 grid data
     addItem: function (data, beforeAdd) {
         var html = template.compile(this.tpl)(data);
         var c = document.createElement('div');

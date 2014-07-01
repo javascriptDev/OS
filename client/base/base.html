@@ -48,8 +48,43 @@
     });
 
     socket.on(event.addDesk, function (desk) {
-        console.log(desk);
+
+        if (Object.prototype.toString.call(desk) == '[object Object]') {
+            desk = [desk];
+        }
+        var data = [];
+
+        for (var i = 0, len = desk.length; i < len; i++) {
+            (function (index) {
+                var d = desk[index];
+                var o = {did: 0, order: '', price: 0};
+                o.did = d.dn;
+                o.statue = d.statue;
+                o.id = d.id;
+                var detail = d.data.list;
+                for (var j = 0, l = detail.length; j < l; j++) {
+                    (function (jj) {
+                        o.order += detail[jj].text + ',';
+                        o.price += parseInt(detail[jj].value);
+                    }(j))
+                }
+                data.push(o);
+            }(i))
+        }
+        grid.addData(data);
     });
+
+    // 菜单制作完成，删除菜单
+    socket.on(event.makeOver, function (data) {
+        if (data.success) {
+            var id = data.id;
+            var item = grid.contentEl.querySelector('#' + id);
+            item && (item.parentNode.parentNode.removeChild(item.parentNode));
+
+        }
+    })
+
+
     function num(length) {
         return  Math.pow(Math.floor(Math.random() * 100), length);
     }
@@ -73,15 +108,18 @@
         parent: '.right',
         title: 'grid demo',
         fields: [
-            {en: 'cm', cn: '菜名', sum: true},
-            {en: 'price', sum: true, cn: '价钱'},
-            {en: 'count', cn: '份数'},
-            {en: 'aa', sum: true, cn: '测试1'},
-            {en: 'bb', sum: true, cn: '测试2'},
-            {en: 'cc', sum: true, cn: '测试3'}
+            {en: 'did', cn: '桌号'},
+            {en: 'order', cn: '菜单'},
+            {en: 'price', cn: '总价'},
+            {en: 'statue', cn: '状态'},
+            { en: 'id', cn: '', isHide: true}
+
         ],
-        data: {list: randomData(1000000)},
+        data: {list: []},
         isQuery: false,
+        isToolbar: false,
+        isFooter: false,
+        isTitle: false,
         height: 500,
         width: 1024,
         //是否启用多选

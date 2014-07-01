@@ -5,6 +5,8 @@ div {
 .g-field {
     display: inline-block;
     width: 16%;
+    height: 100%;
+    line-height: 100%;
 }
 
 .line, .line-field {

@@ -30,8 +30,6 @@ Ol.prototype = {
     render: function () {
         this.c.innerHTML = template.compile(this.itemTpl)(this.data);
         document.body.appendChild(this.el);
-
-
     },
     animate: function (el, distance) {
         var s = 'translate3d(0,' + distance + 'px,0) ';
@@ -69,8 +67,6 @@ Ol.prototype = {
             e.stopPropagation();
             me.hide();
         }
-
-
     },
     show: function () {
         this.animate(this.el, 0)
@@ -79,7 +75,6 @@ Ol.prototype = {
         this.data.list.push(data);
         this.render();
     },
-
     hide: function () {
         this.animate(this.el, this.el.offsetHeight - 40);
     },

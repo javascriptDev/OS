@@ -9,8 +9,14 @@
 <div draggable="true" style="width: 100px;height: 100px;border: 1px solid red;" class="baaa"></div>
 
 <div style="height: 300px;width: 300px;border: 1px solid green;" class="asdasa"></div>
+<canvas id="a" height="100" width="100" style="border: 1px solid red;"></canvas>
 
 <script>
+
+    document.querySelector('#a').oncontextmenu=function(e){
+        e.preventDefault();
+        alert(1);
+    }
 
 //    var b = document.querySelector('.b'),
 //            a = document.querySelector('.a');

@@ -263,6 +263,18 @@ Grid.prototype = {
         // this.addItem({list: [data]});
         this.update();
     },
+    delData: function (id) {
+        var me = this;
+        this.data.list.forEach(function (item, index) {
+            if (item.id == id) {
+                me.data.list.splice(index, 1);
+            }
+        })
+
+        // this.addItem({list: [data]});
+        this.update();
+
+    },
     //当前分页加载一行数据，不操作 grid data
     addItem: function (data, beforeAdd) {
         var html = template.compile(this.tpl)(data);
@@ -331,7 +343,11 @@ Grid.prototype = {
         }
         //list item click
         this.contentEl.onclick = function (e) {
-            var target = e.target.offsetParent;
+
+            var target = e.target;
+            if (target.className.indexOf('list-item') == -1) {
+                target = e.target.offsetParent;
+            }
             //单选模式
             if (!me.isMulti) {
                 var el = me.contentEl.querySelector('.item-selected');

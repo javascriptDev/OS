@@ -20,7 +20,7 @@
  * -------------------------------------------------
  *
  */
-var db = require('./db/dbtest').dbh;
+var db = require('./db/dbHelper').help;
 
 
 //终端类型
@@ -78,7 +78,7 @@ function addEvent(io) {
             socket.on(event.addDesk, function (desk) {
                 desk.id = newGuid();
                 deskArr.push(desk);
-                //  db.add(desk.data);
+                db.add(desk);
                 var a = [role.base, role.monitor];
                 a.forEach(function (item) {
                     io.sockets.in(item);

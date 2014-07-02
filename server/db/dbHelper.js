@@ -31,7 +31,7 @@ function add(table, data, fn) {
         })
     })
 }
-function update(table, where, data, fn) {
+function update(table, fn, data, where) {
     client.connect(address, function (err, db) {
         db.collection(table).update(where, data, function (err, result) {
             fn && fn(err, result);
@@ -40,7 +40,7 @@ function update(table, where, data, fn) {
     })
 }
 
-function del(table, where, fn) {
+function del(table, fn, where) {
     client.connect(address, function (err, db) {
         db.collection(table).remove(where, {w: 1}, function (err, result) {
             fn && fn(err, result);
@@ -54,13 +54,15 @@ function select(table, fn, where) {
     client.connect(address, function (err, db) {
         var col = db.collection(table);
         col.find(where || {}).toArray(function (err, result) {
+            //   console.log(result);
             fn && fn(err, result);
             db.close();
         })
     })
 }
+
 var db = {
-    insert: add,
+    add: add,
     del: del,
     update: update,
     query: select

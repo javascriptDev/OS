@@ -270,10 +270,8 @@ Grid.prototype = {
                 me.data.list.splice(index, 1);
             }
         })
-
         // this.addItem({list: [data]});
         this.update();
-
     },
     //当前分页加载一行数据，不操作 grid data
     addItem: function (data, beforeAdd) {

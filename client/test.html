@@ -11,32 +11,31 @@
 <div style="height: 300px;width: 300px;border: 1px solid green;" class="asdasa"></div>
 <canvas id="a" height="100" width="100" style="border: 1px solid red;"></canvas>
 
+<form action="/image/upload" method="post" enctype="multipart/form-data"><input type="file" name="image"
+                                                                                style="width: 100%; height: 100%;"
+                                                                                onchange="this.form.submit()"></form>
 <script>
 
-    document.querySelector('#a').oncontextmenu=function(e){
-        e.preventDefault();
-        alert(1);
-    }
 
-//    var b = document.querySelector('.b'),
-//            a = document.querySelector('.a');
-//    b.ondragstart = function (e) {
-//
-//        e.dataTransfer.setData('a', b.className);
-//    }
-//
-//    a.ondragover = function (e) {
-//        e.preventDefault();
-//    }
-//    a.ondrop = function (e) {
-//        a.appendChild(document.querySelector('.' + e.dataTransfer.getData('a')))
-//    }
+    //    var b = document.querySelector('.b'),
+    //            a = document.querySelector('.a');
+    //    b.ondragstart = function (e) {
+    //
+    //        e.dataTransfer.setData('a', b.className);
+    //    }
+    //
+    //    a.ondragover = function (e) {
+    //        e.preventDefault();
+    //    }
+    //    a.ondrop = function (e) {
+    //        a.appendChild(document.querySelector('.' + e.dataTransfer.getData('a')))
+    //    }
 
-//    g = function () {
-//        H = 3
-//        console.log(H+H)
-//        return H + H
-//    }
+    //    g = function () {
+    //        H = 3
+    //        console.log(H+H)
+    //        return H + H
+    //    }
 
 
 </script>

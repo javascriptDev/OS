@@ -42,7 +42,7 @@ function update(table, fn, data, where) {
 
 function del(table, fn, where) {
     client.connect(address, function (err, db) {
-        db.collection(table).remove(where, {w: 1}, function (err, result) {
+        db.collection(table).remove(where || {}, {w: 1}, function (err, result) {
             fn && fn(err, result);
             db.close();
         })

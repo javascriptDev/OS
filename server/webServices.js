@@ -41,16 +41,13 @@ function webServices(req, res) {
             break;
     }
     function getData() {
-        db.query(tn, function (data) {
-            res.writeHead(200, {'Content-Type': head});
+        db.query('order', function (err, data) {
             console.log(data);
+            res.writeHead(200, {'Content-Type': head});
             res.write(JSON.stringify(data), 'binary');
             res.end();
         }, {})
-
     }
-
-
 }
 
 

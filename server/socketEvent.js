@@ -55,11 +55,12 @@ function newGuid() {
         if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
             guid += "-";
     }
+
     return guid;
 }
 function addEvent(io) {
     io.on('connection', function (socket) {
-            console.log(io.sockets.sockets.length);
+          //  console.log(io.sockets.sockets.length);
 
             //登陆
             socket.on(event.login, function (member) {
@@ -78,7 +79,11 @@ function addEvent(io) {
             socket.on(event.addDesk, function (desk) {
                 desk.id = newGuid();
                 deskArr.push(desk);
-                db.add(desk);
+
+                db.add('order', desk, function (err,data) {
+                    console.log(err);
+                });
+
                 var a = [role.base, role.monitor];
                 a.forEach(function (item) {
                     io.sockets.in(item);

@@ -341,28 +341,28 @@ Grid.prototype = {
                 var field = target.getAttribute('data-name');
                 var type = target.getAttribute('data-type');
                 me.page.ci = 0;
-                var data = {};
+
                 if (!type) {
                     target.setAttribute('data-type', 'asc');
-                    data = {list: me.data.list.sort(function (item, item2) {
-                        return item[field] > item2[field];
-                    })}
+                    me.data.list.sort(function (item, item2) {
+                        return item[field] > item2[field] ? 1 : -1;
+                    })
                 } else {
                     if (type == 'asc') {
                         target.setAttribute('data-type', 'desc');
-                        data = {list: me.data.list.sort(function (item, item2) {
-                            return item[field] < item2[field];
-                        })}
+                        me.data.list.sort(function (item, item2) {
+                            return item[field] < item2[field] ? 1 : -1;
+                        });
                     } else {
                         target.setAttribute('data-type', 'asc');
-                        data = {list: me.data.list.sort(function (item, item2) {
-                            return item[field] > item2[field];
-                        })}
+                        me.data.list.sort(function (item, item2) {
+                            return item[field] > item2[field] ? 1 : -1;
+                        })
                     }
                 }
-
-                me.update(data);
             }
+
+            me.update();
         }
 
 

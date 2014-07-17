@@ -1,0 +1,62 @@
+
+.tab-c,body{
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.tabs {
+    display: inline-block;
+    vertical-align: top;
+    width: 30px;
+    position: fixed;
+    height: 0;
+}
+
+.tab-item {
+    writing-mode: tb;
+    background: royalblue;
+    color: white;
+    height: 100px;
+    text-align: center;
+    width: 100%;
+    transition: 0.2 linear;
+    -webkit-transform: skew(0, 20deg);
+    position: relative;
+    font-size: 15px;
+}
+
+.selected {
+    background: green;
+    color: yellow;
+}
+
+.inner-text {
+    -webkit-transform: skew(0, -20deg);
+    height: 100%;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+    writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+    -moz-writing-mode: vertical-rl; /* 未対応 */
+    -o-writing-mode: vertical-rl; /* 未対応 */
+    -ms-writing-mode: vertical-rl; /* 未対応 */
+    -epub-writing-mode: vertical-rl;
+}
+
+.contents {
+    width: -webkit-calc(100% - 30px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+.wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 35px;
+    /*width: 100%;*/
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

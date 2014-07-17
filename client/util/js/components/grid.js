@@ -26,9 +26,10 @@
         parent: '.right',                            * 父容器选择器
         title: 'grid demo',                          * grid title
         fields: [                                    * grid 显示的字段
-            {en: 'cm', cn: '菜名'},                       1.页面显示的字段
-            {en: 'price', sum: true, cn: '价钱'},         2.数据字段
-            {en: 'count', cn: '份数'}                     3.sum:开启汇总
+            {en: 'cm', cn: '菜名'},                        1.页面显示的字段
+            {en: 'price', sum: true, cn: '价钱'},          2.数据字段
+            {en: 'count', cn: '份数',sort:true}             3.sum:  true|false  开启汇总
+                                                           4.sort: true|false  开启排序
         ],
         data: {list: datas},                         * grid 数据
         isQuery: false,                              * 是否开启查询

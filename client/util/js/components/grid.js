@@ -31,7 +31,7 @@
             {en: 'count', cn: '份数',sort:true}             3.sum:  true|false  开启汇总
                                                            4.sort: true|false  开启排序
         ],
-        data: {list: datas},                         * grid 数据
+        data: {list: datas},                         * grid 数据 数组  data demo:[ {cm:'阿什顿',price:11,count:1},...]
         isQuery: false,                              * 是否开启查询
         height: 500,                                 * 控件高度
         width: 1024,                                 * 控件宽度

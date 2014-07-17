@@ -148,7 +148,7 @@ Grid.prototype = {
             //添加到fields 用于生成表头
             fields == '' ? (fields += '<div class="g-field line-field">序号</div>') : null;
             if (item.sort) {
-                fields += '<div class="g-field g-f sort" data-name="' + item.en + '">' + item.cn + '</div>';
+                fields += '<div class="g-field g-f sort" data-type="asc"  data-name="' + item.en + '">' + item.cn + '</div>';
             } else {
                 fields += '<div class="g-field g-f">' + item.cn + '</div>';
             }
@@ -342,24 +342,19 @@ Grid.prototype = {
                 var type = target.getAttribute('data-type');
                 me.page.ci = 0;
 
-                if (!type) {
+
+                if (type == 'asc') {
+                    target.setAttribute('data-type', 'desc');
+                    me.data.list.sort(function (item, item2) {
+                        return item[field] < item2[field] ? 1 : -1;
+                    });
+                } else {
                     target.setAttribute('data-type', 'asc');
                     me.data.list.sort(function (item, item2) {
                         return item[field] > item2[field] ? 1 : -1;
                     })
-                } else {
-                    if (type == 'asc') {
-                        target.setAttribute('data-type', 'desc');
-                        me.data.list.sort(function (item, item2) {
-                            return item[field] < item2[field] ? 1 : -1;
-                        });
-                    } else {
-                        target.setAttribute('data-type', 'asc');
-                        me.data.list.sort(function (item, item2) {
-                            return item[field] > item2[field] ? 1 : -1;
-                        })
-                    }
                 }
+
             }
 
             me.update();

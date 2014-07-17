@@ -82,7 +82,6 @@
         }
     })
 
-
     function num(length) {
         return  Math.pow(Math.floor(Math.random() * 100), length);
     }
@@ -91,13 +90,11 @@
         var datas = [];
         for (var i = 0; i < c; i++) {
             datas.push({
-                cm: num(5),
-                price: num(4),
-                count: num(4),
+                did: num(0),
+                price: num(2),
+                order: num(1),
                 id: 'asdasd' + i,
-                aa: num(4),
-                bb: num(4),
-                cc: num(4)
+                statue:'open'
             })
         }
         return datas;
@@ -108,7 +105,7 @@
         fields: [
             {en: 'did', cn: '桌号'},
             {en: 'order', cn: '菜单'},
-            {en: 'price', cn: '总价', sum: true},
+            {en: 'price', cn: '总价', sum: true,sort:true},
             {en: 'statue', cn: '状态'},
             { en: 'id', cn: '', isHide: true}
 

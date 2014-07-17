@@ -55,6 +55,8 @@ function Grid(o) {
     this.isQuery = o.isQuery || true;
     //需要汇总的字段
     this.sumField = [];
+    //需要排序的字段
+    this.sortField = [];
     //list fields
     this.fields = o.fields || [];
     this.data = o.data || [];
@@ -145,9 +147,15 @@ Grid.prototype = {
             }
             //添加到fields 用于生成表头
             fields == '' ? (fields += '<div class="g-field line-field">序号</div>') : null;
-            fields += '<div class="g-field g-f">' + item.cn + '</div>';
+            if (item.sort) {
+                fields += '<div class="g-field g-f sort" data-name="' + item.en + '">' + item.cn + '</div>';
+            } else {
+                fields += '<div class="g-field g-f">' + item.cn + '</div>';
+            }
             //找出需要汇总的字段
             item.sum && me.sumField.push(item.en);
+            //找出需要排序的字段
+            item.sort && me.sortField.push(item.en);
         })
         me.fieldEl.innerHTML = fields;
         tpl += "</div>" +
@@ -155,14 +163,15 @@ Grid.prototype = {
         //根据字段生成模板
         this.tpl = tpl;
     },
-    setContent: function (pageIndex) {
+    setContent: function (pageIndex, newData) {
         var me = this;
+        newData = newData || me.data;
         if (!pageIndex) pageIndex = 0;
         var min = me.page.ci * me.page.count,
             max = (me.page.ci + 1) * me.page.count;
-        var pageData = me.data.list.filter(function (nextIndex, currentIndex) {
+        var pageData = newData.list.filter(function (nextIndex, currentIndex) {
             if (currentIndex >= min && currentIndex < max) {
-                return me.data.list[currentIndex];
+                return newData.list[currentIndex];
             }
         });
 
@@ -325,14 +334,42 @@ Grid.prototype = {
     },
     addEvent: function () {
         var me = this;
-        var data = {
-            cm: 1,
-            price: 100,
-            count: 1
-        };
+
+        this.fieldEl.onclick = function (e) {
+            var target = e.target;
+            if (target.className.indexOf('sort') != -1) {
+                var field = target.getAttribute('data-name');
+                var type = target.getAttribute('data-type');
+                me.page.ci = 0;
+                var data = {};
+                if (!type) {
+                    target.setAttribute('data-type', 'asc');
+                    data = {list: me.data.list.sort(function (item, item2) {
+                        return item[field] > item2[field];
+                    })}
+                } else {
+                    if (type == 'asc') {
+                        target.setAttribute('data-type', 'desc');
+                        data = {list: me.data.list.sort(function (item, item2) {
+                            return item[field] < item2[field];
+                        })}
+                    } else {
+                        target.setAttribute('data-type', 'asc');
+                        data = {list: me.data.list.sort(function (item, item2) {
+                            return item[field] > item2[field];
+                        })}
+                    }
+                }
+
+                me.update(data);
+            }
+        }
+
+
         //添加数据
         this.controls.addBtn.onclick = function () {
-            me.addData(data);
+            data.price = Math.random() * 100;
+            me.addData(randomData(1));
         }
         //删除数据
         this.controls.delBtn.onclick = function () {

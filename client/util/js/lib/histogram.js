@@ -1,7 +1,7 @@
 /**
- * Created by a2014 on 14-7-17.
+ * Created by addison on 14-7-17.
  */
-function Line(o) {
+function Histogram(o) {
     this.opt = o;
     this.data = o.data;
     this.label = o.label;
@@ -11,7 +11,7 @@ function Line(o) {
     this.init();
 }
 
-Line.prototype = {
+Histogram.prototype = {
     init: function () {
         var canvas = document.createElement('canvas');
         canvas.width = this.w;
@@ -110,13 +110,9 @@ Line.prototype = {
         var XStep = ( w - padding * 2) / this.label.length;
         var YStep = (h - padding * 2) / this.data.length;
         var color = ['green', 'blue', 'red', 'pink', 'silver', 'black', 'origin'];
-        c.beginPath();
         this.data.forEach(function (num, index) {
             c.fillStyle = color[Math.floor(Math.random() * 1000) % (color.length - 1)];
-            var x = XStep * index + padding + YStep / 2, y = h - padding - num * me.factor;
-            c.fillRect(x, y, 10, 10);
-            c.lineTo(x, y);
-            c.stroke();
+            c.fillRect(XStep * index + padding, h - padding, XStep, -num * me.factor);
             c.fillStyle = '#e43e34';
             c.font = "Bold 15px Arial";
             c.fillText(num, XStep * index + 10 + padding, h - padding - 20 - num * me.factor);

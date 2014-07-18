@@ -48,7 +48,7 @@ pie.prototype = {
             c.fill();
         })
         this.data.forEach(function (item, index) {
-            c.fillText(item, 50 + 40 * index,radius);
+            c.fillText(item, 50 + 40 * index, radius);
         })
 
     },
@@ -60,7 +60,6 @@ pie.prototype = {
             }
         })
         return begin / this.sum;
-
     },
     getEndAngle: function (index) {
         var end = 0;

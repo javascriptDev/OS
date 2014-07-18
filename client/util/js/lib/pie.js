@@ -17,6 +17,7 @@ pie.prototype = {
         canvas.height = this.h;
         document.body.appendChild(canvas);
         this.ctx = canvas.getContext('2d');
+        this.ctx.font = "Bolder 20px Arial";
         this.render();
     },
     render: function () {
@@ -29,25 +30,25 @@ pie.prototype = {
         var radius = this.w > this.h ? this.h / 2 : this.w / 2;
 
         var sum = 0;
-        this.data.forEach(function (item) {
+        this.data.forEach(function (item, index) {
             sum += item;
+
         })
         this.sum = sum;
 
         this.data.forEach(function (item, index) {
-
             c.fillStyle = randomColor();
             c.beginPath();
             var begin = me.getBeginAngle(index);
             var end = me.getEndAngle(index);
-//            console.log(me.getBeginAngle(index) + '-' + me.getEndAngle(index));
+            console.log(begin);
             c.arc(cc.x, cc.y, radius, 2 * Math.PI * begin, 2 * Math.PI * end, false);
             c.lineTo(cc.x, cc.y);
             c.closePath();
             c.fill();
-            c.fillStyle = randomColor();
-            c.fillText(item, cc.x, cc.y);
-
+        })
+        this.data.forEach(function (item, index) {
+            c.fillText(item, 50 + 40 * index,radius);
         })
 
     },

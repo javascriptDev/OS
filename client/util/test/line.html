@@ -5,21 +5,26 @@
     <title></title>
     <script src="../js/lib/line.js"></script>
     <script src="../js/lib/histogram.js"></script>
+    <script src="../js/lib/pie.js"></script>
 </head>
 <body>
 
 
 <script>
+    function data(c) {
+        var a = [];
+        for (var i = 0; i < c; i++) {
+            a.push(Math.floor(Math.random() * 1000 % 100));
+        }
 
-    var a = [];
-    for (var i = 0; i < 12; i++) {
-        a.push(Math.floor(Math.random() * 1000 % 100));
+        return a;
     }
+
 
     new Histogram({
 
         label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        data: a,
+        data: data(12),
         title: 'asd',
         height: 400,
         width: 500
@@ -28,12 +33,17 @@
     new Line({
 
         label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        data: a,
+        data: data(12),
         title: 'asd',
         height: 400,
         width: 500
     })
 
+    new pie({
+        data: data(5),
+        height: 400,
+        width: 500
+    })
 
 </script>
 

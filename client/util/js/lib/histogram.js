@@ -16,7 +16,6 @@ Histogram.prototype = {
         var canvas = document.createElement('canvas');
         canvas.width = this.w;
         canvas.height = this.h;
-        canvas.style.border = '1px solid black';
         document.body.appendChild(canvas);
         this.ctx = canvas.getContext('2d');
 

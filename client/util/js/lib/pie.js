@@ -33,10 +33,10 @@ pie.prototype = {
             sum += item;
         })
         this.sum = sum;
-        var color = ['green', 'blue', 'red', 'pink', 'silver', 'black', 'origin'];
+
         this.data.forEach(function (item, index) {
 
-            c.fillStyle = color[Math.floor(Math.random() * 1000) % (color.length - 1)];
+            c.fillStyle = randomColor();
             c.beginPath();
             var begin = me.getBeginAngle(index);
             var end = me.getEndAngle(index);
@@ -45,6 +45,9 @@ pie.prototype = {
             c.lineTo(cc.x, cc.y);
             c.closePath();
             c.fill();
+            c.fillStyle = randomColor();
+            c.fillText(item, cc.x, cc.y);
+
         })
 
     },

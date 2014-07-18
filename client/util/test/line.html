@@ -3,6 +3,17 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script>
+        function randomColor() {
+            var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
+            var result='';
+            for (var i = 0; i < 6; i++) {
+                result += a[Math.floor(Math.random() * 1000) % (a.length)];
+            }
+            console.log('#' + result);
+            return '#' + result;
+        }
+    </script>
     <script src="../js/lib/line.js"></script>
     <script src="../js/lib/histogram.js"></script>
     <script src="../js/lib/pie.js"></script>

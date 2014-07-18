@@ -114,12 +114,12 @@ Line.prototype = {
         this.data.forEach(function (num, index) {
             c.fillStyle = color[Math.floor(Math.random() * 1000) % (color.length - 1)];
             var x = XStep * index + padding + YStep / 2, y = h - padding - num * me.factor;
-            c.fillRect(x, y, 10, 10);
+            c.fillRect(x, y, 3, 3);
             c.lineTo(x, y);
             c.stroke();
             c.fillStyle = '#e43e34';
             c.font = "Bold 15px Arial";
-            c.fillText(num, XStep * index + 10 + padding, h - padding - 20 - num * me.factor);
+            c.fillText(num, XStep * index + 3 + padding, h - padding - 20 - num * me.factor);
         })
     }
 }

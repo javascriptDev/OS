@@ -10,6 +10,20 @@
 
 <script>
 
+    var a = [];
+    for (var i = 0; i < 12; i++) {
+        a.push(Math.floor(Math.random() * 1000 % 100));
+    }
+
+    new Line({
+
+        label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+        data:a,
+        title: 'asd',
+        height: 400,
+        width: 500
+    })
+
 </script>
 
 </body>

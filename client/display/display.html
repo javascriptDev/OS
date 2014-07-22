@@ -122,13 +122,19 @@
                 el.className = 'list-item';
             }
             if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
-                list.cdata.statues='made';
+                list.cdata.statues = 'made';
                 socket.emit(et.makeOver, list.cdata);
             } else {
 
             }
         })
     }
+
+    socket.on(et.pay, function (data) {
+        if (data.success) {
+            alert(data.dn + 'has pay');
+        }
+    })
 
 </script>
 </body>

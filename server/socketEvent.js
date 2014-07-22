@@ -84,8 +84,6 @@ function addEvent(io) {
 
             //前端点餐
             socket.on(event.addDesk, function (desk) {
-
-
                 db.add('order', desk, function (err, data) {
                     if (!err) {
                         desk.id = data[0]._id;
@@ -108,20 +106,23 @@ function addEvent(io) {
                 var id = data.id;
                 deskArr.forEach(function (item, index) {
                     if (item.id == id) {
+                        item.statues = 'made';
                         db.update('order', function (err, data) {
-                            if (!err) {
-                                deskArr.splice(index, 1);
-                                io.sockets.in(role.monitor);
-                                io.sockets.in(role.base);
-                                io.sockets.emit(event.makeOver, {
-                                    success: true,
-                                    id: id,
-                                    data: {
-                                        statues: 'made'
-                                    }
-                                })
+                            var result = {
+                                success: true,
+                                id: id,
+                                data: {
+                                    statues: 'made'
+                                }
+                            };
+                            if (err) {
+                                result = err;
                             }
-                        }, data, {"_id": new ObjectId(item.id)});
+                            deskArr.splice(index, 1);
+                            io.sockets.in(role.monitor);
+                            io.sockets.in(role.base);
+                            io.sockets.emit(event.makeOver, result)
+                        }, item, {"_id": new ObjectId(id)});
                     }
                 })
 
@@ -135,7 +136,8 @@ function addEvent(io) {
                         db.update('order', function (err, d) {
                             var result = {
                                 success: true,
-                                id: id
+                                id: id,
+                                dn: data[0].dn
                             }
                             if (err) {
                                 result = err;

@@ -76,7 +76,16 @@
 
     socket.on(events.pay, function (data) {
         console.log('pay');
-        console.log(data);
+        if (data.success) {
+            grid.updateSingleData(data.id, {
+                statues: 'pay'
+            })
+            setTimeout(function () {
+                grid.delData(data.id, true);
+
+            }, 3000);
+
+        }
     })
 
     // 菜单制作完成，删除菜单

@@ -232,6 +232,8 @@ Grid.prototype = {
         this.addItem({list: [o]}, function beforeAdd(dom) {
             dom.className += ' g-sum';
             dom.firstChild.innerHTML = '总计';
+        }, function added(dom) {
+            dom.removeChild(dom.querySelector('.operate'));
         });
     },
     setFoot: function () {
@@ -317,15 +319,19 @@ Grid.prototype = {
 
     },
     //当前分页加载一行数据，不操作 grid data
-    addItem: function (data, beforeAdd) {
+    addItem: function (data, beforeAdd, added) {
         var html = template.compile(this.tpl)(data);
         var c = document.createElement('div');
         c.innerHTML = html;
         var el = c.firstChild;
         c = null;
+        //给行添加class。
         beforeAdd && beforeAdd(el);
+        //添加到主体上面
         this.contentEl.appendChild(el);
+        //
         this.setInfo();
+        added && added(el);
     },
     createPagingBar: function (i) {
         var div = document.createElement('div');
@@ -415,7 +421,7 @@ Grid.prototype = {
                 me.btnEvent.forEach(function (buttons) {
                     buttons.forEach(function (btn) {
                         if (btn.id == target.id) {
-                            btn.click && btn.click.call(null,target.getAttribute('data-id'));
+                            btn.click && btn.click.call(null, target.getAttribute('data-id'));
                         }
                     })
                 })

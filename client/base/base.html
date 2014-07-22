@@ -33,21 +33,21 @@
 <script>
 
     var socket = io.connect(msj.ip);
-    var role = msj.role, event = msj.et;
+    var role = msj.role, events = msj.et;
     var me = {
         role: role.base,
         id: Math.random() * 1989
     };
     //发送登陆事件
-    socket.emit(event.login, me);
+    socket.emit(events.login, me);
     //登陆成功回调
-    socket.on(event.loginSuccess, function (o) {
+    socket.on(events.loginSuccess, function (o) {
         if (o.id == me.id) {
             console.log('login success');
         }
     });
 
-    socket.on(event.addDesk, function (desk) {
+    socket.on(events.addDesk, function (desk) {
 
         if (Object.prototype.toString.call(desk) == '[object Object]') {
             desk = [desk];
@@ -74,8 +74,13 @@
         grid.addData(data);
     });
 
+    socket.on(events.pay, function (data) {
+        console.log('pay');
+        console.log(data);
+    })
+
     // 菜单制作完成，删除菜单
-    socket.on(event.makeOver, function (data) {
+    socket.on(events.makeOver, function (data) {
         if (data.success) {
             grid.updateSingleData(data.id, data.data);
         }
@@ -110,9 +115,11 @@
             {en: 'operate', cn: '操作', buttons: [
                 {
                     text: '付款',
+                    id: 'g-pay',
                     click: function (id) {
-                        socket.emit(event.pay, id);
-                    }
+                        socket.emit(events.pay, id);
+                    },
+                    require: 'id'
                 }
             ]}
         ],

@@ -58,6 +58,8 @@ function Grid(o) {
     this.sumField = [];
     //需要排序的字段
     this.sortField = [];
+    //需要添加事件的button
+    this.btnEvent = [];
     //list fields
     this.fields = o.fields || [];
     this.data = o.data || [];
@@ -146,8 +148,14 @@ Grid.prototype = {
             } else if (item.buttons) {
                 tpl += "<div class='g-field " + item.en + "'>";
                 item.buttons.forEach(function (btn) {
-                    tpl += '<button class="g-operate">' + btn.text + '</button>';
+                    var button = document.createElement('button');
+                    button.innerHTML = btn.text;
+                    button.className = 'g-operate';
+                    button.id = btn.id;
+                    button.setAttribute('data-id', "<%= list[i]['" + btn.require + "']%>")
+                    tpl += button.outerHTML;
                 })
+                tpl += '</div>';
             } else {
                 tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
             }
@@ -164,6 +172,10 @@ Grid.prototype = {
             item.sum && me.sumField.push(item.en);
             //找出需要排序的字段
             item.sort && me.sortField.push(item.en);
+            //找出需要添加事件的btn
+            item.buttons && me.btnEvent.push(item.buttons);
+            //找出需要添加事件的button
+//            item.buttons&&me.btns.push(item.buttons);
         })
         me.fieldEl.innerHTML = fields;
         tpl += "</div>" +
@@ -399,6 +411,15 @@ Grid.prototype = {
             var target = e.target;
             if (target.className.indexOf('g-field') != -1) {
                 target = e.target.offsetParent;
+            } else if (target.className.indexOf('g-operate') != -1) {
+                me.btnEvent.forEach(function (buttons) {
+                    buttons.forEach(function (btn) {
+                        if (btn.id == target.id) {
+                            btn.click && btn.click.call(null,target.getAttribute('data-id'));
+                        }
+                    })
+                })
+
             } else if (target.className.indexOf('list-item') == -1) {
                 return;
             }

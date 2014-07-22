@@ -32,6 +32,7 @@ function add(table, data, fn) {
     })
 }
 function update(table, fn, data, where) {
+    console.log(arguments);
     client.connect(address, function (err, db) {
         db.collection(table).update(where, data, function (err, result) {
             fn && fn(err, result);

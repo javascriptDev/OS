@@ -21,6 +21,7 @@
  *
  */
 var db = require('./db/dbHelper').help;
+var ObjectId = require('mongodb').ObjectID;
 
 
 //终端类型
@@ -40,7 +41,8 @@ var event = {
     addDesk: 'addDesk',
     login: 'login',
     loginSuccess: 'ls',
-    makeOver: 'mo'
+    makeOver: 'mo',
+    pay: 'pay'
 }
 var status = {
     begin: 'begin',
@@ -82,18 +84,23 @@ function addEvent(io) {
 
             //前端点餐
             socket.on(event.addDesk, function (desk) {
-                desk.id = newGuid();
-                deskArr.push(desk);
+
 
                 db.add('order', desk, function (err, data) {
-                    console.log(err);
+                    if (!err) {
+                        desk.id = data[0]._id;
+                        deskArr.push(desk);
+                        var a = [role.base, role.monitor];
+                        a.forEach(function (item) {
+                            io.sockets.in(item);
+                        })
+                        io.sockets.emit(event.addDesk, desk);
+                    } else {
+                        io.sockets.emit(event.addDesk, error);
+                    }
                 });
 
-                var a = [role.base, role.monitor];
-                a.forEach(function (item) {
-                    io.sockets.in(item);
-                })
-                io.sockets.emit(event.addDesk, desk);
+
             });
 
             //后厨按照菜单 制作好
@@ -101,25 +108,50 @@ function addEvent(io) {
                 var id = data.id;
                 deskArr.forEach(function (item, index) {
                     if (item.id == id) {
-                        db.update('order', function () {
-                            deskArr.splice(index, 1);
-
-                        }, data, {"id": item.id});
-                        //     overDesk.push(data);
-
-
+                        db.update('order', function (err, data) {
+                            if (!err) {
+                                deskArr.splice(index, 1);
+                                io.sockets.in(role.monitor);
+                                io.sockets.in(role.base);
+                                io.sockets.emit(event.makeOver, {
+                                    success: true,
+                                    id: id,
+                                    data: {
+                                        statues: 'made'
+                                    }
+                                })
+                            }
+                        }, data, {"_id": new ObjectId(item.id)});
                     }
                 })
-                io.sockets.in(role.monitor);
-                io.sockets.in(role.base);
-                io.sockets.emit(event.makeOver, {
-                    success: true,
-                    id: id,
-                    data: {
-                        statues: 'made'
-                    }
-                })
+
             });
+
+            socket.on(event.pay, function (id) {
+                db.query('order', function (err, data) {
+                    //data is a array
+                    if (!err) {
+                        data[0].statues = status.end;
+                        db.update('order', function (err, d) {
+                            var result = {
+                                success: true,
+                                id: id
+                            }
+                            if (err) {
+                                result = err;
+                            }
+                            io.sockets.in(role.monitor);
+                            io.sockets.in(role.base);
+                            io.sockets.emit(event.pay, result);
+
+                        }, data[0], {"_id": new ObjectId(id)});
+                    }
+
+
+                }, {"_id": new ObjectId(id)});
+
+
+            })
 
             socket.on('disconnect', function (a) {
                 var a = '';

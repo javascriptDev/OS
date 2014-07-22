@@ -13,10 +13,11 @@ div {
     width: 40px;
 }
 
-.g-sum{
-    background:silver;
+.g-sum {
+    background: silver;
     color: white;
 }
+
 .middle-bar .pb-selected {
     background: firebrick;
     color: white;
@@ -123,6 +124,34 @@ div {
     -khtml-user-select: none; /*早期浏览器*/
     user-select: none;
 }
-.hidden{
+
+.hidden {
     display: none;
 }
+
+.g-f {
+    position: relative;
+}
+
+[data-type=asc]:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid red;
+    border-bottom: 1px solid red;
+    position: absolute;
+    right: 10px;
+    -webkit-transform: rotate(-45deg);
+}
+
+[data-type=desc] {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid red;
+    border-bottom: 1px solid red;
+    position: absolute;
+    right: 10px;
+    -webkit-transform: rotate(45deg);
+}
+

@@ -143,15 +143,22 @@ Grid.prototype = {
             //添加到模板
             if (item.isHide) {
                 tpl += "<div class='g-field hidden' id='<%=list[i]['" + item.en + "']%>'></div>";
+            } else if (item.buttons) {
+                tpl += "<div class='g-field " + item.en + "'>";
+                item.buttons.forEach(function (btn) {
+                    tpl += '<button class="g-operate">' + btn.text + '</button>';
+                })
             } else {
                 tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
             }
             //添加到fields 用于生成表头
             fields == '' ? (fields += '<div class="g-field line-field">序号</div>') : null;
-            if (item.sort) {
-                fields += '<div class="g-field g-f sort" data-type="asc"  data-name="' + item.en + '">' + item.cn + '</div>';
-            } else {
-                fields += '<div class="g-field g-f">' + item.cn + '</div>';
+            if (!item.isHide) {
+                if (item.sort) {
+                    fields += '<div class="g-field g-f sort" data-type="asc"  data-name="' + item.en + '">' + item.cn + '</div>';
+                } else {
+                    fields += '<div class="g-field g-f">' + item.cn + '</div>';
+                }
             }
             //找出需要汇总的字段
             item.sum && me.sumField.push(item.en);
@@ -259,21 +266,21 @@ Grid.prototype = {
     addData: function (data) {
         var me = this;
         data.forEach(function (item) {
-            for (var i = 0, len = me.fields.length; i < len; i++) {
-                //确保添加的数据包含所有 该有的字段
-                if (!item.hasOwnProperty(me.fields[i].en)) {
-                    console.log('add data failed');
-                    break;
-                    return;
-                }
-            }
+//            for (var i = 0, len = me.fields.length; i < len; i++) {
+//                //确保添加的数据包含所有 该有的字段
+//                if (!item.hasOwnProperty(me.fields[i].en)) {
+//                    console.log('add data failed');
+//                    break;
+//                    return;
+//                }
+//            }
             me.data.list.push(item);
         })
 
         // this.addItem({list: [data]});
         this.update();
     },
-    delData: function (id) {
+    delData: function (id, isUpdate) {
         var me = this;
         this.data.list.forEach(function (item, index) {
             if (item.id == id) {
@@ -281,7 +288,21 @@ Grid.prototype = {
             }
         })
         // this.addItem({list: [data]});
+        if (isUpdate) {
+            this.update();
+        }
+    },
+    updateSingleData: function (id, updataData) {
+        // this.delData(data.id, false);
+        this.data.list.forEach(function (item) {
+            if (item.id == id) {
+                for (var i in updataData) {
+                    item[i] = updataData[i];
+                }
+            }
+        })
         this.update();
+
     },
     //当前分页加载一行数据，不操作 grid data
     addItem: function (data, beforeAdd) {
@@ -376,8 +397,10 @@ Grid.prototype = {
         this.contentEl.onclick = function (e) {
 
             var target = e.target;
-            if (target.className.indexOf('list-item') == -1) {
+            if (target.className.indexOf('g-field') != -1) {
                 target = e.target.offsetParent;
+            } else if (target.className.indexOf('list-item') == -1) {
+                return;
             }
             //单选模式
             if (!me.isMulti) {

@@ -42,6 +42,11 @@ var event = {
     loginSuccess: 'ls',
     makeOver: 'mo'
 }
+var status = {
+    begin: 'begin',
+    made: 'made',
+    end: 'end'
+}
 
 //所有餐桌的订单
 var deskArr = [];
@@ -60,7 +65,7 @@ function newGuid() {
 }
 function addEvent(io) {
     io.on('connection', function (socket) {
-          //  console.log(io.sockets.sockets.length);
+            //  console.log(io.sockets.sockets.length);
 
             //登陆
             socket.on(event.login, function (member) {
@@ -80,7 +85,7 @@ function addEvent(io) {
                 desk.id = newGuid();
                 deskArr.push(desk);
 
-                db.add('order', desk, function (err,data) {
+                db.add('order', desk, function (err, data) {
                     console.log(err);
                 });
 
@@ -96,8 +101,12 @@ function addEvent(io) {
                 var id = data.id;
                 deskArr.forEach(function (item, index) {
                     if (item.id == id) {
-                        overDesk.push(data);
-                        deskArr.splice(index, 1);
+                        db.update('order', function () {
+                            deskArr.splice(index, 1);
+
+                        }, data, {"id": item.id});
+                        //     overDesk.push(data);
+
 
                     }
                 })
@@ -105,7 +114,10 @@ function addEvent(io) {
                 io.sockets.in(role.base);
                 io.sockets.emit(event.makeOver, {
                     success: true,
-                    id: id
+                    id: id,
+                    data: {
+                        statues: 'made'
+                    }
                 })
             });
 

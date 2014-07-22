@@ -122,6 +122,7 @@
                 el.className = 'list-item';
             }
             if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
+                list.cdata.statues='made';
                 socket.emit(et.makeOver, list.cdata);
             } else {
 

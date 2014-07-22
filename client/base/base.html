@@ -59,12 +59,12 @@
                 var d = desk[index];
                 var o = {did: 0, order: '', price: 0};
                 o.did = d.dn;
-                o.statue = d.statue;
+                o.statues = d.statues;
                 o.id = d.id;
                 var detail = d.data.list;
                 for (var j = 0, l = detail.length; j < l; j++) {
                     (function (jj) {
-                        o.order += detail[jj].text + ',';
+                        o.order += detail[jj].text + ':' + parseInt(detail[jj].value) + '\r\n,';
                         o.price += parseInt(detail[jj].value);
                     }(j))
                 }
@@ -77,8 +77,7 @@
     // 菜单制作完成，删除菜单
     socket.on(event.makeOver, function (data) {
         if (data.success) {
-            var id = data.id;
-            grid.delData(id);
+            grid.updateSingleData(data.id, data.data);
         }
     })
 
@@ -103,11 +102,19 @@
         parent: '.right',
         title: 'grid demo',
         fields: [
-            {en: 'did', cn: '桌号',sort:true},
+            {en: 'did', cn: '桌号', sort: true},
             {en: 'order', cn: '菜单'},
             {en: 'price', cn: '总价', sum: true, sort: true},
-            {en: 'statue', cn: '状态'},
-            { en: 'id', cn: '', isHide: true}
+            {en: 'statues', cn: '状态'},
+            { en: 'id', cn: '', isHide: true},
+            {en: 'operate', cn: '操作', buttons: [
+                {
+                    text: '付款',
+                    click: function (id) {
+                        socket.emit(event.pay, id);
+                    }
+                }
+            ]}
         ],
         data: {list: []},
         isQuery: false,
@@ -122,99 +129,59 @@
             count: 16
         }
     });
+    var page = {
+        realTime: 'rt',
+        history: 'history'
+    }
 
     var data = [
         {
-            node: 'control',
-            id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d345',
+            node: '功能',
             items: [
                 {
-                    name: 'hornbill/web/script-ss/cms/component/list',
-                    text: 'list1',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d23f'
+
+                    text: '实时',
+                    name: page.realTime
+
+
                 },
                 {
-                    name: 'hornbill/web/script-ss/cms/component/list2',
-                    text: 'list2',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d231'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list3',
-                    text: 'list3',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d233'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list4',
-                    text: 'list4',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d222'
-                }
-            ]
-        },
-        {
-            node: 'control',
-            id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d345',
-            items: [
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list',
-                    text: 'list1',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d23f'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list2',
-                    text: 'list2',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d231'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list3',
-                    text: 'list3',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d233'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list4',
-                    text: 'list4',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d222'
-                }
-            ]
-        },
-        {
-            node: 'control',
-            id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d345',
-            items: [
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list',
-                    text: 'list1',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d23f'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list2',
-                    text: 'list2',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d231'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list3',
-                    text: 'list3',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d233'
-                },
-                {
-                    name: 'hornbill/web/script-ss/cms/component/list4',
-                    text: 'list4',
-                    id: '9f2b5353-c3d4-168f-6bc9-9c734aa0d222'
+                    text: '历史',
+                    name: page.history
+
                 }
             ]
         }
-
     ]
+
 
     window.left = new Tree({
         data: data,
         parent: '.left',
         isDrag: false,
         leafClick: function (e) {
-            grid.data.list = randomData(100000);
-            grid.update();
+            var name = e.target.getAttribute('data-name');
+            location.hash = 'page=' + name;
         }
 
     });
+    window.onhashchange = function (e) {
+        init();
+    }
+
+    function init() {
+        var page = location.hash.split('#')[1];
+        switch (page) {
+            case page.realTime:
+                ;
+                break;
+            case page.history:
+                ;
+                break;
+            default :
+                break;
+        }
+    }
 
 
 </script>

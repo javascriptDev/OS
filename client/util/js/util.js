@@ -29,7 +29,7 @@ function inherit(subclass, superclass) {
 
 msj = {
 //    ip: 'http://localhost',
-    ip:'http://192.168.166.108',
+    ip: 'http://192.168.166.108',
 
     role: {
         //显示设备
@@ -43,7 +43,8 @@ msj = {
         addDesk: 'addDesk',
         login: 'login',
         loginSuccess: 'ls',
-        makeOver: 'mo'
+        makeOver: 'mo',
+        pay: 'pay'
 
     },
     tpl: {

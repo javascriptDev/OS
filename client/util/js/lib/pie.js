@@ -58,7 +58,7 @@ pie.prototype = {
             if (i < index) {
                 begin += item;
             }
-        })
+        });
         return begin / this.sum;
     },
     getEndAngle: function (index) {
@@ -67,7 +67,7 @@ pie.prototype = {
             if (i <= index) {
                 end += item;
             }
-        })
+        });
         return end / this.sum;
     }
 

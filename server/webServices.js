@@ -6,6 +6,7 @@
  */
 var fs = require('fs');
 var db = require('./db/dbHelper').help;
+var parse = require('url');
 
 var methods = {
     data: 'data'
@@ -13,6 +14,8 @@ var methods = {
 
 
 }
+
+//http://xxx.xxx.xxx.xxx:8000!ws?data/a=1&b=2
 var tn = 'order';
 function webServices(req, res) {
     var mime = {
@@ -26,27 +29,35 @@ function webServices(req, res) {
     var head = mime.json + ';charset=utf-8';
 
     var url = req.url,
-        arr = url.split('/'),
-        len = arr.length,
-        method = arr[len - 2],
-        params = arr[len - 1];
+        base = parse.parse(url).query.split('/'),
+        method = base[0],
+        param = base[1];
+
     var data;
     switch (method) {
         case methods.data:
-            getData();
+            var params = {};
+            param && param.split('&').forEach(function (item) {
+                var s = item.split('=');
+                params[s[0]] = s[1];
+            })
+            getData(params);
             break;
         default :
             res.write('no data');
             res.end();
             break;
     }
-    function getData() {
+    function getData(where) {
         db.query('order', function (err, data) {
+
+            res.setHeader('Access-Control-Allow-Methods', 'GET');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            var data = JSON.stringify(data);
             console.log(data);
-            res.writeHead(200, {'Content-Type': head});
-            res.write(JSON.stringify(data), 'binary');
+            res.write(data);
             res.end();
-        }, {})
+        }, where || {})
     }
 }
 

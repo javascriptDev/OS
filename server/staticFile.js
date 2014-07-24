@@ -60,7 +60,7 @@ function staticFile(req, res) {
         //     console.log(filePath);
         fs.exists(filePath, function (a) {
             if (a) {
-                fs.readFile(filePath, 'binary', function (err, data) {
+                fs.readFile(filePath, function (err, data) {
                     res.writeHead(200, {'Content-Type': ct});
                     res.write(data, 'binary');
                     res.end();

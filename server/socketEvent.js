@@ -92,6 +92,7 @@ function addEvent(io) {
                         a.forEach(function (item) {
                             io.sockets.in(item);
                         })
+                        console.log(desk);
                         io.sockets.emit(event.addDesk, desk);
                     } else {
                         io.sockets.emit(event.addDesk, error);
@@ -148,11 +149,7 @@ function addEvent(io) {
 
                         }, data[0], {"_id": new ObjectId(id)});
                     }
-
-
                 }, {"_id": new ObjectId(id)});
-
-
             })
 
             socket.on('disconnect', function (a) {

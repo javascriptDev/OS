@@ -37,6 +37,26 @@
         role: role.base,
         id: Math.random() * 1989
     };
+    var pageName = {
+        realTime: 'rt',
+        history: 'history'
+    }
+    var data = [
+        {
+            node: '功能',
+            items: [
+                {
+                    text: '实时',
+                    name: pageName.realTime
+                },
+                {
+                    text: '历史',
+                    name: pageName.history
+
+                }
+            ]
+        }
+    ]
     //发送登陆事件
     socket.emit(events.login, me);
     //登陆成功回调
@@ -137,29 +157,8 @@
             count: 16
         }
     });
-    var page = {
-        realTime: 'rt',
-        history: 'history'
-    }
-    var data = [
-        {
-            node: '功能',
-            items: [
-                {
-
-                    text: '实时',
-                    name: page.realTime
 
 
-                },
-                {
-                    text: '历史',
-                    name: page.history
-
-                }
-            ]
-        }
-    ]
     window.left = new Tree({
         data: data,
         parent: '.left',
@@ -174,16 +173,49 @@
         init();
     }
     function init() {
-        var page = location.hash.split('#')[1];
+        var page = location.hash.split('=')[1];
         switch (page) {
-            case page.realTime:
-                ;
+            case pageName.realTime:
+                request(msj.ip + ':8000/!ws?data', function (data) {
+                    console.log(data);
+                })
                 break;
-            case page.history:
-                ;
+            case pageName.history:
+                request(msj.ip + ':8000/!ws?data/statues=end', function (data) {
+                    grid.addData(data);
+                })
                 break;
             default :
                 break;
+        }
+    }
+    function request(url, cb) {
+        var xhr;
+        if (window.XMLHttpRequest) { // Mozilla, Safari,...
+            xhr = new XMLHttpRequest();
+
+        } else if (window.ActiveXObject) { // IE
+            try {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                try {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {
+                }
+            }
+        }
+
+        if (!xhr) {
+            alert('Giving up :( Cannot create an XMLHTTP instance');
+            return false;
+        }
+        xhr.open('get', url);
+        xhr.send();
+        xhr.onreadystatechange = function (e) {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                cb && cb(JSON.parse(xhr.responseText));
+            }
+
         }
     }
 </script>

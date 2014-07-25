@@ -50,10 +50,6 @@ var status = {
     end: 'end'
 }
 
-//所有餐桌的订单
-var deskArr = [];
-//制作完成菜单的desk
-var overDesk = [];
 function newGuid() {
     var guid = "a";
     for (var i = 1; i <= 31; i++) {
@@ -77,9 +73,7 @@ function addEvent(io) {
                     success: true,
                     id: member.id
                 });
-                if (deskArr.length > 0) {
-                    socket.emit(event.addDesk, deskArr)
-                }
+//                socket.emit(event.addDesk, deskArr)
             });
 
             //前端点餐
@@ -87,12 +81,10 @@ function addEvent(io) {
                 db.add('order', desk, function (err, data) {
                     if (!err) {
                         desk.id = data[0]._id;
-                        deskArr.push(desk);
                         var a = [role.base, role.monitor];
                         a.forEach(function (item) {
                             io.sockets.in(item);
                         })
-                        console.log(desk);
                         io.sockets.emit(event.addDesk, desk);
                     } else {
                         io.sockets.emit(event.addDesk, error);
@@ -104,28 +96,24 @@ function addEvent(io) {
 
             //后厨按照菜单 制作好
             socket.on(event.makeOver, function (data) {
-                var id = data.id;
-                deskArr.forEach(function (item, index) {
-                    if (item.id == id) {
-                        item.statues = 'made';
-                        db.update('order', function (err, data) {
-                            var result = {
-                                success: true,
-                                id: id,
-                                data: {
-                                    statues: 'made'
-                                }
-                            };
-                            if (err) {
-                                result = err;
-                            }
-                            deskArr.splice(index, 1);
-                            io.sockets.in(role.monitor);
-                            io.sockets.in(role.base);
-                            io.sockets.emit(event.makeOver, result)
-                        }, item, {"_id": new ObjectId(id)});
+                var id = data._id || data.id;
+                data._id = new ObjectId(id);
+                db.update('order', function (err, data) {
+                    var result = {
+                        success: true,
+                        id: id,
+                        data: {
+                            statues: 'made'
+                        }
+                    };
+                    if (err) {
+                        result = err;
                     }
-                })
+                    io.sockets.in(role.monitor);
+                    io.sockets.in(role.base);
+                    io.sockets.emit(event.makeOver, result)
+                }, data, {"_id": new ObjectId(id)});
+
 
             });
 

@@ -12,6 +12,8 @@
     <script src="client/util/js/lib/tpl.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="client/util/js/util.js"></script>
+    <script src="client/util/js/common.js"></script>
+
     <style type="text/css">
         .c {
             width: 1000px;
@@ -75,6 +77,7 @@
     socket.on(et.loginSuccess, function (o) {
         if (o.id == me.id) {
             console.log('login success');
+            initPage();
         }
     })
 
@@ -94,7 +97,7 @@
         if (data.success) {
             var id = data.id;
             Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (item) {
-                if (item.cdata.id == id) {
+                if (item.cdata._id == id) {
                     item.parentNode.removeChild(item);
                 }
             })
@@ -103,7 +106,7 @@
     function addDesk(desk) {
         var order = desk.data,
                 number = desk.dn,
-                statue = desk.statue;
+                statue = desk.statues;
 
         var list = document.createElement('div');
         list.className = 'order-list';
@@ -135,6 +138,17 @@
             alert(data.dn + 'has pay');
         }
     })
+
+    function initPage() {
+        getData('statues=begin', function (data) {
+            console.log(data.list);
+            data.list.forEach(function (item) {
+                addDesk(item);
+            })
+        })
+
+    }
+
 
 </script>
 </body>

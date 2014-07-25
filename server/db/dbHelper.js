@@ -34,6 +34,7 @@ function add(table, data, fn) {
 function update(table, fn, data, where) {
     client.connect(address, function (err, db) {
         db.collection(table).update(where, data, function (err, result) {
+            console.log(err);
             fn && fn(err, result);
             db.close();
         })

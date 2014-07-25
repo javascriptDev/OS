@@ -41,6 +41,7 @@ function webServices(req, res) {
                 var s = item.split('=');
                 params[s[0]] = s[1];
             })
+            console.log(params);
             getData(params);
             break;
         default :
@@ -54,7 +55,6 @@ function webServices(req, res) {
             res.setHeader('Access-Control-Allow-Methods', 'GET');
             res.setHeader('Access-Control-Allow-Origin', '*');
             var data = JSON.stringify(data);
-            console.log(data);
             res.write(data);
             res.end();
         }, where || {})

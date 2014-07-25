@@ -84,6 +84,7 @@ Grid.prototype = {
         this.setCss();
     },
     update: function (data, fn) {
+        data && (this.data = data);
         //todo: 每次添加一条数据，都要执行这个。有点浪费资源
         this.setFoot();
         this.paging();

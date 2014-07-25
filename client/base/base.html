@@ -84,6 +84,40 @@ socket.emit(events.login, me);
 socket.on(events.loginSuccess, function (o) {
     if (o.id == me.id) {
         console.log('login success');
+
+        window.grid = new Grid({
+            parent: '.right',
+            title: 'grid demo',
+            fields: [
+                {en: 'did', cn: '桌号', sort: true},
+                {en: 'order', cn: '菜单'},
+                {en: 'price', cn: '总价', sum: true, sort: true},
+                {en: 'statues', cn: '状态'},
+                { en: 'id', cn: '', isHide: true},
+                {en: 'operate', cn: '操作', buttons: [
+                    {
+                        text: '付款',
+                        id: 'g-pay',
+                        click: function (id) {
+                            socket.emit(events.pay, id);
+                        },
+                        require: 'id'
+                    }
+                ]}
+            ],
+            data: {list: []},
+            isQuery: false,
+            isToolbar: false,
+            isFooter: false,
+            isTitle: false,
+            height: 500,
+            width: 1024,
+            //是否启用多选
+            isMulti: false,
+            page: {
+                count: 16
+            }
+        });
         init();
     }
 });
@@ -147,39 +181,6 @@ function randomData(c) {
     }
     return datas;
 }
-var grid = new Grid({
-    parent: '.right',
-    title: 'grid demo',
-    fields: [
-        {en: 'did', cn: '桌号', sort: true},
-        {en: 'order', cn: '菜单'},
-        {en: 'price', cn: '总价', sum: true, sort: true},
-        {en: 'statues', cn: '状态'},
-        { en: 'id', cn: '', isHide: true},
-        {en: 'operate', cn: '操作', buttons: [
-            {
-                text: '付款',
-                id: 'g-pay',
-                click: function (id) {
-                    socket.emit(events.pay, id);
-                },
-                require: 'id'
-            }
-        ]}
-    ],
-    data: {list: []},
-    isQuery: false,
-    isToolbar: false,
-    isFooter: false,
-    isTitle: false,
-    height: 500,
-    width: 1024,
-    //是否启用多选
-    isMulti: false,
-    page: {
-        count: 16
-    }
-});
 
 
 window.left = new Tree({
@@ -197,7 +198,7 @@ window.onhashchange = function (e) {
 }
 function init() {
     if (location.href.indexOf('#') == -1) {
-        location.href = location.href + '#statues='+pageName.realTime;
+        location.href = location.href + '#statues=' + pageName.realTime;
     }
     var page = location.hash.split('=')[1];
     switch (page) {

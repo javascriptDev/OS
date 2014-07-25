@@ -456,5 +456,11 @@ Grid.prototype = {
             }
 
         }
+    },
+    hide: function () {
+        this.el.style.display = 'none';
+    },
+    show: function () {
+        this.el.style.display = 'block';
     }
 };

@@ -83,11 +83,11 @@ Grid.prototype = {
         this.render();
         this.setCss();
     },
-    update: function () {
+    update: function (data) {
         //todo: 每次添加一条数据，都要执行这个。有点浪费资源
         this.setFoot();
         this.paging();
-        this.setContent(this.page.ci);
+        this.setContent(this.page.ci,data);
         this.setInfo();
 
     },

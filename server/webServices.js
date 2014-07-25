@@ -41,7 +41,6 @@ function webServices(req, res) {
                 var s = item.split('=');
                 params[s[0]] = s[1];
             })
-            console.log(params);
             getData(params);
             break;
         default :

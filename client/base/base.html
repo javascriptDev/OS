@@ -99,7 +99,9 @@ socket.on(events.loginSuccess, function (o) {
                         text: '付款',
                         id: 'g-pay',
                         click: function (id) {
-                            socket.emit(events.pay, id);
+                            socket.emit(events.pay, id,function(){
+                                console.log(arguments);
+                            });
                         },
                         require: 'id'
                     }
@@ -115,7 +117,7 @@ socket.on(events.loginSuccess, function (o) {
             //是否启用多选
             isMulti: false,
             page: {
-                count: 16
+                count: 7
             }
         });
         init();

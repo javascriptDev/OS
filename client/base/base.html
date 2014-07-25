@@ -69,6 +69,7 @@
     socket.on(events.loginSuccess, function (o) {
         if (o.id == me.id) {
             console.log('login success');
+            init();
         }
     });
     socket.on(events.addDesk, function (desk) {
@@ -194,9 +195,9 @@
                 break;
             case pageName.history:
                 getData('statues=end', function (data) {
-                    data && grid.update(data,function(){
-                            //this is grid
-                        
+                    data && grid.update(data, function () {
+                        //this is grid
+
                     });
                 }, true)
                 break;

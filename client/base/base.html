@@ -34,221 +34,201 @@
 <footer>
 </footer>
 <script>
-var socket = io.connect(msj.ip);
-var role = msj.role, events = msj.et;
-var me = {
-    role: role.base,
-    id: Math.random() * 1989
-};
-var pageName = {
-    realTime: 'rt',
-    made: 'made',
-    history: 'history',
-    analysisHistogram: 'analysisHistogram',
-    analysisLine: 'analysisLine'
-}
-var data = [
-    {
-        node: '功能',
-        items: [
-            {
-                text: '当前账单',
-                name: pageName.realTime
-            },
-            {
-                text: '菜已做完',
-                name: pageName.made
-            },
-            {
-                text: '历史记录',
-                name: pageName.history
-
-            }
-        ]
-    },
-    {
-        node: '统计',
-        items: [
-            {
-                text: '柱状图',
-                name: pageName.analysisHistogram
-            },
-            {
-                text: '折线图',
-                name: pageName.analysisLine
-            }
-        ]
+    var socket = io.connect(msj.ip);
+    var role = msj.role, events = msj.et;
+    var me = {
+        role: role.base,
+        id: Math.random() * 1989
+    };
+    var pageName = {
+        realTime: 'rt',
+        made: 'made',
+        history: 'history',
+        analysisHistogram: 'analysisHistogram',
+        analysisLine: 'analysisLine'
     }
-]
-//发送登陆事件
-socket.emit(events.login, me);
-//登陆成功回调
-socket.on(events.loginSuccess, function (o) {
-    if (o.id == me.id) {
-        console.log('login success');
+    var data = [
+        {
+            node: '功能',
+            items: [
+                {
+                    text: '当前账单',
+                    name: pageName.realTime
+                },
+                {
+                    text: '菜已做完',
+                    name: pageName.made
+                },
+                {
+                    text: '历史记录',
+                    name: pageName.history
 
-        window.grid = new Grid({
-            parent: '.right',
-            title: 'grid demo',
-            fields: [
-                {en: 'did', cn: '桌号', sort: true},
-                {en: 'order', cn: '菜单', items: [
-                    {en: 'text', cn: '菜名'},
-                    {en: 'value', cn: '价钱'}
-                ]},
-                {en: 'price', cn: '总价', sum: true, sort: true},
-                {en: 'statues', cn: '状态'},
-                { en: 'id', cn: '', isHide: true},
-                {en: 'operate', cn: '操作', buttons: [
-                    {
-                        text: '付款',
-                        id: 'g-pay',
-                        click: function (id) {
-                            socket.emit(events.pay, id, function () {
-                                console.log(arguments);
-                            });
-                        },
-                        require: 'id'
-                    }
-                ]}
-            ],
-            data: {list: []},
-            isQuery: false,
-            isToolbar: false,
-            isFooter: false,
-            isTitle: false,
-            height: 500,
-            width: 1024,
-            //是否启用多选
-            isMulti: false,
-            page: {
-                count: 7
-            }
-        });
+                }
+            ]
+        },
+        {
+            node: '统计',
+            items: [
+                {
+                    text: '柱状图',
+                    name: pageName.analysisHistogram
+                },
+                {
+                    text: '折线图',
+                    name: pageName.analysisLine
+                }
+            ]
+        }
+    ]
+    //发送登陆事件
+    socket.emit(events.login, me);
+    //登陆成功回调
+    socket.on(events.loginSuccess, function (o) {
+        if (o.id == me.id) {
+            console.log('login success');
+
+            window.grid = new Grid({
+                parent: '.right',
+                title: 'grid demo',
+                fields: [
+                    {en: 'did', cn: '桌号', sort: true},
+                    {en: 'order', cn: '菜单', items: [
+                        {en: 'text', cn: '菜名'},
+                        {en: 'value', cn: '价钱'}
+                    ]},
+                    {en: 'price', cn: '总价', sum: true, sort: true},
+                    {en: 'statues', cn: '状态'},
+                    { en: 'id', cn: '', isHide: true},
+                    {en: 'operate', cn: '操作', buttons: [
+                        {
+                            text: '付款',
+                            id: 'g-pay',
+                            click: function (id) {
+                                socket.emit(events.pay, id, function () {
+                                    console.log(arguments);
+                                });
+                            },
+                            require: 'id'
+                        }
+                    ]}
+                ],
+                data: {list: []},
+                isQuery: false,
+                isToolbar: false,
+                isFooter: false,
+                isTitle: false,
+                height: 500,
+                width: 1024,
+                //是否启用多选
+                isMulti: false,
+                page: {
+                    count: 7
+                }
+            });
+            init();
+        }
+    });
+    socket.on(events.addDesk, function (desk) {
+
+        if (Object.prototype.toString.call(desk) == '[object Object]') {
+            desk = [desk];
+        }
+        var data = [];
+
+        for (var i = 0, len = desk.length; i < len; i++) {
+            (function (index) {
+                var d = desk[index];
+                var o = {did: 0, order: '', price: 0};
+                o.did = d.dn;
+                o.data = d.data.list;
+                o.statues = d.statues;
+                o.id = d._id;
+                var detail = d.data.list;
+                for (var j = 0, l = detail.length; j < l; j++) {
+                    (function (jj) {
+                        o.price += parseInt(detail[jj].value);
+                    }(j))
+                }
+                data.push(o);
+            }(i))
+        }
+        grid.addData(data);
+    });
+    socket.on(events.pay, function (data) {
+        console.log('pay');
+        if (data.success) {
+            grid.updateSingleData(data.id, {
+                statues: 'pay'
+            })
+            setTimeout(function () {
+                console.log(data.id);
+                grid.delData(data.id, true);
+            }, 3000);
+        }
+    })
+    // 菜单制作完成，删除菜单
+    socket.on(events.makeOver, function (data) {
+        if (data.success) {
+            grid.updateSingleData(data.id, data.data, function () {
+                setTimeout(function () {
+                    grid.delData(data.id, true);
+                }, 3000)
+            });
+        }
+    })
+    window.left = new Tree({
+        data: data,
+        parent: '.left',
+        isDrag: false,
+        leafClick: function (e) {
+            var name = e.target.getAttribute('data-name');
+            location.hash = 'page=' + name;
+        }
+
+    });
+    window.onhashchange = function (e) {
         init();
     }
-});
-socket.on(events.addDesk, function (desk) {
+    function init() {
+        if (location.href.indexOf('#') == -1) {
+            location.href = location.href + '#statues=' + pageName.realTime;
+        }
+        var page = location.hash.split('=')[1];
+        grid.page.ci = 0;
+        switch (page) {
+            case pageName.realTime:
+                getData('statues=begin', function (data) {
+                    data && grid.update(data, function () {
+                        this.show();
+                    });
+                }, true)
+                break;
+            case pageName.made:
+                getData('statues=made', function (data) {
+                    data && grid.update(data, function () {
+                        this.show();
+                    });
+                }, true);
+                break;
+            case pageName.history:
+                getData('statues=end', function (data) {
+                    data && grid.update(data, function () {
+                        //this is grid
+                        this.show();
 
-    if (Object.prototype.toString.call(desk) == '[object Object]') {
-        desk = [desk];
+                    });
+                }, true)
+                break;
+            case pageName.analysisHistogram:
+                grid.hide();
+                break;
+            case pageName.analysisLine:
+                grid.hide();
+                break;
+            default :
+                break;
+        }
     }
-    var data = [];
-
-    for (var i = 0, len = desk.length; i < len; i++) {
-        (function (index) {
-            var d = desk[index];
-            var o = {did: 0, order: '', price: 0};
-            o.did = d.dn;
-            o.data = d.data.list;
-            o.statues = d.statues;
-            o.id = d._id;
-            var detail = d.data.list;
-            for (var j = 0, l = detail.length; j < l; j++) {
-                (function (jj) {
-                    o.price += parseInt(detail[jj].value);
-                }(j))
-            }
-            data.push(o);
-        }(i))
-    }
-    grid.addData(data);
-});
-socket.on(events.pay, function (data) {
-    console.log('pay');
-    if (data.success) {
-        grid.updateSingleData(data.id, {
-            statues: 'pay'
-        })
-        setTimeout(function () {
-            console.log(data.id);
-            grid.delData(data.id, true);
-        }, 3000);
-    }
-})
-// 菜单制作完成，删除菜单
-socket.on(events.makeOver, function (data) {
-    if (data.success) {
-        grid.updateSingleData(data.id, data.data, function () {
-            setTimeout(function () {
-                grid.delData(data.id, true);
-            }, 3000)
-        });
-    }
-})
-function num(length) {
-    return  Math.pow(Math.floor(Math.random() * 100), length);
-}
-function randomData(c) {
-    var datas = [];
-    for (var i = 0; i < c; i++) {
-        datas.push({
-            did: num(0),
-            price: num(2),
-            order: num(1),
-            id: 'asdasd' + i,
-            statue: 'open'
-        })
-    }
-    return datas;
-}
-
-
-window.left = new Tree({
-    data: data,
-    parent: '.left',
-    isDrag: false,
-    leafClick: function (e) {
-        var name = e.target.getAttribute('data-name');
-        location.hash = 'page=' + name;
-    }
-
-});
-window.onhashchange = function (e) {
-    init();
-}
-function init() {
-    if (location.href.indexOf('#') == -1) {
-        location.href = location.href + '#statues=' + pageName.realTime;
-    }
-    var page = location.hash.split('=')[1];
-    grid.page.ci = 0;
-    switch (page) {
-        case pageName.realTime:
-            getData('statues=begin', function (data) {
-                data && grid.update(data, function () {
-                    this.show();
-                });
-            }, true)
-            break;
-        case pageName.made:
-            getData('statues=made', function (data) {
-                data && grid.update(data, function () {
-                    this.show();
-                });
-            }, true);
-            break;
-        case pageName.history:
-            getData('statues=end', function (data) {
-                data && grid.update(data, function () {
-                    //this is grid
-                    this.show();
-
-                });
-            }, true)
-            break;
-        case pageName.analysisHistogram:
-            grid.hide();
-            ;
-            break;
-        case pageName.analysisLine:
-            grid.hide();
-            ;
-            break;
-        default :
-            break;
-    }
-}
 
 </script>
 </body>

@@ -29,260 +29,201 @@
 <body>
 <script>
 
-var role = msj.role,
-        socket = io.connect(msj.ip),
-        ne = msj.et,
-        tpl = msj.tpl;
-var me = {
-    role: role.terminal,
-    id: Math.random() * 1989
-}
-
-socket.emit(ne.login, me);
-
-socket.on(ne.loginSuccess, function (o) {
-    if (o.id == me.id) {
-        console.log(me);
+    var role = msj.role,
+            socket = io.connect( msj.ip ),
+            ne = msj.et,
+            tpl = msj.tpl;
+    var me = {
+        role: role.terminal,
+        id: Math.random() * 1989
     }
-})
+
+    socket.emit( ne.login, me );
+
+    socket.on( ne.loginSuccess, function( o ) {
+        if(o.id == me.id) {
+            console.log( me );
+        }
+    } )
 
 
-var data = [
-    {
-        tab: '家常菜',
-        tpl: tpl.a,
-        data: {list: [
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'}
+    var data = [
+        {
+            tab: '素馅饺子',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '韭菜鸡蛋', img: '   ', price: '8'},
+                {text: '小白菜鸡蛋', img: '   ', price: '10'},
+                {text: '素三鲜(木耳,虾仁,鸡蛋)', img: '   ', price: '16'},
+                {text: '黄瓜鸡蛋', img: '   ', price: '10'},
+                {text: '西红柿鸡蛋', img: '   ', price: '12'},
+                {text: '青椒鸡蛋', img: '   ', price: '10'},
+                {text: '平菇玉米粒鸡蛋', img: '   ', price: '12'},
+                {text: '茴香鸡蛋', img: '   ', price: '10'}
+            ]}
+        },
+        {
+            tab: '猪肉水饺',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '猪肉白菜', img: '', price: '8'},
+                {text: '猪肉芹菜', img: '', price: '10'},
+                {text: '猪肉酸菜', img: '', price: '10'},
+                {text: '猪肉茴香', img: '', price: '10'},
+                {text: '猪肉韭菜', img: '   ', price: '10'},
+                {text: '猪肉香菇', img: '   ', price: '12'},
+                {text: '猪肉青椒', img: '   ', price: '10'},
+                {text: '猪肉大葱', img: '   ', price: '12'},
+                {text: '肉三鲜(虾仁,鲜贝,猪肉)', img: '   ', price: '28'},
+            ]}
+        },
+        {
+            tab: '鸡肉水饺',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '马蹄玉米粒', img: '   ', price: '18'},
+                {text: '鸡肉韭菜', img: '   ', price: '16'},
+
+            ]}
+        },
+        {
+            tab: '牛肉水饺',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '牛肉萝卜', img: '   ', price: '16'},
+                {text: '牛肉胡萝卜', img: '   ', price: '16'},
+                {text: '牛肉韭菜', img: '   ', price: '18'},
+                {text: '牛肉大葱', img: '   ', price: '18'},
+                {text: '牛肉西红柿', img: '   ', price: '18'}
+            ]}
+        },
+        {
+            tab: '羊驴肉水饺',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '羊肉胡萝卜', img: '   ', price: '22'},
+                {text: '羊肉香菜', img: '   ', price: '26'},
+                {text: '羊肉洋葱', img: '   ', price: '26'},
+                {text: '羊肉大葱', img: '   ', price: '26'},
+                {text: '驴肉葱花', img: '   ', price: '18'}
+            ]}
+        },
+        {
+            tab: '凉菜',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '茴香花生米', img: '   ', price: '10'},
+                {text: '老醋花生米', img: '   ', price: '11'},
+                {text: '炝干豆丝', img: '   ', price: '10'},
+                {text: '炝土豆丝', img: '   ', price: '10'},
+                {text: '红油肚丝', img: '   ', price: '20'},
+                {text: '辣拌鸡胗', img: '   ', price: '24'},
+                {text: '拍黄瓜', img: '   ', price: '10'},
+                {text: '老虎菜', img: '   ', price: '10'},
+                {text: '大拉皮', img: '   ', price: '14'},
+                {text: '三河豆腐丝', img: '   ', price: '10'},
+                {text: '皮蛋豆腐', img: '   ', price: '8'},
+                {text: '辣根木耳', img: '   ', price: '12'},
+                {text: '炝金针蘑瓜丝', img: '   ', price: '18'},
+                {text: '肉丝拌粉条', img: '   ', price: '18'}
 
 
-        ]}
-    },
-    {
-        tab: '肉馅饺子',
-        tpl: tpl.a,
-        data: {list: [
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸭', img: 'http://192.168.165.31:8000/client/util/img/gpj.jpg', price: '200'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'}
+            ]}
+        },
+        {
+            tab: '干锅',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '干锅娃娃菜', img: '   ', price: '18'},
+                {text: '干锅茶树菇', img: '   ', price: '24'},
+                {text: '干锅土豆片', img: '   ', price: '18'}
+            ]}
+        },
+        {
+            tab: '热菜',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '爆炒圆白菜', img: '   ', price: '16'},
+                {text: '韭菜炒鸡蛋', img: '   ', price: '10'},
+                {text: '木耳炒白菜片', img: '   ', price: '10'},
+                {text: '青椒丝炒肉丝', img: '   ', price: '20'},
+                {text: '宫保鸡丁', img: '   ', price: '20'},
+                {text: '小炒肉', img: '   ', price: '20'},
+                {text: '杭椒牛柳', img: '   ', price: '38'},
+                {text: '干煸豆角', img: '   ', price: '18'},
+                {text: '炒肉木耳', img: '   ', price: '24'},
+                {text: '家常炖豆腐', img: '   ', price: '16'},
+                {text: '毛血旺', img: '   ', price: '26'},
+                {text: '鱼香茄子', img: '   ', price: '18'},
+                {text: '尖椒炒肉', img: '   ', price: '20'},
+                {text: '溜豆腐', img: '   ', price: '20'},
+                {text: '酱炖大豆腐', img: '   ', price: '18'},
+                {text: '滑子蘑炒肉', img: '   ', price: '22'},
+                {text: '杏鲍菇炒肉', img: '   ', price: '24'},
+                {text: '酸辣土豆丝', img: '   ', price: '12'},
+                {text: '苦瓜煎蛋', img: '   ', price: '16'},
+                {text: '啤酒地瓜条', img: '   ', price: '26'},
+                {text: '麻辣豆腐', img: '   ', price: '14'},
+                {text: '土豆片炖豆腐', img: '   ', price: '18'},
+                {text: '熘肝尖', img: '   ', price: '20'},
+                {text: '回锅肉', img: '   ', price: '32'},
+                {text: '红烧排骨', img: '   ', price: '48'},
+                {text: '溜肥肠', img: '   ', price: '38'},
+                {text: '尖椒护心肉', img: '   ', price: '38'},
+                {text: '小鸡炖蘑菇', img: '   ', price: '38'},
+                {text: '木须肉', img: '   ', price: '20'},
+                {text: '锅包肉', img: '   ', price: '32'},
+                {text: '酱腔骨', img: '   ', price: '48'},
+                {text: '尖椒干豆腐', img: '   ', price: '14'},
+                {text: '地三鲜', img: '   ', price: '18'},
+                {text: '鱼香肉丝', img: '   ', price: '18'},
+                {text: '乡村扒茄子', img: '   ', price: '18'},
+                {text: '酸菜粉', img: '   ', price: '16'},
+                {text: '芹菜粉', img: '   ', price: '16'},
+                {text: '京酱肉丝', img: '   ', price: '20'},
+                {text: '烧茄子', img: '   ', price: '16'},
+                {text: '红烧排骨土豆玉米', img: '   ', price: '48'},
+                {text: '大丰收', img: '   ', price: '68'},
+                {text: '溜肉段', img: '   ', price: '32'},
+                {text: '肉段烧茄子', img: '   ', price: '26'},
+                {text: '得莫利炖鱼', img: '   ', price: '48'},
+                {text: '红烧鲤鱼', img: '   ', price: '38'},
+                {text: '猪肉炖粉条', img: '   ', price: '28'},
+                {text: '糖醋里脊', img: '   ', price: '32'},
+                {text: '猪头酸菜炖粉条', img: '   ', price: '28'}
+            ]}
+        },
+        {
+            tab: '盖饭',
+            tpl: tpl.a,
+            data: {list: [
+                {text: '土豆丝盖饭', img: '   ', price: '10'},
+                {text: '韭菜鸡蛋盖饭', img: '   ', price: '10'},
+                {text: '尖椒豆皮盖饭', img: '   ', price: '10'},
+                {text: '尖椒鸡蛋盖饭', img: '   ', price: '10'},
+                {text: '木耳鸡蛋盖饭', img: '   ', price: '12'},
+                {text: '韭菜鸡蛋盖饭', img: '   ', price: '12'},
+                {text: '鱼香肉丝盖饭', img: '   ', price: '12'},
+                {text: '宫爆鸡丁盖饭', img: '   ', price: '12'},
+                {text: '榨菜肉丝盖饭', img: '   ', price: '12'},
+                {text: '酱爆鸡丁盖饭', img: '   ', price: '12'},
+                {text: '木耳肉片盖饭', img: '   ', price: '13'},
+                {text: '回锅肉盖饭', img: '   ', price: '13'}
+            ]}
+        }
+    ]
 
-        ]}
-    },
-    {
-        tab: '素馅饺子',
-        tpl: tpl.a,
-        data: {list: [
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '鱼香肉丝', img: 'http://192.168.165.31:8000/client/util/img/jz.jpeg', price: '200'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'},
-            {text: '可乐鸡', img: 'http://192.168.165.31:8000/client/util/img/a.jpg', price: '100'}
 
-        ]}
-    }
-]
+    var tab = new tab( {
+        tab: data,
+        ol: new Ol( {tpl: tpl.b,
+            data: {list: []},
+            submit: function( data ) {
+               // socket.emit( ne.addDesk, data );
+            }} )
+    } );
 
-var tab = new tab({
-    tab: data,
-    ol: new Ol({tpl: tpl.b,
-        data: {list: []},
-        submit: function (data) {
-            socket.emit(ne.addDesk, data);
-        }})
-});
-
-//加滚动
+    //加滚动
 
 
 </script>

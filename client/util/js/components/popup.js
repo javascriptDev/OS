@@ -53,5 +53,11 @@ popup.prototype = {
     update: function (data, isRender) {
         this.setData(data);
         isRender && this.render();
+    },
+    hide: function () {
+    },
+    show: function () {
+    },
+    destroy: function () {
     }
 }

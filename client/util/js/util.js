@@ -101,11 +101,9 @@ msj = {
                 dom[i] = o[i];
             }
         }
-    },
-    hide: function () {
-    },
-    show: function () {
     }
+
+
 
 
 

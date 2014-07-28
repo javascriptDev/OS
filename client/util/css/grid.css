@@ -31,7 +31,7 @@ div {
 }
 
 .list-item {
-    border-bottom: 1px dashed yellowgreen;
+    border-bottom: 1px solid yellowgreen;
     position: relative;
     vertical-align: middle;
 }

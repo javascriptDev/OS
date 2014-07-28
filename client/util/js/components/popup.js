@@ -10,12 +10,18 @@ function popup(opt) {
 
 popup.prototype = {
     init: function () {
-        this.el = util.createEl('div', {
+        var me = this;
+        var opt = this.opt;
+        this.el = msj.createEl('div', {
             className: 'addison-popup',
             style: {
-                
+                border: '1px solid red',
+                height: opt.height || '400px',
+                width: opt.width || '300px'
             }
         });
+        this.el.innerHTML = opt.html;
+        document.body.appendChild(this.el);
     }
 
 }

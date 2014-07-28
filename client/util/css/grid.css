@@ -94,6 +94,15 @@ div {
     border-left: 1px solid white;
     text-align: center;
 }
+.g-child-field-container{
+    height:20px;
+}
+.g-child-text{
+    float: left;
+}
+.g-child-value{
+    float: right;
+}
 
 .a-grid {
     border: 1px solid cornflowerblue;

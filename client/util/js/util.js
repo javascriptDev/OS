@@ -28,8 +28,8 @@ function inherit(subclass, superclass) {
 }
 
 msj = {
-//    ip: 'http://localhost',
-    ip: 'http://192.168.166.108',
+    ip: 'http://192.168.165.166',
+//    ip: 'http://192.168.1.104',
 
     role: {
         //显示设备

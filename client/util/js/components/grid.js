@@ -142,9 +142,10 @@ Grid.prototype = {
             "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class='list-item'><div class='g-field line'></div>";
 
-        //生成模板，添加表头
+        //生成模板开始
         this.fields.forEach(function (item) {
-            //添加到模板
+
+            //<----------------------------添加到模板-------------------------------------------------->
             if (item.isHide) {
                 tpl += "<div class='g-field hidden' id='<%=list[i]['" + item.en + "']%>'></div>";
             } else if (item.buttons) {
@@ -158,10 +159,25 @@ Grid.prototype = {
                     tpl += button.outerHTML;
                 })
                 tpl += '</div>';
+            } else if (item.items) {//重表
+                tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%>";
+                tpl += "<%for (var j=0;j<(list[i]['data']&&list[i]['data'].length)||0;j++) {%>";
+                tpl += '<div class="g-child-field-container">';
+
+                item.items.forEach(function (child, index) {
+                    tpl += '<div class="g-child-field g-child-' + child.en + '"><%= list[i]["data"][j]["' + item.items[index].en + '"]%></div>'
+                })
+
+                tpl += '</div>';
+                tpl += "<%}%>";
+                tpl += '</div>'
+
             } else {
                 tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%></div>";
             }
-            //添加到fields 用于生成表头
+            //<-----------------------------生成模板结束------------------------------------------>
+
+            //<-----------------------------添加到fields 用于生成表头----------------------------->
             fields == '' ? (fields += '<div class="g-field line-field">序号</div>') : null;
             if (!item.isHide) {
                 if (item.sort) {
@@ -170,14 +186,14 @@ Grid.prototype = {
                     fields += '<div class="g-field g-f">' + item.cn + '</div>';
                 }
             }
+            //<-----------------------------生成表头结束----------------------------->
+
             //找出需要汇总的字段
             item.sum && me.sumField.push(item.en);
             //找出需要排序的字段
             item.sort && me.sortField.push(item.en);
             //找出需要添加事件的btn
             item.buttons && me.btnEvent.push(item.buttons);
-            //找出需要添加事件的button
-//            item.buttons&&me.btns.push(item.buttons);
         })
         me.fieldEl.innerHTML = fields;
         tpl += "</div>" +
@@ -198,7 +214,8 @@ Grid.prototype = {
         });
 
         var data = {list: pageData || []};
-        var html = template.compile(this.tpl)(data);
+        var html;
+        (data.list.length > 0) && (html = template.compile(this.tpl)(data));
         this.contentEl.innerHTML = html;
 
         //设置行号
@@ -322,6 +339,7 @@ Grid.prototype = {
     },
     //当前分页加载一行数据，不操作 grid data
     addItem: function (data, beforeAdd, added) {
+
         var html = template.compile(this.tpl)(data);
         var c = document.createElement('div');
         c.innerHTML = html;

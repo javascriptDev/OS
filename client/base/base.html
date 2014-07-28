@@ -90,7 +90,10 @@ socket.on(events.loginSuccess, function (o) {
             title: 'grid demo',
             fields: [
                 {en: 'did', cn: '桌号', sort: true},
-                {en: 'order', cn: '菜单'},
+                {en: 'order', cn: '菜单', items: [
+                    {en: 'text', cn: '菜名'},
+                    {en: 'value', cn: '价钱'}
+                ]},
                 {en: 'price', cn: '总价', sum: true, sort: true},
                 {en: 'statues', cn: '状态'},
                 { en: 'id', cn: '', isHide: true},
@@ -99,7 +102,7 @@ socket.on(events.loginSuccess, function (o) {
                         text: '付款',
                         id: 'g-pay',
                         click: function (id) {
-                            socket.emit(events.pay, id,function(){
+                            socket.emit(events.pay, id, function () {
                                 console.log(arguments);
                             });
                         },

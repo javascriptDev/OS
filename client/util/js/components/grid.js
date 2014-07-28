@@ -214,7 +214,7 @@ Grid.prototype = {
         });
 
         var data = {list: pageData || []};
-        var html;
+        var html='';
         (data.list.length > 0) && (html = template.compile(this.tpl)(data));
         this.contentEl.innerHTML = html;
 
@@ -228,6 +228,7 @@ Grid.prototype = {
         var index = this.page.ci;
         var countPerPage = this.page.count;
         Array.prototype.forEach.call(this.contentEl.querySelectorAll('.line'), function (line, i) {
+
             line.innerHTML = index * countPerPage + i + 1;
         })
     },
@@ -474,6 +475,21 @@ Grid.prototype = {
                 }
             }
 
+        }
+
+        //list item dbclick
+        this.contentEl.ondblclick = function (e) {
+            var item;
+            if (e.target.className.indexOf('list-item') != -1) {
+                item = e.target;
+            } else {
+                if (e.target.offsetParent.className.indexOf('list-item') != -1) {
+                    item = e.target.offsetParent;
+                }
+            }
+            if (item) {
+
+            }
         }
     },
     hide: function () {

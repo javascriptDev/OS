@@ -68,6 +68,25 @@ msj = {
 
             "</div>" +
             "<%}%>"
+    },
+    createEl: function (domName, cfg) {
+        var el = document.createElement(domName);
+        msj.resursion(el, cfg);
+        return result;
+    },
+    //递归函数
+    recursion: function (dom, o) {
+        for (var i in o) {
+            if (Object.prototype.toString.call(o[i]) == '[object Object]') {
+                msj.resursion(dom, o[i]);
+            } else {
+                dom[i] = o[i];
+            }
+        }
     }
+       
+
+
 
 }
+

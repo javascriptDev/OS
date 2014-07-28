@@ -4,7 +4,6 @@
 function getData(params, fn, needParse) {
     request(msj.ip + ':8000/!ws?data/' + params, function (data) {
         var param = data;
-        console.log(data);
         needParse && (param = parseData(param));
         fn && fn({list: param || []});
     })
@@ -18,7 +17,7 @@ function parseData(data) {
         o.did = d.dn;
         o.id = d._id;
         o.statues = d.statues;
-        o.data= d.data.list;
+        o.data = d.data.list;
         var detail = d.data.list;
         for (var j = 0, l = detail.length; j < l; j++) {
 //            o.order += detail[j].text + ':' + parseInt(detail[j].value) + '\r\n,';
@@ -57,3 +56,4 @@ function request(url, cb) {
 
     }
 }
+

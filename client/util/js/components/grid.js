@@ -157,7 +157,7 @@ Grid.prototype = {
                     button.id = btn.id;
                     button.setAttribute('data-id', "<%= list[i]['" + btn.require + "']%>")
                     tpl += button.outerHTML;
-                })
+                });
                 tpl += '</div>';
             } else if (item.items) {//重表
                 tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%>";

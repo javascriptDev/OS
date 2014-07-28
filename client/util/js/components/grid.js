@@ -68,6 +68,7 @@ function Grid(o) {
     this.controls = {};
     this.selectItem = [];
     this.isMulti = o.isMulti;
+    this.popup = o.popup;
     this.page = { count: o.page.count, page: 0, all: 0, ci: 0};
     this.init();
 }
@@ -147,7 +148,7 @@ Grid.prototype = {
 
             //<----------------------------添加到模板-------------------------------------------------->
             if (item.isHide) {
-                tpl += "<div class='g-field hidden' id='<%=list[i]['" + item.en + "']%>'></div>";
+                tpl += "<div class='g-field hidden " + item.en + "' id='<%=list[i]['" + item.en + "']%>'></div>";
             } else if (item.buttons) {
                 tpl += "<div class='g-field " + item.en + "'>";
                 item.buttons.forEach(function (btn) {
@@ -183,7 +184,7 @@ Grid.prototype = {
                 if (item.sort) {
                     fields += '<div class="g-field g-f sort" data-type="asc"  data-name="' + item.en + '">' + item.cn + '</div>';
                 } else {
-                    fields += '<div class="g-field g-f">' + item.cn + '</div>';
+                    fields += '<div class="g-field g-f">' + item.en + '</div>';
                 }
             }
             //<-----------------------------生成表头结束----------------------------->
@@ -214,7 +215,7 @@ Grid.prototype = {
         });
 
         var data = {list: pageData || []};
-        var html='';
+        var html = '';
         (data.list.length > 0) && (html = template.compile(this.tpl)(data));
         this.contentEl.innerHTML = html;
 
@@ -326,7 +327,7 @@ Grid.prototype = {
             this.update();
         }
     },
-    updateSingleData: function (id, updataData,fn) {
+    updateSingleData: function (id, updataData, fn) {
         // this.delData(data.id, false);
         this.data.list.forEach(function (item) {
             if (item.id == id) {
@@ -335,7 +336,7 @@ Grid.prototype = {
                 }
             }
         })
-        this.update(this.data,fn);
+        this.update(this.data, fn);
 
     },
     //当前分页加载一行数据，不操作 grid data
@@ -388,6 +389,13 @@ Grid.prototype = {
     sort: function () {
 
 
+    },
+    getDataById: function (id) {
+        for (var i = 0; i < this.data.list.length; i++) {
+            if (this.data.list[i].id == id) {
+                return this.data.list[i];
+            }
+        }
     },
     query: function () {
 
@@ -488,7 +496,7 @@ Grid.prototype = {
                 }
             }
             if (item) {
-
+                me.popup && me.popup.update({list:[me.getDataById(item.querySelector('.id').id)]}, 1);
             }
         }
     },

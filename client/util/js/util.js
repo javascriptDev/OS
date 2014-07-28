@@ -67,6 +67,23 @@ msj = {
             "<div class=text><%=list[i].text%></div>" +
 
             "</div>" +
+            "<%}%>",
+        popup: "<%for (var i=0;i<list.length;i++) {%>" +
+            "<div class='pop-form'>" +
+            "<div class=deskNumber>桌号:<%=list[i].did%></div>" +
+            "<div class=sum>金额:<%=list[i].price%></div>" +
+            "<div class=order-list>" +
+            "<%for (var j=0;j<(list[i].data&&list[i].data.length);j++) {%>" +
+            "<div class=order-list-item-container>" +
+            "<div class=pop-list-item><%= list[i].data[j].text%></div>" +
+            "<div class=pop-list-item><%= list[i].data[j].value%></div>" +
+            "</div>" +
+            "<%}%>" +
+            "<button class=add-item>添加一个物品</button>" +
+            "</div>" +
+
+
+            "</div>" +
             "<%}%>"
     },
     createEl: function (domName, cfg) {

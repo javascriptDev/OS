@@ -3,6 +3,16 @@
  */
 function popup(opt) {
     this.opt = opt;
+    var _data = opt.data || [];
+    this.addData = function (data) {
+        _data = data;
+    }
+    this.getData = function () {
+        return _data;
+    }
+    this.setData = function (data) {
+        _data = data;
+    }
     this.init();
 
 }
@@ -20,7 +30,13 @@ popup.prototype = {
                 width: opt.width || '300px'
             }
         });
-        this.el.innerHTML = opt.html;
+        if (this.opt.isRender) {
+            this.render();
+        }
+
+    },
+    render: function () {
+        this.el.innerHTML = template.compile(this.opt.tpl)(this.getData());
         document.body.appendChild(this.el);
     },
     addEvent: function () {
@@ -33,6 +49,9 @@ popup.prototype = {
         btn.reset && (btn.reset.onclick = opt.reset || function (e) {
 
         })
-
+    },
+    update: function (data, isRender) {
+        this.setData(data);
+        isRender && this.render();
     }
 }

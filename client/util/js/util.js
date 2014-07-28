@@ -80,6 +80,7 @@ msj = {
             "</div>" +
             "<%}%>" +
             "<button class=add-item>添加一个物品</button>" +
+            "<button class=close-popup>关闭</button>" +
             "</div>" +
 
 
@@ -100,6 +101,10 @@ msj = {
                 dom[i] = o[i];
             }
         }
+    },
+    hide: function () {
+    },
+    show: function () {
     }
 
 

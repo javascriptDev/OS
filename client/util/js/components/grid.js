@@ -26,10 +26,10 @@
         parent: '.right',                            * 父容器选择器
         title: 'grid demo',                          * grid title
         fields: [                                    * grid 显示的字段
-            {en: 'cm', cn: '菜名'},                        1.页面显示的字段
-            {en: 'price', sum: true, cn: '价钱'},          2.数据字段
-            {en: 'count', cn: '份数',sort:true}             3.sum:  true|false  开启汇总
-                                                           4.sort: true|false  开启排序
+            {en: 'cm', cn: '菜名'},                                   1.cn:页面显示的字段   2.en:数据字段
+            {en: 'price', sum: true, cn: '价钱'},                     3.sum:  true|false  开启汇总
+            {en: 'count', cn: '份数',sort:true},                      4.sort: true|false  开启排序
+            {en:'list',cn:'子表',items:[{en:'text'},{en:'value'}]}    5.重复表 一个字段含有一个重复表
         ],
         data: {list: datas},                         * grid 数据 数组  data demo:[ {cm:'阿什顿',price:11,count:1},...]
         isQuery: false,                              * 是否开启查询
@@ -326,7 +326,7 @@ Grid.prototype = {
             this.update();
         }
     },
-    updateSingleData: function (id, updataData) {
+    updateSingleData: function (id, updataData,fn) {
         // this.delData(data.id, false);
         this.data.list.forEach(function (item) {
             if (item.id == id) {
@@ -335,7 +335,7 @@ Grid.prototype = {
                 }
             }
         })
-        this.update();
+        this.update(this.data,fn);
 
     },
     //当前分页加载一行数据，不操作 grid data

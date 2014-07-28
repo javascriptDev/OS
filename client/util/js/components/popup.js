@@ -22,6 +22,17 @@ popup.prototype = {
         });
         this.el.innerHTML = opt.html;
         document.body.appendChild(this.el);
-    }
+    },
+    addEvent: function () {
+        var opt = this.opt,
+            btn = opt.btn;
+        btn.ok && (btn.ok.onclick = opt.submit && null)
+        btn.quit && (btn.quit.onclick = opt.quit || function (e) {
 
+        });
+        btn.reset && (btn.reset.onclick = opt.reset || function (e) {
+
+        })
+
+    }
 }

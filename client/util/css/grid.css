@@ -97,6 +97,7 @@ div {
 }
 .g-child-field-container{
     height:20px;
+    border-bottom:1px solid silver;
 }
 .g-child-text{
     float: left;

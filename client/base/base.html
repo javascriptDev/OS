@@ -8,6 +8,7 @@
 
     <script src="client/util/js/common.js"></script>
     <script src="client/util/js/lib/tpl.js"></script>
+    <script src="client/util/js/components/popup.js"></script>
     <script src="client/util/js/components/grid.js"></script>
     <script src="client/util/js/components/tree.js"></script>
 
@@ -139,12 +140,12 @@ socket.on(events.addDesk, function (desk) {
             var d = desk[index];
             var o = {did: 0, order: '', price: 0};
             o.did = d.dn;
+            o.data = d.data.list;
             o.statues = d.statues;
             o.id = d._id;
             var detail = d.data.list;
             for (var j = 0, l = detail.length; j < l; j++) {
                 (function (jj) {
-                    o.order += detail[jj].text + ':' + parseInt(detail[jj].value) + '\r\n,';
                     o.price += parseInt(detail[jj].value);
                 }(j))
             }
@@ -168,7 +169,11 @@ socket.on(events.pay, function (data) {
 // 菜单制作完成，删除菜单
 socket.on(events.makeOver, function (data) {
     if (data.success) {
-        grid.updateSingleData(data.id, data.data);
+        grid.updateSingleData(data.id, data.data, function () {
+            setTimeout(function () {
+                grid.delData(data.id, true);
+            }, 3000)
+        });
     }
 })
 function num(length) {
@@ -207,6 +212,7 @@ function init() {
         location.href = location.href + '#statues=' + pageName.realTime;
     }
     var page = location.hash.split('=')[1];
+    grid.page.ci = 0;
     switch (page) {
         case pageName.realTime:
             getData('statues=begin', function (data) {
@@ -217,8 +223,6 @@ function init() {
             break;
         case pageName.made:
             getData('statues=made', function (data) {
-
-
                 data && grid.update(data, function () {
                     this.show();
                 });

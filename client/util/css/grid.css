@@ -3,11 +3,10 @@ div {
 }
 
 .g-field {
-    display: inline-block;
-    width: 16%;
-    height: 100%;
-    line-height: 100%;
+    display: table-cell;
+    width: calc(16%);
     text-align: center;
+    vertical-align: middle;
 }
 
 .order {
@@ -20,7 +19,7 @@ div {
 
 .g-sum {
     color: white;
-    height:30px;
+    height: 30px;
     line-height: 30px;
     position: absolute !important;
     bottom: -30px;
@@ -44,9 +43,14 @@ div {
 }
 
 .list-item {
-    border-bottom: 1px solid yellowgreen;
     position: relative;
     vertical-align: middle;
+}
+
+.list-item:nth-child(even) {
+    border-top: 1px solid #d7dbde;
+    border-bottom: 1px solid #d7dbde;
+
 }
 
 .g-query {
@@ -125,15 +129,20 @@ div {
 
 .g-child-field-container {
     height: 20px;
-    border-bottom: 1px solid silver;
+}
+
+.g-child-field-container > div {
+    display: inline-block;
 }
 
 .g-child-text {
-    float: left;
+    width: 80%;
+    text-align: left;
+    padding-left: 20px;
 }
 
 .g-child-value {
-    float: right;
+    width: 18%;
 }
 
 .a-grid {
@@ -144,15 +153,18 @@ div {
 .g-list {
     overflow-x: hidden;
     overflow-y: scroll;
-    margin-bottom:30px;
+    margin-bottom: 30px;
 
 }
-.g-content{
+
+.g-content {
     position: relative;
 }
 
 .item-selected {
-    background: gainsboro;
+    background-color: #1984c8;
+    background-image: -webkit-linear-gradient(to bottom, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, .2) 100%);
+    color: white;
 }
 
 .p-bar, .middle-bar {
@@ -200,4 +212,5 @@ body {
     right: 10px;
     -webkit-transform: rotate(45deg);
 }
+
 

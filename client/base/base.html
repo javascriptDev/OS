@@ -80,6 +80,19 @@ var data = [
                 name: pageName.analysisLine
             }
         ]
+    },
+    {
+        node: '账户管理',
+        items: [
+            {
+                text: '个人资料',
+                name: pageName.analysisHistogram
+            },
+            {
+                text: '密码管理',
+                name: pageName.analysisLine
+            }
+        ]
     }
 ]
 //发送登陆事件
@@ -124,7 +137,7 @@ socket.on(events.loginSuccess, function (o) {
             //是否启用多选
             isMulti: false,
             page: {
-                count: 7
+                count: 10
             },
             popup: new popup({
                 tpl: msj.tpl.popup,

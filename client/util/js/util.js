@@ -70,20 +70,30 @@ msj = {
             "<%}%>",
         popup: "<%for (var i=0;i<list.length;i++) {%>" +
 
-            "<div class=deskNumber>桌号:<%=list[i].did%></div>" +
-            "<div class=sum>金额:<%=list[i].price%></div>" +
+            "<div class=order-list-item-container>" +
+            "<div class=pop-list-item>桌号</div>" +
+            "<div class=pop-list-item><%=list[i].did%></div>" +
+            "</div>" +
 
             "<div class=order-list>" +
-            "<div class=order-list-item-container>" +
+            "<div class='order-list-item-container list-field'>" +
             "<div class=pop-list-item>菜名</div>" +
             "<div class=pop-list-item>单价</div>" +
             "</div>" +
+
             "<%for (var j=0;j<(list[i].data&&list[i].data.length);j++) {%>" +
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item><%= list[i].data[j].text%></div>" +
             "<div class=pop-list-item><%= list[i].data[j].value%></div>" +
             "</div>" +
             "<%}%>" +
+            "</div>" +
+
+            "<div class=order-list-item-container>" +
+            "<div class=pop-list-item>金额</div>" +
+            "<div class=pop-list-item><%=list[i].price%></div>" +
+            "</div>" +
+
             "<div class=btn-c></div>" +
             "</div>" +
             "<%}%>"

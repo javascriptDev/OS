@@ -35,7 +35,7 @@ popup.prototype = {
             }
         });
         this.el = msj.createEl('div', {
-                className: 'pupup-body',
+                className: 'popup-body',
                 style: {
                     width: opt.width || '400px',
                     height: opt.height || '500px',

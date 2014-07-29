@@ -30,7 +30,7 @@
 <script>
 
     var role = msj.role,
-            socket = io.connect( msj.ip ),
+            socket = io.connect(msj.ip),
             ne = msj.et,
             tpl = msj.tpl;
     var me = {
@@ -38,13 +38,13 @@
         id: Math.random() * 1989
     }
 
-    socket.emit( ne.login, me );
+    socket.emit(ne.login, me);
 
-    socket.on( ne.loginSuccess, function( o ) {
-        if(o.id == me.id) {
-            console.log( me );
+    socket.on(ne.loginSuccess, function (o) {
+        if (o.id == me.id) {
+            console.log(me);
         }
-    } )
+    })
 
 
     var data = [
@@ -214,14 +214,14 @@
     ]
 
 
-    var tab = new tab( {
+    var tab = new tab({
         tab: data,
-        ol: new Ol( {tpl: tpl.b,
+        ol: new Ol({tpl: tpl.b,
             data: {list: []},
-            submit: function( data ) {
-               // socket.emit( ne.addDesk, data );
-            }} )
-    } );
+            submit: function (data) {
+                socket.emit(ne.addDesk, data);
+            }})
+    });
 
     //加滚动
 

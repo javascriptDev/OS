@@ -58,7 +58,7 @@ popup.prototype = {
         this.show();
         !this.rendered && (function () {
             document.body.appendChild(me.c);
-            !me.rendered && (me.rendered = true)
+            me.rendered = true;
         }())
 
     },

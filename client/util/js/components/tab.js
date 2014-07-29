@@ -115,18 +115,26 @@ tab.prototype = {
     },
     addEvent: function () {
         var me = this;
-
-        function tabEvent(e) {
+        this.el.addEventListener('touchstart', function (e) {
             e.preventDefault();
-            var t = e.target.offsetParent;
-            if (t.className.indexOf('tab-item') != -1) {
-                var index = t.dataset['index'];
-                me.switchTab(index, t);
+        })
+        addScrollEvent(this.tabs, {
+            tap: {
+                el: this.tabs,
+                fn: function (e) {
+                    var el;
+
+                    if (e.target.className.indexOf('tab-item') != -1) {
+                        el = e.target;
+                    } else if (e.target.offsetParent.className.indexOf('tab-item') != -1) {
+                        el = e.target.offsetParent;
+                    }
+                    if (el) {
+                        var index = el.dataset['index'];
+                        me.switchTab(index, el);
+                    }
+                }
             }
-        }
-
-        this.tabs.addEventListener('touchstart', tabEvent);
-
-
+        });
     }
 }

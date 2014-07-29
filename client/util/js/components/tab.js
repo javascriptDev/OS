@@ -42,7 +42,7 @@ tab.prototype = {
         })
         //默认选中第一个
         this.switchTab(0)
-        me.tabWrapper.style.height = window.screen.height-40 + 'px';
+        me.tabWrapper.style.height = window.screen.height-150 + 'px';
         document.body.appendChild(this.el);
 
     },

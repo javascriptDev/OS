@@ -73,8 +73,8 @@ popup.prototype = {
                 })
             if (button.events) {
                 for (var i in button.events) {
-                    b.addEventListener(i, function () {
-                        button.events[i].call(me);
+                    b.addEventListener(i, function (e) {
+                        button.events[i].call(me, e);
                     });
                 }
             }

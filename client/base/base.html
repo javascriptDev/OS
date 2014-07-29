@@ -16,6 +16,8 @@
     <link href="client/util/css/base.css" rel="stylesheet">
     <link href="client/util/css/grid.css" rel="stylesheet">
     <link href="client/util/css/tree.css" rel="stylesheet">
+    <link href="client/util/css/popup.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -137,7 +139,7 @@ socket.on(events.loginSuccess, function (o) {
                             text: '添加',
                             cls: 'add',
                             events: {
-                                click: function () {
+                                click: function (e) {
 
                                 }
                             }
@@ -146,7 +148,7 @@ socket.on(events.loginSuccess, function (o) {
                             text: 'cancel',
                             cls: 'cancel',
                             events: {
-                                click: function () {
+                                click: function (e) {
                                     this.hide();
                                 }
                             }

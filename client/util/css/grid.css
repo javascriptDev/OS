@@ -9,6 +9,9 @@ div {
     line-height: 100%;
     text-align: center;
 }
+.order{
+    width:30%;
+}
 
 .line, .line-field {
     width: 40px;

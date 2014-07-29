@@ -184,7 +184,7 @@ Grid.prototype = {
                 if (item.sort) {
                     fields += '<div class="g-field g-f sort" data-type="asc"  data-name="' + item.en + '">' + item.cn + '</div>';
                 } else {
-                    fields += '<div class="g-field g-f">' + item.en + '</div>';
+                    fields += '<div class="g-field g-f ' + item.en + '">' + item.cn + '</div>';
                 }
             }
             //<-----------------------------生成表头结束----------------------------->
@@ -496,7 +496,7 @@ Grid.prototype = {
                 }
             }
             if (item) {
-                me.popup && me.popup.update({list:[me.getDataById(item.querySelector('.id').id)]}, 1);
+                me.popup && me.popup.update({list: [me.getDataById(item.querySelector('.id').id)]}, 1);
             }
         }
     },

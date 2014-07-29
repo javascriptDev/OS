@@ -23,7 +23,7 @@ div {
     height:30px;
     line-height: 30px;
     position: absolute !important;
-    bottom: 0;
+    bottom: -30px;
     width: 100%;
 }
 
@@ -144,6 +144,7 @@ div {
 .g-list {
     overflow-x: hidden;
     overflow-y: scroll;
+    margin-bottom:30px;
 
 }
 .g-content{

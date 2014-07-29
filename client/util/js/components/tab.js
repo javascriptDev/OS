@@ -20,11 +20,12 @@ function tab(o) {
 tab.prototype = {
     initBase: function () {
         var div = document.createElement('div');
-        div.innerHTML = '<div class="tabs"></div><div class="contents wrapper"></div>';
+        div.innerHTML = '<div class="tabs wrapper"><div class="tabs-body"></div></div><div class="contents wrapper"></div>';
         div.className = 'tab-c';
         this.el = div;
-        this.tabs = query(div, '.tabs');
-        this.contents = query(div, '.wrapper');
+        this.tabWrapper = query(div, '.tabs');
+        this.tabs = query(div, '.tabs-body');
+        this.contents = query(div, '.contents');
     },
     init: function () {
         this.initBase();
@@ -41,7 +42,7 @@ tab.prototype = {
         })
         //默认选中第一个
         this.switchTab(0)
-
+        me.tabWrapper.style.height = window.screen.height-40 + 'px';
         document.body.appendChild(this.el);
 
     },

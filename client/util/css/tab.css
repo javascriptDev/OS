@@ -2,6 +2,13 @@
 .tab-c,body{
     overflow-x: hidden;
     overflow-y: scroll;
+
+}
+.tab-c{
+    margin-bottom: 40px;
+}
+.tab-c .tabs{
+    left: 0;
 }
 .tabs {
     display: inline-block;
@@ -10,6 +17,7 @@
     position: fixed;
     overflow-y: scroll;
     overflow-x: hidden;
+
 }
 
 .tab-item {
@@ -49,7 +57,6 @@
     width: -webkit-calc(100% - 30px);
     overflow-y: scroll;
     overflow-x: hidden;
-    margin-bottom: 40px;
 
 }
 

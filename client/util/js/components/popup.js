@@ -3,6 +3,7 @@
  */
 function popup(opt) {
     this.opt = opt;
+    this.rendered = false;
     var _data = opt.data || [];
     this.addData = function (data) {
         _data = data;
@@ -15,6 +16,7 @@ function popup(opt) {
     }
     this.init();
 
+
 }
 
 
@@ -22,42 +24,75 @@ popup.prototype = {
     init: function () {
         var me = this;
         var opt = this.opt;
-        this.el = msj.createEl('div', {
+        this.c = msj.createEl('div', {
             className: 'addison-popup',
             style: {
-                border: '1px solid red',
-                height: opt.height || '400px',
-                width: opt.width || '300px'
+                height: '100%',
+                width: '100%',
+                position: 'absolute',
+                background: 'rgba(205,197,191,0.8)',
+                top: 0
             }
         });
+        this.el = msj.createEl('div', {
+                className: 'pupup-body',
+                style: {
+                    width: opt.width || '400px',
+                    height: opt.height || '500px',
+                    border: '1px solid red',
+                    margin: '40px auto',
+                    background: 'white'
+                }
+            }
+        )
+        this.c.appendChild(this.el);
         if (this.opt.isRender) {
             this.render();
         }
 
     },
     render: function () {
+        var me = this;
         this.el.innerHTML = template.compile(this.opt.tpl)(this.getData());
-        document.body.appendChild(this.el);
+        me.addButton();
+        this.show();
+        !this.rendered && (function () {
+            document.body.appendChild(me.c);
+            !me.rendered && (me.rendered = true)
+        }())
+
     },
-    addEvent: function () {
-        var opt = this.opt,
-            btn = opt.btn;
-        btn.ok && (btn.ok.onclick = opt.submit && null)
-        btn.quit && (btn.quit.onclick = opt.quit || function (e) {
-
-        });
-        btn.reset && (btn.reset.onclick = opt.reset || function (e) {
-
+    addButton: function () {
+        var me = this, opt = me.opt, btn = opt.btn;
+        var btnContainer = this.c.querySelector(btn.parent);
+        btn.buttons && btn.buttons.forEach(function (button) {
+            var b = msj.createEl('button',
+                {
+                    className: button.cls || 'pop-button',
+                    innerHTML: button.text
+                })
+            if (button.events) {
+                for (var i in button.events) {
+                    b.addEventListener(i, function () {
+                        button.events[i].call(me);
+                    });
+                }
+            }
+            btnContainer.appendChild(b);
         })
+
     },
     update: function (data, isRender) {
         this.setData(data);
         isRender && this.render();
     },
     hide: function () {
+        this.c.style.display = 'none';
     },
     show: function () {
+        this.c.style.display = 'block';
     },
     destroy: function () {
+
     }
 }

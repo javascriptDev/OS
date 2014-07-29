@@ -130,17 +130,30 @@ socket.on(events.loginSuccess, function (o) {
                     {text: 'asd'},
                     {text: '333'}
                 ]},
-                btn: [
-                    {
-                        text: '',
-                        click: function () {
+                btn: {
+                    parent: '.btn-c',
+                    buttons: [
+                        {
+                            text: '添加',
+                            cls: 'add',
+                            events: {
+                                click: function () {
+
+                                }
+                            }
+                        },
+                        {
+                            text: 'cancel',
+                            cls: 'cancel',
+                            events: {
+                                click: function () {
+                                    this.hide();
+                                }
+                            }
+
 
                         }
-                    },
-                    {
-
-                    }
-                ]
+                    ]}
 
 
             })

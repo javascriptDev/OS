@@ -5,47 +5,28 @@
 }
 
 .j-tree {
-
+    font: normal .8em/1.5em Arial, Helvetica, sans-serif;
 }
 
 .node-dom {
-    font-size: 23px;
+    font-size: 18px;
     line-height: normal;
     color: #fff;
-    font-weight: bold;
-
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     margin-top: 6px;
     /*border: 1px solid #ef4140;*/
-    background: cornflowerblue; /* Old browsers */
-    text-shadow: none;
+    background: #d7dbde;
+    background-image: -webkit-linear-gradient(top, #d7dbde, #a0a2a3);
+    color: #444;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
     padding: 4px 16px 4px 16px;
 }
 
-.node-dom + .leaf-container {
-    /*margin-left: 50px;*/
-}
-
-.leaf-container .node-dom {
-    background: #ffeef4;
-}
-
-.leaf-container .node-dom + .leaf-container {
-    margin-left: 60px;
-}
-
-.leaf-container .node-dom + .leaf-container .node-dom {
-    background: #62ddd5;
-
-}
-
-.leaf-container .node-dom + .leaf-container .node-dom + .leaf-container {
-    margin-left: 110px;
-}
-
 .leaf-container {
-    -webkit-transition: -webkit-transform .5s, height .5s;;
-
-    transition: transform .5s, height .5s;
+    -webkit-transition: -webkit-transform .5s cubic-bezier(0, 1.03, .01, 1.16), height .5s cubic-bezier(0, 1.03, .01, 1.16);
+    transition: transform .5s cubic-bezier(0, 1.03, .01, 1.16), height .5s cubic-bezier(0, 1.03, .01, 1.16);
 
     -webkit-transform-origin: 50% 0;
     -moz-transform-origin: 50% 0;
@@ -53,44 +34,33 @@
     -o-transform-origin: 50% 0;
     transform-origin: 50% 0;
 
-    /*display: none;*/
+    border: solid 1px #b4b4b4;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+
+    background: #ddd url('../img/gradient.png') repeat-x 0 0;
 }
 
 .leaf-dom {
     display: block;
-    color: #3a3a3a;
-    text-decoration: none;
-    border: 1px solid #fff;
-    background: #f1f1f1; /* Old browsers */
-    background: #878787;
-
-    /* IE6-9 */
-    box-shadow: -1px -1px 0 #b3b3b3, 1px -1px 0 #b3b3b3, -1px 1px 0 #b3b3b3, 1px 1px 0 #b3b3b3;
-    border-radius: 3px;
+    color: #666;
+    font-size: 16px;
     padding: 4px 16px 4px 16px;
-    text-shadow: -1px -1px 0 #f2f0f0, 1px -1px 0 #f2f0f0, -1px 1px 0 #f2f0f0, 1px 1px 0 #f2f0f0;
-}
-
-.middle-dom {
-    display: block;
-    color: #3a3a3a;
-    text-decoration: none;
-    /*border: 1px solid #fff;*/
-    background: #e0e0e0; /* Old browsers */
-
-    box-shadow: -1px -1px 0 #b3b3b3, 1px -1px 0 #b3b3b3, -1px 1px 0 #b3b3b3, 1px 1px 0 #b3b3b3;
-    border-radius: 3px;
-    padding: 4px 16px 4px 16px;
-    text-shadow: -1px -1px 0 #f2f0f0, 1px -1px 0 #f2f0f0, -1px 1px 0 #f2f0f0, 1px 1px 0 #f2f0f0;
 }
 
 .leaf-dom:hover {
-    border: 1px solid #676b6f;
-    background: #878787; /* Old browsers */
-    color: white;
-    box-shadow: -1px -1px 0 #2a2a2a, 1px -1px 0 #2a2a2a, -1px 1px 0 #2a2a2a, 1px 1px 0 #2a2a2a;
-    color: #fff;
-    text-shadow: -1px -1px 0 #191919, 1px -1px 0 #191919, -1px 1px 0 #191919, 1px 1px 0 #191919;
+
+    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
+    color: #fff !important;
+}
+
+.leaf-selected {
+    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
+    color: #fff !important;
 }
 
 .icon {

@@ -109,7 +109,6 @@ Tree.prototype = {
         Array.prototype.forEach.call(items, function (leaf) {
             if (!leaf.items) {
                 var el = me.createLeaf(leaf.name, leaf.text, type).getDom();
-                console.log(parent);
                 parent.appendChild(el);
             } else {
                 var node = me.createNode(leaf.node, leaf.id),
@@ -150,6 +149,8 @@ Tree.prototype = {
                 if (cls == 'node-dom') {
                     me.nodeClick(e.target);
                 } else if (cls == 'leaf-dom') {
+                    me.cancelOtherSelect();
+                    me.select(e.target);
                     me.leafClick && me.leafClick(e);
                 }
             }
@@ -221,6 +222,16 @@ Tree.prototype = {
             this.dragStart(e);
         }
     },
+    select: function (el) {
+        if (el.className.indexOf('leaf-selected') == -1) {
+            el.className += ' leaf-selected';
+        }
+    },
+    cancelOtherSelect: function () {
+        var selected = this.el.querySelector('.leaf-selected');
+        selected && (selected.className = selected.className.replace('leaf-selected', '').replace(/(^\s+)|(\s+$)/g, ''));
+
+    },
     //node click (expand and collapse)
     nodeClick: function (dom) {
 
@@ -229,18 +240,13 @@ Tree.prototype = {
         var ele = dom.parentNode.querySelector('.leaf-container');
         if (cls.indexOf('collapse') != -1) {
             el.className = cls.replace('collapse', 'expand');
-
             ele.style.webkitTransform = 'scaleY(1)'
             ele.style.height = ele.height;
-
         } else {
             el.className = cls.replace('expand', 'collapse');
             ele.style.webkitTransform = 'scaleY(0)'
             ele.style.height = '0';
-
         }
-
-
     },
     //initialize
     init: function () {

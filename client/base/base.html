@@ -91,7 +91,7 @@ socket.on(events.loginSuccess, function (o) {
 
         window.grid = new Grid({
             parent: '.right',
-            title: 'grid demo',
+            title: '报表数据',
             fields: [
                 {en: 'did', cn: '桌号', sort: true},
                 {en: 'order', cn: '菜单', items: [
@@ -216,6 +216,7 @@ window.left = new Tree({
     parent: '.left',
     isDrag: false,
     leafClick: function (e) {
+
         var name = e.target.getAttribute('data-name');
         location.hash = 'page=' + name;
     }

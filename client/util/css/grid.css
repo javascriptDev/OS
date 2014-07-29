@@ -9,8 +9,9 @@ div {
     line-height: 100%;
     text-align: center;
 }
-.order{
-    width:30%;
+
+.order {
+    width: 30%;
 }
 
 .line, .line-field {
@@ -18,8 +19,12 @@ div {
 }
 
 .g-sum {
-    background: silver;
     color: white;
+    height:30px;
+    line-height: 30px;
+    position: absolute !important;
+    bottom: 0;
+    width: 100%;
 }
 
 .middle-bar .pb-selected {
@@ -28,9 +33,14 @@ div {
 }
 
 .g-fields {
-    background: goldenrod;
     color: white;
     text-align: left;
+    padding: 5px;
+}
+
+.gray {
+    background: #d7dbde;
+    background-image: -webkit-linear-gradient(top, #d7dbde, #a0a2a3);
 }
 
 .list-item {
@@ -46,7 +56,7 @@ div {
 .g-foot {
     height: 40px;
     padding: 5px 0;
-    background: dodgerblue;
+
 }
 
 .g-tools {
@@ -56,7 +66,7 @@ div {
 
 .g-title {
     text-align: center;
-    background: dodgerblue;
+
     color: white;
     padding: 5px 0;
     height: 30px;
@@ -64,16 +74,30 @@ div {
 
 .page {
     width: 60%;
-
     height: 30px;
     display: inline-block;
     vertical-align: top;
 }
 
+.blue {
+    background: #8ab9db;
+    background-image: -webkit-linear-gradient(top, #8ab9db, #4daede);
+    background-image: -moz-linear-gradient(top, #8ab9db, #4daede);
+    background-image: -ms-linear-gradient(top, #8ab9db, #4daede);
+    background-image: linear-gradient(top, #8ab9db, #4daede);
+}
+
+.red {
+    background: #e03d4a;
+    background-image: -webkit-linear-gradient(top, #e03d4a, #b51616);
+    background-image: -moz-linear-gradient(top, #e03d4a, #b51616);
+    background-image: -ms-linear-gradient(top, #e03d4a, #b51616);
+    background-image: linear-gradient(to bottom, #e03d4a, #b51616);
+}
+
 .data-info {
     width: 40%;
     line-height: 40px;
-    background: sandybrown;
     color: black;
     text-align: center;
     height: 40px;
@@ -98,25 +122,32 @@ div {
     border-left: 1px solid white;
     text-align: center;
 }
-.g-child-field-container{
-    height:20px;
-    border-bottom:1px solid silver;
+
+.g-child-field-container {
+    height: 20px;
+    border-bottom: 1px solid silver;
 }
-.g-child-text{
+
+.g-child-text {
     float: left;
 }
-.g-child-value{
+
+.g-child-value {
     float: right;
 }
 
 .a-grid {
-    border: 1px solid cornflowerblue;
+    border: 1px solid #eee;
     box-sizing: border-box;
 }
 
 .g-list {
     overflow-x: hidden;
     overflow-y: scroll;
+
+}
+.g-content{
+    position: relative;
 }
 
 .item-selected {
@@ -131,7 +162,7 @@ div {
     margin: 0 2px;
 }
 
-.a-grid {
+body {
     -moz-user-select: none; /*火狐*/
     -webkit-user-select: none; /*webkit浏览器*/
     -ms-user-select: none; /*IE10*/

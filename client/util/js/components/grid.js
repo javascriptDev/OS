@@ -105,17 +105,18 @@ Grid.prototype = {
     createBase: function () {
         var div = document.createElement('div');
         div.className = 'a-grid';
-        div.innerHTML = '<div class="g-title"></div>' +
+        div.innerHTML = '<div class="g-title gray"></div>' +
             '<div class="g-tools"></div>' +
             '<div class="g-content">' +
-            '<div class="g-fields"></div>' +
+            '<div class="g-fields gray"></div>' +
             '<div class="g-list"></div>' +
             '</div>' +
-            '<div class="g-foot"></div>';
+            '<div class="g-foot gray"></div>';
         this.titleEl = div.querySelector('.g-title');
         this.toolbarEl = div.querySelector('.g-tools');
         this.fieldEl = div.querySelector('.g-fields');
         this.contentEl = div.querySelector('.g-list');
+        this.body = div.querySelector('.g-content');
         this.footEl = div.querySelector('.g-foot');
         this.el = div;
     },
@@ -251,11 +252,11 @@ Grid.prototype = {
         })
         //添加总计dom
         this.addItem({list: [o]}, function beforeAdd(dom) {
-            dom.className += ' g-sum';
+            dom.className += ' g-sum red';
             dom.firstChild.innerHTML = '总计';
         }, function added(dom) {
             dom.removeChild(dom.querySelector('.operate'));
-        });
+        }, this.body);
     },
     setFoot: function () {
         var me = this;
@@ -340,8 +341,9 @@ Grid.prototype = {
 
     },
     //当前分页加载一行数据，不操作 grid data
-    addItem: function (data, beforeAdd, added) {
+    addItem: function (data, beforeAdd, added, container) {
 
+        container = container || this.contentEl;
         var html = template.compile(this.tpl)(data);
         var c = document.createElement('div');
         c.innerHTML = html;
@@ -350,7 +352,7 @@ Grid.prototype = {
         //给行添加class。
         beforeAdd && beforeAdd(el);
         //添加到主体上面
-        this.contentEl.appendChild(el);
+        container.appendChild(el);
         //
         this.setInfo();
         added && added(el);

@@ -90,7 +90,7 @@ msj = {
             "</div>" +
 
             "<div class=order-list-item-container>" +
-            "<div class=pop-list-item>金额</div>" +
+            "<div class=pop-list-item>总价</div>" +
             "<div class=pop-list-item><%=list[i].price%></div>" +
             "</div>" +
 

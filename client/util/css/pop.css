@@ -2,6 +2,7 @@
     display: inline-block;
     padding: 5px;
 }
+
 .popup-body {
     position: relative;
     padding: 30px 0;
@@ -35,4 +36,9 @@
 .btn-c button {
     width: 80px;
     height: 80%;
+}
+
+.addison-popup {
+    -webkit-transition: .4s cubic-bezier(0, .99, 0, .91);
+    -webkit-transform: scale(0);
 }

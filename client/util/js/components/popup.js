@@ -55,11 +55,11 @@ popup.prototype = {
         var me = this;
         this.el.innerHTML = template.compile(this.opt.tpl)(this.getData());
         me.addButton();
-        this.show();
         !this.rendered && (function () {
             document.body.appendChild(me.c);
             me.rendered = true;
         }())
+        this.show();
 
     },
     addButton: function () {
@@ -87,10 +87,13 @@ popup.prototype = {
         isRender && this.render();
     },
     hide: function () {
-        this.c.style.display = 'none';
+//        this.c.style.display = 'none';
+        this.c.style.webkitTransform = 'scale(0)'
+
     },
     show: function () {
-        this.c.style.display = 'block';
+//        this.c.style.display = 'block';
+        this.c.style.webkitTransform = 'scale(1)'
     },
     destroy: function () {
 

@@ -9,7 +9,7 @@ function Tree(cfg) {
     this.data = cfg.data || [];
     this.mdata = cfg.mdata || [];
     this.dragStart = cfg.dragStart;
-    this.leafClick=cfg.leafClick;
+    this.leafClick = cfg.leafClick;
     this.structureIndex = 0;
     this.init();
 }
@@ -39,11 +39,16 @@ Tree.prototype = {
             //一个类别下面所有的子节点
                 leafColl = node.getChildC();
             //遍历所有节点,并添加到 leafColl 上
-            me.DG(leafColl, item.items, item.node);
+            me.recursion(leafColl, item.items, item.node);
 
             me.el.appendChild(area);
         });
         this.parent.appendChild(this.el);
+        //用于 collapse expand css animation
+        Array.prototype.forEach.call(this.el.querySelectorAll('.leaf-container'), function (item) {
+            item.height = item.offsetHeight + 'px';
+            item.style.height = item.height;
+        })
     },
     //update data structure
     addData: function (target, data) {
@@ -99,17 +104,18 @@ Tree.prototype = {
 
     },
     //递归
-    DG: function DG(parent, items, type) {
+    recursion: function (parent, items, type) {
         var me = this;
         Array.prototype.forEach.call(items, function (leaf) {
             if (!leaf.items) {
                 var el = me.createLeaf(leaf.name, leaf.text, type).getDom();
+                console.log(parent);
                 parent.appendChild(el);
             } else {
                 var node = me.createNode(leaf.node, leaf.id),
                     dom = node.getDom();
                 parent.appendChild(dom);
-                me.DG.call(me, node.getChildC(), leaf.items, leaf.node);
+                me.recursion.call(me, node.getChildC(), leaf.items, leaf.node);
             }
         });
     },
@@ -220,13 +226,18 @@ Tree.prototype = {
 
         var el = dom.querySelector('i'),
             cls = el.className;
+        var ele = dom.parentNode.querySelector('.leaf-container');
         if (cls.indexOf('collapse') != -1) {
             el.className = cls.replace('collapse', 'expand');
-            dom.parentNode.querySelector('.leaf-container').style.display = 'block';
+
+            ele.style.webkitTransform = 'scaleY(1)'
+            ele.style.height = ele.height;
 
         } else {
             el.className = cls.replace('expand', 'collapse');
-            dom.parentNode.querySelector('.leaf-container').style.display = 'none';
+            ele.style.webkitTransform = 'scaleY(0)'
+            ele.style.height = '0';
+
         }
 
 

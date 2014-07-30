@@ -50,17 +50,42 @@
     color: #666;
     font-size: 16px;
     padding: 4px 16px 4px 16px;
+    position: relative;
+    z-index: 100;
+    -webkit-transition: background .5;
+    -moz-transition: background .5;
+    -ms-transition: background .5;
+    -o-transition: background .5;
+    transition: background .5;
+
+}
+
+.leaf-dom:hover {
+    color: white;
+    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
+}
+
+.leaf-dom:nth-last-child(1):hover {
+    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+.leaf-dom:hover:after {
+    height: 100%;
+    -webkit-transform: rotateX(0deg);
 }
 
 .leaf-dom:hover {
 
-    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
     color: #fff !important;
 }
 
 .leaf-selected {
     background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
     color: #fff !important;
+    border-radius: 10px;
 }
 
 .icon {

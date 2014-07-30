@@ -48,12 +48,11 @@
  *
  */
 function Grid(o) {
+    this.opt = o;
     //title
     this.title = o.title || 'gird-demo';
     this.width = o.width || 500;
     this.height = o.height || 400;
-    //是否启用查询
-    this.isQuery = o.isQuery || true;
     //需要汇总的字段
     this.sumField = [];
     //需要排序的字段
@@ -76,67 +75,70 @@ function Grid(o) {
 Grid.prototype = {
     init: function () {
         this.createBase();
-        this.setTitle();
-        this.setToolBar();
+
+        this.opt.isTitle && this.setTitle();
+        this.opt.isToolBar && this.setToolBar();
         this.setField();
         this.update();
         this.addEvent();
         this.render();
         this.setCss();
+        this.inititalize = true;
+
     },
     update: function (data, fn) {
         data && (this.data = data);
         //todo: 每次添加一条数据，都要执行这个。有点浪费资源
+        this.setContent(this.page.ci, data);
         this.setFoot();
         this.paging();
-        this.setContent(this.page.ci, data);
         this.setInfo();
         fn && fn.call(this);
-
     },
     setCss: function () {
         this.el.style.width = this.width + 'px';
         this.el.style.height = this.height + 'px';
         this.el.style.maxHeight = this.height + 'px';
         var cs = this.contentEl.style;
-        cs.height = this.height - this.titleEl.offsetHeight - this.fieldEl.offsetHeight - this.toolbarEl.offsetHeight - this.footEl.offsetHeight + 'px';
+        cs.height = this.height - (this.titleEl && this.titleEl.offsetHeight) - this.fieldEl.offsetHeight - (this.toolbarEl && this.toolbarEl.offsetHeight) - this.footEl.offsetHeight + 'px';
     },
     //创建骨架dom
     createBase: function () {
-        var div = document.createElement('div');
-        div.className = 'a-grid';
-        div.innerHTML = '<div class="g-title gray"></div>' +
-            '<div class="g-tools"></div>' +
-            '<div class="g-content">' +
-            '<div class="g-fields gray"></div>' +
-            '<div class="g-list"></div>' +
-            '</div>' +
-            '<div class="g-foot gray"></div>';
-        this.titleEl = div.querySelector('.g-title');
-        this.toolbarEl = div.querySelector('.g-tools');
-        this.fieldEl = div.querySelector('.g-fields');
-        this.contentEl = div.querySelector('.g-list');
-        this.body = div.querySelector('.g-content');
-        this.footEl = div.querySelector('.g-foot');
-        this.el = div;
+        this.el = msj.createEl('div', {
+            className: 'a-grid'
+        })
     },
     setTitle: function () {
+        this.titleEl = msj.createEl('div', {
+            className: 'g-title gray'
+        })
         this.titleEl.innerHTML = this.title;
+        this.el.appendChild(this.titleEl);
     },
     setToolBar: function () {
+
+        this.toolbarEl = msj.createEl('div', {
+            className: 'g-tools'
+        })
+        this.el.appendChild(this.toolbarEl);
         var html = '<button class="g-add">添加</button>' +
             '<button class="g-del">删除</button>' +
             '<button class="g-refresh">刷新</button>'
-        if (this.isQuery) {
-            html += '<div class="g-query"><input type="text"><button class="query">查询</button></div>'
-        }
+
+        html += '<div class="g-query"><input type="text"><button class="query">查询</button></div>'
+
         this.toolbarEl.innerHTML = html;
+
         this.controls.addBtn = this.toolbarEl.querySelector('.g-add');
         this.controls.delBtn = this.toolbarEl.querySelector('.g-del');
         this.controls.refreshBtn = this.toolbarEl.querySelector('.g-refresh');
         this.controls.query = this.toolbarEl.querySelector('.g-query');
     },
     setField: function () {
+        this.fieldEl = msj.createEl('div', {
+            className: 'g-fields gray'
+        })
+        this.el.appendChild(this.fieldEl);
         var me = this;
         var fields = '';
         //模板
@@ -204,6 +206,17 @@ Grid.prototype = {
         this.tpl = tpl;
     },
     setContent: function (pageIndex, newData) {
+        if (!this.inititalize) {
+            this.body = msj.createEl('div', {
+                className: 'g-content'
+            });
+
+            this.contentEl = msj.createEl('div', {
+                className: 'g-list'
+            })
+            this.body.appendChild(this.contentEl);
+            this.el.appendChild(this.body);
+        }
         var me = this;
         newData = newData || me.data;
         if (!pageIndex) pageIndex = 0;
@@ -224,6 +237,7 @@ Grid.prototype = {
         this.setLineNumber();
         this.sumField.length > 0 ? this.setSum(pageData) : null;
         this.setPageBarSelect();
+
     },
     //设置行号
     setLineNumber: function () {
@@ -258,16 +272,40 @@ Grid.prototype = {
             dom.removeChild(dom.querySelector('.operate'));
         }, this.body);
     },
-    setFoot: function () {
-        var me = this;
-        var html = '<div class="page"><div class="last p-bar"><</div><div class="middle-bar"></div><div class="next p-bar">></div></div><div class="data-info"></div>'
-        this.footEl.innerHTML = html;
-        this.controls.info = this.footEl.querySelector('.data-info');
-        this.pagingBarEl = this.footEl.querySelector('.middle-bar');
-        this.lastPageEl = this.footEl.querySelector('.last');
-        this.nextPageEl = this.footEl.querySelector('.next');
 
-        //分页事件
+    setFoot: function () {
+        if (!this.inititalize) {
+            var me = this;
+
+            this.footEl = msj.createEl('div', {
+                className: 'g-foot gray'
+            })
+            this.el.appendChild(this.footEl);
+            this.setPage();
+        }
+
+
+    },
+    //添加分页dom
+    setPage: function () {
+        var me = this;
+        this.pageEl = msj.createEl('div', {
+            className: 'page'
+        });
+        this.lastPageEl = msj.createEl('div', {
+            className: 'last p-bar'
+        });
+
+        this.nextPageEl = msj.createEl('div', {
+            className: 'next p-bar'
+        })
+        this.pagingBarEl = msj.createEl('div', {
+            className: 'middle-bar'
+        })
+
+        this.pageEl.appendChild(this.lastPageEl);
+        this.pageEl.appendChild(this.pagingBarEl);
+        this.pageEl.appendChild(this.nextPageEl);
         //上一页
         this.lastPageEl.onclick = function () {
             if (me.page.ci > 0) {
@@ -290,6 +328,15 @@ Grid.prototype = {
                 me.setContent(index);
             }
         }
+        this.setInfoEl();
+    },
+    //添加分页 详细信息dom
+    setInfoEl: function () {
+        this.controls.info = msj.createEl('div', {
+            className: 'data-info'
+        });
+        this.pageEl.appendChild(this.controls.info);
+        this.setInfo()
     },
     //设置右下角数据总数
     setInfo: function () {
@@ -312,7 +359,6 @@ Grid.prototype = {
 //            }
             me.data.list.push(item);
         })
-
         // this.addItem({list: [data]});
         this.update();
     },
@@ -342,7 +388,6 @@ Grid.prototype = {
     },
     //当前分页加载一行数据，不操作 grid data
     addItem: function (data, beforeAdd, added, container) {
-
         container = container || this.contentEl;
         var html = template.compile(this.tpl)(data);
         var c = document.createElement('div');
@@ -354,7 +399,7 @@ Grid.prototype = {
         //添加到主体上面
         container.appendChild(el);
         //
-        this.setInfo();
+        this.controls.info && this.setInfo();
         added && added(el);
     },
     createPagingBar: function (i) {
@@ -377,15 +422,17 @@ Grid.prototype = {
         }
     },
     setPageBarSelect: function () {
-        var el = this.pagingBarEl.querySelector('.pb-selected');
-        if (el)  el.className = el.className.replace('pb-selected', '').replace(/(^\s+)|(\s+$)/g, '');
-        try {
-            var bar = this.pagingBarEl.querySelector('[data-index="' + this.page.ci + '"]');
-            bar && (bar.className += ' pb-selected');
-            //默认内容从上往下阅读
-            this.contentEl.scrollTop = 0;
-        } catch (e) {
-            throw new Error(e.message);
+        if (this.pagingBarEl) {
+            var el = this.pagingBarEl.querySelector('.pb-selected');
+            if (el)  el.className = el.className.replace('pb-selected', '').replace(/(^\s+)|(\s+$)/g, '');
+            try {
+                var bar = this.pagingBarEl.querySelector('[data-index="' + this.page.ci + '"]');
+                bar && (bar.className += ' pb-selected');
+                //默认内容从上往下阅读
+                this.contentEl.scrollTop = 0;
+            } catch (e) {
+                throw new Error(e.message);
+            }
         }
     },
     sort: function () {
@@ -405,15 +452,12 @@ Grid.prototype = {
     },
     addEvent: function () {
         var me = this;
-
         this.fieldEl.onclick = function (e) {
             var target = e.target;
             if (target.className.indexOf('sort') != -1) {
                 var field = target.getAttribute('data-name');
                 var type = target.getAttribute('data-type');
                 me.page.ci = 0;
-
-
                 if (type == 'asc') {
                     target.setAttribute('data-type', 'desc');
                     me.data.list.sort(function (item, item2) {
@@ -425,26 +469,21 @@ Grid.prototype = {
                         return item[field] > item2[field] ? 1 : -1;
                     })
                 }
-
             }
-
             me.update();
         }
-
-
         //添加数据
-        this.controls.addBtn.onclick = function () {
+        this.controls.addBtn && (this.controls.addBtn.onclick = function () {
             data.price = Math.random() * 100;
             me.addData(randomData(1));
-        }
+        })
         //删除数据
-        this.controls.delBtn.onclick = function () {
+        this.controls.delBtn && (  this.controls.delBtn.onclick = function () {
             var selectItem = me.contentEl.querySelectorAll('.item-selected');
             //todo:删除数据是否数据加 UUID
-        }
+        })
         //list item click
         this.contentEl.onclick = function (e) {
-
             var target = e.target;
             if (target.className.indexOf('g-field') != -1) {
                 target = e.target.offsetParent;
@@ -475,7 +514,6 @@ Grid.prototype = {
                     }
                 }
             } else {//多选模式
-
                 if (target.className.indexOf('item-selected') == -1) {
                     target.className += ' item-selected';
                     //  me.selectItem.push(target);
@@ -484,9 +522,7 @@ Grid.prototype = {
                     //me.selectItem
                 }
             }
-
         }
-
         //list item dbclick
         this.contentEl.ondblclick = function (e) {
             var item;

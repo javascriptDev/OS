@@ -13,5 +13,35 @@
     height: 400px;
     display: inline-block;
 
+}
 
+.header {
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    line-height: 60px;
+
+}
+
+nav {
+    height: 20px;
+    line-height: 20px;
+    width: 100%;
+    background: #eee;
+    margin-bottom: 10px;
+    padding:5px 0;
+}
+
+nav li {
+    float: left;
+    margin-left: 30px;
+    font-size: 13px;
+    list-style-type: none;
+    border-radius: 5px;
+    color: dodgerblue;
+}
+
+nav li:hover {
+    background: dodgerblue;
+    color: white;
 }

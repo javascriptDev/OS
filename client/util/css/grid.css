@@ -45,6 +45,7 @@ div {
 .list-item {
     position: relative;
     vertical-align: middle;
+    padding: 5px;
 }
 
 .list-item:nth-child(even) {
@@ -155,8 +156,8 @@ div {
 }
 
 .item-selected {
-    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
-    color: white;
+    /*background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;*/
+    color: red;
 }
 
 .p-bar, .middle-bar {

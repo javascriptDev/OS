@@ -65,8 +65,10 @@ msj = {
         c: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class='list-item'>" +
             "<div class=text><%=list[i].text%></div>" +
-
             "</div>" +
+            "<%}%>",
+        d: "<%for (var i=0;i<list.length;i++) {%>" +
+            "<div class=text><%=list[i].text%></div>" +
             "<%}%>",
         popup: "<%for (var i=0;i<list.length;i++) {%>" +
 

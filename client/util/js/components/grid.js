@@ -343,7 +343,7 @@ Grid.prototype = {
     },
     //设置右下角数据总数
     setInfo: function () {
-        this.controls.info.innerHTML = '共:' + this.page.pageCount + '页 | 全部:' + this.data.list.length + ' 条';
+        this.controls.info.innerHTML = '共:' + this.page.pageCount + '页 | 全部:' + this.data.list.length + ' 条 | 当前第' + this.page.ci + '页';
     },
     render: function () {
         this.parent.appendChild(this.el);
@@ -419,10 +419,12 @@ Grid.prototype = {
         this.page.pageCount = pages;
         this.page.all = this.data.list.length;
         var forCount = 0;
+        this.pagingBarEl.innerHTML = '';
         pages > 4 ? forCount = 4 : forCount = pages;
         for (var i = 0; i < forCount; i++) {
             this.pagingBarEl.appendChild(this.createPagingBar(i));
         }
+        this.setPageBarSelect();
     },
     setPageBarSelect: function () {
         if (this.pagingBarEl) {

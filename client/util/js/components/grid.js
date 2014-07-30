@@ -76,8 +76,8 @@ Grid.prototype = {
     init: function () {
         this.createBase();
 
-        this.opt.isTitle && this.setTitle();
-        this.opt.isToolBar && this.setToolBar();
+        this.opt.isTitle == undefined ? true : this.opt.isTitle && this.setTitle();
+        this.opt.isToolBar == undefined ? true : this.opt.isToolBar && this.setToolBar();
         this.setField();
         this.update();
         this.addEvent();
@@ -100,7 +100,7 @@ Grid.prototype = {
         this.el.style.height = this.height + 'px';
         this.el.style.maxHeight = this.height + 'px';
         var cs = this.contentEl.style;
-        cs.height = this.height - (this.titleEl && this.titleEl.offsetHeight) - this.fieldEl.offsetHeight - (this.toolbarEl && this.toolbarEl.offsetHeight) - this.footEl.offsetHeight + 'px';
+        cs.height = this.height - ((this.titleEl && this.titleEl.offsetHeight) || 0) - this.fieldEl.offsetHeight - ((this.toolbarEl && this.toolbarEl.offsetHeight) || 0) - this.footEl.offsetHeight + 'px';
     },
     //创建骨架dom
     createBase: function () {
@@ -293,11 +293,13 @@ Grid.prototype = {
             className: 'page'
         });
         this.lastPageEl = msj.createEl('div', {
-            className: 'last p-bar'
+            className: 'last p-bar',
+            innerHTML: '<'
         });
 
         this.nextPageEl = msj.createEl('div', {
-            className: 'next p-bar'
+            className: 'next p-bar',
+            innerHTML: '>'
         })
         this.pagingBarEl = msj.createEl('div', {
             className: 'middle-bar'
@@ -306,6 +308,7 @@ Grid.prototype = {
         this.pageEl.appendChild(this.lastPageEl);
         this.pageEl.appendChild(this.pagingBarEl);
         this.pageEl.appendChild(this.nextPageEl);
+        this.footEl.appendChild(this.pageEl);
         //上一页
         this.lastPageEl.onclick = function () {
             if (me.page.ci > 0) {
@@ -335,7 +338,7 @@ Grid.prototype = {
         this.controls.info = msj.createEl('div', {
             className: 'data-info'
         });
-        this.pageEl.appendChild(this.controls.info);
+        this.footEl.appendChild(this.controls.info);
         this.setInfo()
     },
     //设置右下角数据总数

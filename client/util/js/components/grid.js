@@ -5,19 +5,20 @@
  *
  * 控件dom结构
  * -----------------------------
- * -         title             -
+ * -          title            -
  * -----------------------------
  * -         toolbar           -
  * -----------------------------  - -
- * -        fields             -  c -
+ * -         fields            -  c -
  * -----------------------------  o -
  * -                           -  n -
  * -        content            -  t -
  * -                           -  e -
  * -                           -  n -
- * -                           -  t -
+ * --------------------------- -  t -
+ * -          sum              -  - -
  * -----------------------------  - -
- * -   page     -   data info  -
+ * -   paging   -  paging info -
  * -----------------------------
  *
  *
@@ -42,7 +43,35 @@
         isToolbar: false,                            * 是否加载toolbar
         isFooter: false,                             * 是否加载foot
         isTitle: false,                              * 是否加载title
+        new popup({                                  * 双击 list item 弹出窗口
+                tpl: msj.tpl.popup,                  * 弹出窗口 模板
+                data: {list: [
+                    {text: 'asd'},                   * 数据渲染模板
+                    {text: '333'}
+                ]},
+                btn: {                               * 弹出窗 内涵的 button
+                    parent: '.btn-c',
+                    buttons: [
+                        {
+                            text: '添加',             * button 显示的文字
+                            cls: 'add',
+                            events: {                * button 需要添加的事件
+                                click: function (e) {
 
+                                }
+                            }
+                        },
+                        {
+                            text: 'cancel',
+                            cls: 'cancel',
+                            events: {
+                                click: function (e) {
+                                    this.hide();
+                                }
+                            }
+                        }
+                    ]}
+            })
     });
  *
  *

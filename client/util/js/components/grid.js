@@ -139,7 +139,7 @@ Grid.prototype = {
     },
     setTitle: function () {
         this.titleEl = msj.createEl('div', {
-            className: 'g-title gray'
+            className: 'g-title lightblue'
         })
         this.titleEl.innerHTML = this.title;
         this.el.appendChild(this.titleEl);
@@ -165,7 +165,7 @@ Grid.prototype = {
     },
     setField: function () {
         this.fieldEl = msj.createEl('div', {
-            className: 'g-fields gray'
+            className: 'g-fields lightblue'
         })
         this.el.appendChild(this.fieldEl);
         var me = this;
@@ -295,7 +295,7 @@ Grid.prototype = {
         })
         //添加总计dom
         this.addItem({list: [o]}, function beforeAdd(dom) {
-            dom.className += ' g-sum red';
+            dom.className += ' g-sum cr';
             dom.firstChild.innerHTML = '总计';
         }, function added(dom) {
             dom.removeChild(dom.querySelector('.operate'));
@@ -307,7 +307,7 @@ Grid.prototype = {
             var me = this;
 
             this.footEl = msj.createEl('div', {
-                className: 'g-foot gray'
+                className: 'g-foot lightblue'
             })
             this.el.appendChild(this.footEl);
             this.setPage();
@@ -322,12 +322,12 @@ Grid.prototype = {
             className: 'page'
         });
         this.lastPageEl = msj.createEl('div', {
-            className: 'last p-bar',
+            className: 'last p-bar origin',
             innerHTML: '<'
         });
 
         this.nextPageEl = msj.createEl('div', {
-            className: 'next p-bar',
+            className: 'next p-bar origin',
             innerHTML: '>'
         })
         this.pagingBarEl = msj.createEl('div', {
@@ -354,7 +354,7 @@ Grid.prototype = {
         }
         //分页中间的12345...
         this.pagingBarEl.onclick = function (e) {
-            if (e.target.className == 'p-bar') {
+            if (e.target.className.indexOf('p-bar') != -1) {
                 var index = parseInt(e.target.dataset['index']);
                 me.page.ci = index;
                 me.setContent(index);
@@ -436,7 +436,7 @@ Grid.prototype = {
     },
     createPagingBar: function (i) {
         var div = document.createElement('div');
-        div.className = 'p-bar';
+        div.className = 'p-bar origin';
         div.setAttribute('data-index', i);
         div.innerHTML = i;
         return div;

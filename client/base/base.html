@@ -18,6 +18,8 @@
     <link href="client/util/css/grid.css" rel="stylesheet">
     <link href="client/util/css/tree.css" rel="stylesheet">
     <link href="client/util/css/pop.css" rel="stylesheet">
+    <link href="client/util/css/common.css" rel="stylesheet">
+
     <link href="client/util/css/nestedList.css" rel="stylesheet">
 
 </head>
@@ -25,7 +27,7 @@
 
 <header>
     <div class="header">addison system</div>
-    <nav>
+    <nav class="silver">
         <ul>
             <li>点餐系统</li>
             <li>财务系统</li>
@@ -327,7 +329,7 @@ socket.on(events.loginSuccess, function (o) {
                             ],
                             parent: this.el,
                             height: '200px',
-                            width:'400px'
+                            width: '400px'
                         }).render();
                     }
                 }

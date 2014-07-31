@@ -35,7 +35,8 @@ div {
 .g-fields {
     color: white;
     text-align: left;
-    padding: 5px;
+    padding: 9px;
+
 }
 
 .gray {
@@ -111,7 +112,6 @@ div {
     width: 30px;;
     height: 30px;
     border-radius: 15px;
-    background: yellowgreen;
     display: inline-block;
     line-height: 30px;
     text-align: center;

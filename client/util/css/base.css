@@ -24,12 +24,12 @@
 }
 
 nav {
-    height: 20px;
+    height: 30px;
     line-height: 20px;
     width: 100%;
-    background: #eee;
     margin-bottom: 10px;
-    padding:5px 0;
+    padding: 5px 0;
+
 }
 
 nav li {
@@ -38,10 +38,9 @@ nav li {
     font-size: 13px;
     list-style-type: none;
     border-radius: 5px;
-    color: dodgerblue;
 }
 
 nav li:hover {
-    background: dodgerblue;
-    color: white;
+    opacity: .6;
 }
+

@@ -10,17 +10,10 @@
 
 .node-dom {
     font-size: 18px;
-    line-height: normal;
     color: #fff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     margin-top: 6px;
     /*border: 1px solid #ef4140;*/
-    background: #d7dbde;
-    background-image: -webkit-linear-gradient(top, #d7dbde, #a0a2a3);
-    color: #444;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
     padding: 4px 16px 4px 16px;
 }
 

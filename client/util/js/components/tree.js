@@ -86,7 +86,7 @@ Tree.prototype = {
         leafColl.className = 'leaf-container';
 
         var a = document.createElement('div');
-        a.className = 'node-dom';
+        a.className = 'node-dom lightblue rtl10 rtr10';
         a.setAttribute('data-id', id);
         a.innerHTML = '<i class="icon expand"></i>' + text;
         area.appendChild(a);
@@ -146,9 +146,9 @@ Tree.prototype = {
         this.el.onclick = function (e) {
             var cls = e.target.className;
             if (cls) {
-                if (cls == 'node-dom') {
+                if (cls.indexOf('node-dom') != -1) {
                     me.nodeClick(e.target);
-                } else if (cls == 'leaf-dom') {
+                } else if (cls.indexOf('leaf-dom') != -1) {
                     me.cancelOtherSelect();
                     me.select(e.target);
                     me.leafClick && me.leafClick(e);

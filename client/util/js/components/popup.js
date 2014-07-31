@@ -65,7 +65,7 @@ popup.prototype = {
         var me = this, opt = me.opt, btn = opt.btn;
         var btnContainer = this.c.querySelector(btn.parent);
         btn.buttons && btn.buttons.forEach(function (button) {
-            var b = msj.createEl('button',
+            var b = msj.createEl('div',
                 {
                     className: button.cls || 'pop-button',
                     innerHTML: button.text

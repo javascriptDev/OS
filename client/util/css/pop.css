@@ -8,17 +8,19 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.pop-title{
+
+.pop-title {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background: dodgerblue;
-    color:white;
+    color: white;
     text-align: center;
-    height:30px;
+    height: 30px;
     line-height: 30px;
 
 }
-.fred{
+
+.fred {
     color: red;
     font-weight: bold;
 }
@@ -56,4 +58,23 @@
 .addison-popup {
     -webkit-transition: .4s cubic-bezier(0, .99, 0, .91);
     -webkit-transform: scale(0);
+}
+
+.add {
+    background-color: #5ea600;
+    color: white;
+}
+
+.cancel {
+    background-color: #a40b31;
+    background-image: -webkit-linear-gradient(top, #ec1046, #bc0c38 3%, #8c092a);
+    color: white;
+}
+
+.add:hover {
+    opacity: 0.6;
+}
+
+.cancel:hover {
+    opacity: 0.6;
 }

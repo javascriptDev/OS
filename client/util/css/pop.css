@@ -61,20 +61,23 @@
 }
 
 .add {
-    background-color: #5ea600;
+    background-color: #6c9804;
+    border-top-color: #374e02;
+    background-image: -webkit-linear-gradient(top, #a2e306, #7eb105 3%, #5b7f03);
     color: white;
 }
 
 .cancel {
     background-color: #a40b31;
     background-image: -webkit-linear-gradient(top, #ec1046, #bc0c38 3%, #8c092a);
+    border: 1px solid #a40b31;
     color: white;
 }
 
 .add:hover {
-    opacity: 0.6;
+    opacity: 0.9;
 }
 
 .cancel:hover {
-    opacity: 0.6;
+    opacity: 0.9;
 }

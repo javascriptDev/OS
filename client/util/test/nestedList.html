@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script src="../js/lib/tpl.js"></script>
     <script src="../js/util.js"></script>
     <script src="../js/components/nestedList.js"></script>
     <link href="../css/nestedList.css" rel="stylesheet">
@@ -15,12 +16,160 @@
     for (var i = 0; i < 10; i++) {
         data.push({text: 'asd' + i});
     }
-    new NestedList({
-        data: {
-
-        },
-        tpl: msj.tpl.d
-    })
+    var a = new NestedList({
+        tpl: msj.tpl.d,
+        data: [
+            {
+                text: '凉菜',
+                tpl: msj.tpl.e,
+                items: [
+                    {text: '茴香花生米', price: '10'},
+                    {text: '老醋花生米', price: '11'},
+                    {text: '炝干豆丝', price: '10'},
+                    {text: '炝土豆丝', price: '10'},
+                    {text: '红油肚丝', price: '20'},
+                    {text: '辣拌鸡胗', price: '24'},
+                    {text: '拍黄瓜', price: '10'},
+                    {text: '老虎菜', price: '10'},
+                    {text: '大拉皮', price: '14'},
+                    {text: '三河豆腐丝', price: '10'},
+                    {text: '皮蛋豆腐', price: '8'},
+                    {text: '辣根木耳', price: '12'},
+                    {text: '炝金针蘑瓜丝', price: '18'},
+                    {text: '肉丝拌粉条', price: '18'}
+                ]
+            },
+            {
+                text: '饺子',
+                tpl: msj.tpl.e,
+                child: [
+                    {
+                        text: '素馅水饺',
+                        tpl: msj.tpl.e,
+                        items: [
+                            {text: '韭菜鸡蛋', price: '8'},
+                            {text: '小白菜鸡蛋', price: '10'},
+                            {text: '素三鲜(木耳,虾仁,鸡蛋)', price: '16'},
+                            {text: '黄瓜鸡蛋', price: '10'},
+                            {text: '西红柿鸡蛋', price: '12'},
+                            {text: '青椒鸡蛋', price: '10'},
+                            {text: '平菇玉米粒鸡蛋', price: '12'},
+                            {text: '茴香鸡蛋', price: '10'}
+                        ]
+                    },
+                    {
+                        text: '猪肉水饺',
+                        tpl: msj.tpl.e,
+                        items: [
+                            {text: '猪肉白菜', img: '', price: '8'},
+                            {text: '猪肉芹菜', img: '', price: '10'},
+                            {text: '猪肉酸菜', img: '', price: '10'},
+                            {text: '猪肉茴香', img: '', price: '10'},
+                            {text: '猪肉韭菜', price: '10'},
+                            {text: '猪肉香菇', price: '12'},
+                            {text: '猪肉青椒', price: '10'},
+                            {text: '猪肉大葱', price: '12'},
+                            {text: '肉三鲜(虾仁,鲜贝,猪肉)', price: '28'}
+                        ]
+                    },
+                    {
+                        text: '鸡肉水饺',
+                        tpl: msj.tpl.e,
+                        items: [
+                            {text: '马蹄玉米粒', price: '18'},
+                            {text: '鸡肉韭菜', price: '16'}
+                        ]
+                    },
+                    {
+                        text: '牛肉水饺',
+                        tpl: msj.tpl.e,
+                        items: [
+                            {text: '牛肉萝卜', price: '16'},
+                            {text: '牛肉胡萝卜', price: '16'},
+                            {text: '牛肉韭菜', price: '18'},
+                            {text: '牛肉大葱', price: '18'},
+                            {text: '牛肉西红柿', price: '18'}
+                        ]
+                    },
+                    {
+                        text: '羊驴肉水饺',
+                        tpl: msj.tpl.e,
+                        items: [
+                            {text: '羊肉胡萝卜', price: '22'},
+                            {text: '羊肉香菜', price: '26'},
+                            {text: '羊肉洋葱', price: '26'},
+                            {text: '羊肉大葱', price: '26'},
+                            {text: '驴肉葱花', price: '18'}
+                        ]
+                    }
+                ]
+            },
+            {
+                text: '干锅',
+                tpl: msj.tpl.e,
+                items: [
+                    {text: '干锅娃娃菜', price: '18'},
+                    {text: '干锅茶树菇', price: '24'},
+                    {text: '干锅土豆片', price: '18'}
+                ]
+            },
+            {
+                text: '热菜',
+                tpl: msj.tpl.e,
+                items: [
+                    {text: '爆炒圆白菜', price: '16'},
+                    {text: '韭菜炒鸡蛋', price: '10'},
+                    {text: '木耳炒白菜片', price: '10'},
+                    {text: '青椒丝炒肉丝', price: '20'},
+                    {text: '宫保鸡丁', price: '20'},
+                    {text: '小炒肉', price: '20'},
+                    {text: '杭椒牛柳', price: '38'},
+                    {text: '干煸豆角', price: '18'},
+                    {text: '炒肉木耳', price: '24'},
+                    {text: '家常炖豆腐', price: '16'},
+                    {text: '毛血旺', price: '26'},
+                    {text: '鱼香茄子', price: '18'},
+                    {text: '尖椒炒肉', price: '20'},
+                    {text: '溜豆腐', price: '20'},
+                    {text: '酱炖大豆腐', price: '18'},
+                    {text: '滑子蘑炒肉', price: '22'},
+                    {text: '杏鲍菇炒肉', price: '24'},
+                    {text: '酸辣土豆丝', price: '12'},
+                    {text: '苦瓜煎蛋', price: '16'},
+                    {text: '啤酒地瓜条', price: '26'},
+                    {text: '麻辣豆腐', price: '14'},
+                    {text: '土豆片炖豆腐', price: '18'},
+                    {text: '熘肝尖', price: '20'},
+                    {text: '回锅肉', price: '32'},
+                    {text: '红烧排骨', price: '48'},
+                    {text: '溜肥肠', price: '38'},
+                    {text: '尖椒护心肉', price: '38'},
+                    {text: '小鸡炖蘑菇', price: '38'},
+                    {text: '木须肉', price: '20'},
+                    {text: '锅包肉', price: '32'},
+                    {text: '酱腔骨', price: '48'},
+                    {text: '尖椒干豆腐', price: '14'},
+                    {text: '地三鲜', price: '18'},
+                    {text: '鱼香肉丝', price: '18'},
+                    {text: '乡村扒茄子', price: '18'},
+                    {text: '酸菜粉', price: '16'},
+                    {text: '芹菜粉', price: '16'},
+                    {text: '京酱肉丝', price: '20'},
+                    {text: '烧茄子', price: '16'},
+                    {text: '红烧排骨土豆玉米', price: '48'},
+                    {text: '大丰收', price: '68'},
+                    {text: '溜肉段', price: '32'},
+                    {text: '肉段烧茄子', price: '26'},
+                    {text: '得莫利炖鱼', price: '48'},
+                    {text: '红烧鲤鱼', price: '38'},
+                    {text: '猪肉炖粉条', price: '28'},
+                    {text: '糖醋里脊', price: '32'},
+                    {text: '猪头酸菜炖粉条', price: '28'}
+                ]
+            }
+        ],
+        parent: document.body
+    }).render();
 </script>
 </body>
 </html>

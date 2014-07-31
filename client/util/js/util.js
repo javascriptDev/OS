@@ -55,6 +55,12 @@ msj = {
             "<div class=price><%= list[i].price%></div>" +
             "</div>" +
             "<%}%>",
+        e: "<%for (var i=0;i<list.length;i++) {%>" +
+            "<div class=list-item>" +
+            "<div class=text><%=list[i].text%></div>" +
+            "<div class=price><%= list[i].price%></div>" +
+            "</div>" +
+            "<%}%>",
         b: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class='list-item ol-list-item'>" +
             "<div class=ol-text><%=list[i].text%></div>" +
@@ -68,7 +74,7 @@ msj = {
             "</div>" +
             "<%}%>",
         d: "<%for (var i=0;i<list.length;i++) {%>" +
-            "<div class=text><%=list[i].text%></div>" +
+            "<div class='nestedlist-item'><%=list[i].text%></div>" +
             "<%}%>",
         popup: "<div class=pop-title>交易详情</div>" +
             "<%for (var i=0;i<list.length;i++) {%>" +

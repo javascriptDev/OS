@@ -59,6 +59,7 @@ popup.prototype = {
             me.rendered = true;
         }())
         this.show();
+        me.opt.events.rendered && me.opt.events.rendered.call(this);
 
     },
     addButton: function () {

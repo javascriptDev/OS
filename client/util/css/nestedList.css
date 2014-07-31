@@ -1,0 +1,22 @@
+.g-itemContainer {
+    float: left;
+    overflow: scroll;
+    background-color: #eeeeee;
+    height: 100%;
+}
+
+.g-nestedList-inner {
+    height: 100%;
+
+    left: 0;
+    top: 0;
+
+    position: absolute;
+}
+
+.g-nestedList {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    width: auto;
+}
+

@@ -7,6 +7,7 @@ function NestedList(o) {
     this.getData = function () {
         return _data;
     }
+    this.itemWidth = 150;
     this.init();
 
 }
@@ -18,9 +19,23 @@ NestedList.prototype = {
         this.addEvent();
     },
     createBase: function () {
-        this.el = msj.createEl('div', {
-            className: 'g-nestedList'
+        var me = this;
+        this.c = msj.createEl('div', {
+            className: 'g-nestedList',
+            style: {
+                height: me.opt.height,
+                width: me.opt.width
+            }
         })
+        this.el = msj.createEl('div', {
+                className: 'g-nestedlist-inner',
+                style: {
+                    height: '100%'
+                }
+            }
+        )
+        this.c.appendChild(this.el);
+
 
     },
     createItem: function (data, tpl) {
@@ -30,30 +45,35 @@ NestedList.prototype = {
         var itemContainer = msj.createEl('div', {
             className: 'g-itemContainer',
             style: {
-                width: '150px'
+                width: me.itemWidth + 'px'
             }
         })
+        this.el.style.width = (parseInt(this.el.style.width) || 0) + me.itemWidth + 'px';
         this.el.appendChild(itemContainer);
         itemContainer.innerHTML = template.compile(tpl)({list: data});
         Array.prototype.forEach.call(itemContainer.childNodes, function (item, index) {
             item.dataItems = JSON.stringify(data[index].items);
             item.dataChild = JSON.stringify(data[index].child);
+            item.dataTpl = data[index].tpl;
         })
+        this.c.scrollLeft = 9999;
 
     },
     render: function () {
-        this.opt.parent.appendChild(this.el);
+        this.opt.parent.appendChild(this.c);
         return this;
     },
     addEvent: function () {
+        var me = this;
         this.el.onclick = function (e) {
             var target = e.target;
-            if (target.className == 'nested-item') {
-                
+            if (target.className == 'nestedlist-item') {
+                var items = target.dataItems,
+                    child = target.dataChild;
+                var childData = null;
+                items && me.createItem(JSON.parse(items), target.dataTpl);
+                child && ( childData = JSON.parse(child)) && me.createItem(childData, childData.tpl);
             }
         }
-
     }
-
-
 }

@@ -27,11 +27,12 @@
 
 <header>
     <div class="header">addison system</div>
-    <nav class="silver">
+    <nav class="">
         <ul>
             <li>点餐系统</li>
-            <li>财务系统</li>
-            <li>物品管理系统</li>
+            <li class="change-theme">更换主题
+                <ul class="theme-ul"></ul>
+            </li>
         </ul>
     </nav>
 </header>
@@ -101,6 +102,15 @@ var data = [
         ]
     }
 ]
+
+var bc = {
+    lightBlue: 'c-lightblue',
+    darkRed: 'c-darkred',
+    silver: 'c-silver',
+    origin: 'c-origin',
+    darkBlue: 'c-darkblue'
+}
+var theme = localStorage.getItem('theme') || bc.darkRed;
 //发送登陆事件
 socket.emit(events.login, me);
 //登陆成功回调
@@ -111,6 +121,7 @@ socket.on(events.loginSuccess, function (o) {
         window.grid = new Grid({
             parent: '.right',
             title: '报表数据',
+            baseColor: theme,
             fields: [
                 {en: 'did', cn: '桌号', sort: true},
                 {en: 'order', cn: '菜单', items: [
@@ -145,6 +156,7 @@ socket.on(events.loginSuccess, function (o) {
             },
             popup: new popup({
                 tpl: msj.tpl.popup,
+                baseColor: theme,
                 data: {list: [
                     {text: 'asd'},
                     {text: '333'}
@@ -391,6 +403,7 @@ socket.on(events.makeOver, function (data) {
 window.left = new Tree({
     data: data,
     parent: '.left',
+    baseColor: theme,
     isDrag: false,
     leafClick: function (e) {
 
@@ -403,6 +416,7 @@ window.onhashchange = function (e) {
     init();
 }
 function init() {
+    document.querySelector('nav').className = theme;
     if (location.href.indexOf('#') == -1) {
         location.href = location.href + '#statues=' + pageName.realTime;
     }
@@ -442,7 +456,31 @@ function init() {
             break;
     }
 }
-
+function initThemeSelect() {
+    var html = []
+    for (var i in bc) {
+        html.push('<li class="' + bc[i] + '">' + i + '</li>');
+    }
+    var el = document.querySelector('.theme-ul');
+    el.innerHTML = html.join('');
+    el.height = el.offsetHeight;
+    el.style.display = 'none';
+    el.style.left = el.parentNode.offsetLeft + 'px';
+    el.style.top = '20px';
+    var ct = document.querySelector('.change-theme');
+    ct.onmouseover = function () {
+        el.style.display = 'block';
+    }
+    ct.onmouseout = function (e) {
+        el.style.display = 'none';
+    }
+    el.onclick = function (e) {
+        localStorage.setItem('theme', e.target.className);
+        el.style.display = 'none';
+        location.reload();
+    }
+}
+initThemeSelect();
 </script>
 </body>
 </html>

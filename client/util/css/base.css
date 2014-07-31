@@ -29,6 +29,7 @@ nav {
     width: 100%;
     margin-bottom: 10px;
     padding: 5px 0;
+    position: relative;
 
 }
 
@@ -41,6 +42,29 @@ nav li {
 }
 
 nav li:hover {
-    opacity: .6;
+}
+
+.theme-ul {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    z-index: 101;
+    text-align: left;
+    -webkit-transition: display .5s cubic-bezier(0, 1.03, .01, 1.16);
+    -moz-transition: height .5s cubic-bezier(0, 1.03, .01, 1.16);
+    -ms-transition: height .5s cubic-bezier(0, 1.03, .01, 1.16);
+    -o-transition: height .5s cubic-bezier(0, 1.03, .01, 1.16);
+    transition: display .5s cubic-bezier(0, 1.03, .01, 1.16);
+}
+
+.theme-ul li {
+    margin-left: 0;
+    float: none;
+    border-radius: 0;
+    padding: 5px 10px;
+}
+.theme-ul li:hover{
+    opacity: .9;
+    color: black;
 }
 

@@ -4,6 +4,7 @@
 function popup(opt) {
     this.opt = opt;
     this.rendered = false;
+    this.baseColor = opt.baseColor;
     var _data = opt.data || [];
     this.addData = function (data) {
         _data = data;

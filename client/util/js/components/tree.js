@@ -10,6 +10,7 @@ function Tree(cfg) {
     this.mdata = cfg.mdata || [];
     this.dragStart = cfg.dragStart;
     this.leafClick = cfg.leafClick;
+    this.baseColor = cfg.baseColor;
     this.structureIndex = 0;
     this.init();
 }
@@ -86,7 +87,7 @@ Tree.prototype = {
         leafColl.className = 'leaf-container';
 
         var a = document.createElement('div');
-        a.className = 'node-dom lightblue rtl10 rtr10';
+        a.className = 'node-dom rtl10 rtr10 ' + this.baseColor;
         a.setAttribute('data-id', id);
         a.innerHTML = '<i class="icon expand"></i>' + text;
         area.appendChild(a);

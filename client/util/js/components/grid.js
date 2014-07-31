@@ -82,6 +82,7 @@ function Grid(o) {
     this.title = o.title || 'gird-demo';
     this.width = o.width || 500;
     this.height = o.height || 400;
+    this.baseColor = o.baseColor;
     //需要汇总的字段
     this.sumField = [];
     //需要排序的字段
@@ -138,8 +139,9 @@ Grid.prototype = {
         })
     },
     setTitle: function () {
+        var me = this;
         this.titleEl = msj.createEl('div', {
-            className: 'g-title lightblue'
+            className: 'g-title ' + me.baseColor
         })
         this.titleEl.innerHTML = this.title;
         this.el.appendChild(this.titleEl);
@@ -165,7 +167,7 @@ Grid.prototype = {
     },
     setField: function () {
         this.fieldEl = msj.createEl('div', {
-            className: 'g-fields lightblue'
+            className: 'g-fields ' + this.baseColor
         })
         this.el.appendChild(this.fieldEl);
         var me = this;
@@ -279,6 +281,8 @@ Grid.prototype = {
     },
     //生成汇总行
     setSum: function (data) {
+        var el = this.body.querySelector('.g-sum');
+        el && el.parentNode.removeChild(el);
         var sf = this.sumField;
         var o = {};
         this.fields.forEach(function (f) {
@@ -307,7 +311,7 @@ Grid.prototype = {
             var me = this;
 
             this.footEl = msj.createEl('div', {
-                className: 'g-foot lightblue'
+                className: 'g-foot ' + me.baseColor
             })
             this.el.appendChild(this.footEl);
             this.setPage();

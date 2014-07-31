@@ -18,18 +18,20 @@ html {
     -ms-touch-action: none;
 }
 
-.darkblue {
+.c-darkblue {
     background-color: #2b5283;
     background-image: -webkit-linear-gradient(top, #3e76bc, #325e96 3%, #254670);
     background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(0%, #3e76bc), color-stop(3%, #325e96), color-stop(100%, #254670));
     background-image: linear-gradient(top, #3e76bc, #325e96 3%, #254670);
+    color: white;
 }
 
-.lightblue {
+.c-lightblue {
     background-color: #1985d0;
     background-image: -webkit-linear-gradient(top, #4ca9e9, #1e93e4 3%, #1676b9);
     background-image: -moz-linear-gradient(top, #4ca9e9, #1e93e4 3%, #1676b9);
     background-image: linear-gradient(top, #4ca9e9, #1e93e4 3%, #1676b9);
+    color: #ffffff;
 }
 
 .rtl10 {
@@ -40,12 +42,12 @@ html {
     border-top-right-radius: 10px;
 }
 
-.origin {
+.c-origin {
     background-image: -webkit-gradient(linear, 0% 15%, 0% 100%, from(#B09904), to(#756603));
     color: white;
 }
 
-.silver {
+.c-silver {
     background-color: #c9c9c9;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#c9c9c9), to(#848484), color-stop(0.6, #a1a1a1));
     background-image: -moz-linear-gradient(top, #c9c9c9, #848484, #a1a1a1 90%);
@@ -58,5 +60,10 @@ html {
 
 .cr {
     color: red;
+}
+
+.c-darkred {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FC0303), to(#5E0303));
+    color: white;
 }
 

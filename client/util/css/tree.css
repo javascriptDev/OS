@@ -55,13 +55,13 @@
 
 .leaf-dom:hover {
     color: white;
-    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1B88BF), to(#105273));
 }
 
 .leaf-dom:nth-last-child(1):hover {
-    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1B88BF), to(#105273));
 
 }
 
@@ -75,7 +75,7 @@
 }
 
 .leaf-selected {
-    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1B88BF), to(#105273));
     color: #fff !important;
 }
 

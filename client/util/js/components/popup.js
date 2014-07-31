@@ -39,7 +39,6 @@ popup.prototype = {
                 style: {
                     width: opt.width || '400px',
                     height: opt.height || '500px',
-                    border: '1px solid red',
                     margin: '40px auto',
                     background: 'white'
                 }

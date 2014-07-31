@@ -78,14 +78,17 @@
 }
 
 .leaf-dom:hover {
-
     color: #fff !important;
 }
 
 .leaf-selected {
     background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;
     color: #fff !important;
-    border-radius: 10px;
+}
+
+.leaf-dom:nth-last-child(1) {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .icon {

@@ -70,7 +70,8 @@ msj = {
         d: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class=text><%=list[i].text%></div>" +
             "<%}%>",
-        popup: "<%for (var i=0;i<list.length;i++) {%>" +
+        popup: "<div class=pop-title>交易详情</div>" +
+            "<%for (var i=0;i<list.length;i++) {%>" +
 
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item>桌号</div>" +
@@ -91,9 +92,9 @@ msj = {
             "<%}%>" +
             "</div>" +
 
-            "<div class=order-list-item-container>" +
+            "<div class='order-list-item-container fred'>" +
             "<div class=pop-list-item>总价</div>" +
-            "<div class=pop-list-item><%=list[i].price%></div>" +
+            "<div class='pop-list-item '><%=list[i].price%></div>" +
             "</div>" +
 
             "<div class=btn-c></div>" +

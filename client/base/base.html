@@ -13,18 +13,14 @@
     <script src="client/util/js/components/tree.js"></script>
     <script src="client/util/js/components/nestedList.js"></script>
 
-
     <link href="client/util/css/base.css" rel="stylesheet">
     <link href="client/util/css/grid.css" rel="stylesheet">
     <link href="client/util/css/tree.css" rel="stylesheet">
     <link href="client/util/css/pop.css" rel="stylesheet">
     <link href="client/util/css/common.css" rel="stylesheet">
-
     <link href="client/util/css/nestedList.css" rel="stylesheet">
-
 </head>
 <body>
-
 <header>
     <div class="header">addison system</div>
     <nav class="">
@@ -411,11 +407,9 @@ window.left = new Tree({
     baseColor: theme,
     isDrag: false,
     leafClick: function (e) {
-
         var name = e.target.getAttribute('data-name');
         location.hash = 'page=' + name;
     }
-
 });
 window.onhashchange = function (e) {
     init();

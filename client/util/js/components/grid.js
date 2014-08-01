@@ -105,7 +105,6 @@ function Grid(o) {
 Grid.prototype = {
     init: function () {
         this.createBase();
-
         this.opt.isTitle == undefined ? true : this.opt.isTitle && this.setTitle();
         this.opt.isToolBar == undefined ? true : this.opt.isToolBar && this.setToolBar();
         this.setField();
@@ -114,7 +113,6 @@ Grid.prototype = {
         this.render();
         this.setCss();
         this.inititalize = true;
-
     },
     update: function (data, fn) {
         data && (this.data = data);
@@ -147,7 +145,6 @@ Grid.prototype = {
         this.el.appendChild(this.titleEl);
     },
     setToolBar: function () {
-
         this.toolbarEl = msj.createEl('div', {
             className: 'g-tools'
         })
@@ -155,11 +152,8 @@ Grid.prototype = {
         var html = '<button class="g-add">添加</button>' +
             '<button class="g-del">删除</button>' +
             '<button class="g-refresh">刷新</button>'
-
         html += '<div class="g-query"><input type="text"><button class="query">查询</button></div>'
-
         this.toolbarEl.innerHTML = html;
-
         this.controls.addBtn = this.toolbarEl.querySelector('.g-add');
         this.controls.delBtn = this.toolbarEl.querySelector('.g-del');
         this.controls.refreshBtn = this.toolbarEl.querySelector('.g-refresh');
@@ -176,10 +170,8 @@ Grid.prototype = {
         var tpl =
             "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class='list-item'><div class='g-field line'></div>";
-
         //生成模板开始
         this.fields.forEach(function (item) {
-
             //<----------------------------添加到模板-------------------------------------------------->
             if (item.isHide) {
                 tpl += "<div class='g-field hidden " + item.en + "' id='<%=list[i]['" + item.en + "']%>'></div>";
@@ -198,11 +190,9 @@ Grid.prototype = {
                 tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%>";
                 tpl += "<%for (var j=0;j<(list[i]['data']&&list[i]['data'].length)||0;j++) {%>";
                 tpl += '<div class="g-child-field-container">';
-
                 item.items.forEach(function (child, index) {
                     tpl += '<div class="g-child-field g-child-' + child.en + '"><%= list[i]["data"][j]["' + item.items[index].en + '"]%></div>'
                 })
-
                 tpl += '</div>';
                 tpl += "<%}%>";
                 tpl += '</div>'

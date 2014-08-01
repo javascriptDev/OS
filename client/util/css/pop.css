@@ -58,6 +58,8 @@
 .addison-popup {
     -webkit-transition: .4s cubic-bezier(0, .99, 0, .91);
     -webkit-transform: scale(0);
+    position: absolute;
+    z-index: 10000;
 }
 
 .add {

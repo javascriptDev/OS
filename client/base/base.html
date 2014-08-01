@@ -111,6 +111,7 @@ var bc = {
     darkBlue: 'c-darkblue'
 }
 var theme = localStorage.getItem('theme') || bc.darkRed;
+
 //发送登陆事件
 socket.emit(events.login, me);
 //登陆成功回调
@@ -340,7 +341,7 @@ socket.on(events.loginSuccess, function (o) {
                                 }
                             ],
                             parent: this.el,
-                            height: '200px',
+                            height: '150px',
                             width: '400px'
                         }).render();
                     }

@@ -194,8 +194,6 @@ socket.on(events.loginSuccess, function (o) {
                                     this.hide();
                                 }
                             }
-
-
                         }
                     ]},
                 events: {
@@ -358,20 +356,16 @@ socket.on(events.loginSuccess, function (o) {
                         }).render();
                     }
                 }
-
-
             })
         });
         init();
     }
 });
 socket.on(events.addDesk, function (desk) {
-
     if (Object.prototype.toString.call(desk) == '[object Object]') {
         desk = [desk];
     }
     var data = [];
-
     for (var i = 0, len = desk.length; i < len; i++) {
         (function (index) {
             var d = desk[index];

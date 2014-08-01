@@ -1,6 +1,10 @@
-.pop-list-item {
+.pop-list-item, .pop-list-item-del {
     display: inline-block;
-    padding: 5px;
+    padding: 5px 0;
+}
+
+.pop-list-item-del {
+    color: red;
 }
 
 .popup-body {
@@ -25,12 +29,16 @@
     font-weight: bold;
 }
 
-.order-list-item-container div:nth-child(odd) {
-    width: 70%;
+.order-list-item-container div:nth-child(1) {
+    width: 58%;
 }
 
-.order-list-item-container div:nth-child(even) {
-    width: 28%;
+.order-list-item-container div:nth-child(2) {
+    width: 20%;
+}
+
+.order-list-item-container div:nth-child(3) {
+    width: 20%;
 }
 
 .list-field {

@@ -88,6 +88,8 @@ msj = {
             "<div class='order-list-item-container list-field'>" +
             "<div class=pop-list-item>菜名</div>" +
             "<div class=pop-list-item>单价</div>" +
+            "<div class=pop-list-item>操作</div>" +
+
             "</div>" +
 
             "<div class='order-list-body'>"+
@@ -95,6 +97,7 @@ msj = {
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item><%= list[i].data[j].text%></div>" +
             "<div class=pop-list-item><%= list[i].data[j].value%></div>" +
+            "<div class=pop-list-item-del>X</div>" +
             "</div>" +
             "<%}%>" +
             "</div>"+
@@ -104,7 +107,6 @@ msj = {
             "<div class=pop-list-item>总价</div>" +
             "<div class='pop-list-item '><%=list[i].price%></div>" +
             "</div>" +
-
             "<div class=btn-c></div>" +
             "</div>" +
             "<%}%>",
@@ -112,6 +114,7 @@ msj = {
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item><%= list[j].text%></div>" +
             "<div class=pop-list-item><%= list[j].value%></div>" +
+            "<div class=pop-list-item-del>X</div>" +
             "</div>" +
             "<%}%>"
     },

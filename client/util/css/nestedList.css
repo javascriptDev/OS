@@ -2,7 +2,7 @@
     float: left;
     overflow: scroll;
     height: 100%;
-    border: 1px solid #333;
+    border: 1px solid #ddd;
     position: relative;
     margin-left: 5px;
 }
@@ -55,4 +55,8 @@
 
 .catgory-selected {
     color: red;
+}
+
+.pop-list-item-del {
+    height: 100%;
 }

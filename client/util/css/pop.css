@@ -28,7 +28,9 @@
     color: red;
     font-weight: bold;
 }
-
+.order-list-item-container{
+    position: relative;
+}
 .order-list-item-container div:nth-child(1) {
     width: 58%;
 }

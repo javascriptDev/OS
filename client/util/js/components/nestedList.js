@@ -28,7 +28,8 @@ NestedList.prototype = {
         this.el = msj.createEl('div', {
                 className: 'g-nestedlist-inner',
                 style: {
-                    height: '100%'
+                    height: '100%',
+                    width: me.itemWidth + 'px'
                 }
             }
         )
@@ -44,7 +45,7 @@ NestedList.prototype = {
                 width: me.itemWidth + 'px'
             }
         });
-//        this.el.style.width = (parseInt(this.el.style.width) || 0) + me.itemWidth + 'px';
+
         this.el.appendChild(itemContainer);
         itemContainer.innerHTML = template.compile(tpl)({list: data});
         Array.prototype.forEach.call(itemContainer.childNodes, function (item, index) {
@@ -52,6 +53,7 @@ NestedList.prototype = {
             item.dataChild = JSON.stringify(data[index].child);
             item.dataTpl = data[index].tpl;
         })
+        this.el.style.width = this.el.childNodes.length * me.itemWidth + 'px';
         this.c.scrollLeft = 9999;
 
     },
@@ -62,17 +64,15 @@ NestedList.prototype = {
     addEvent: function () {
         var me = this;
         this.el.onclick = function (e) {
-
             var target = e.target.className == 'nestedlist-item' ? e.target : e.target.offsetParent;
-            if (target.className == 'nestedlist-item') {
+            if (target.className == 'nestedlist-item') {//还有下一层
                 var items = target.dataItems,
                     child = target.dataChild;
-                var childData = null;
+                var childData;
                 me.delNextEl(target.parentNode);
                 items && me.createItem(JSON.parse(items), target.dataTpl);
                 child && ( childData = JSON.parse(child)) && me.createItem(childData, childData.tpl);
-
-            } else if (target.className == 'list-item') {
+            } else if (target.className == 'list-item') {//最后一层
                 if (target.className.indexOf('nested-selected') == -1) {
                     target.className += ' nested-selected';
                 } else {
@@ -86,7 +86,7 @@ NestedList.prototype = {
             if (el.nextElementSibling) {
                 var ele = el.nextElementSibling;
                 ele.parentNode.removeChild(ele);
-                recursion(ele);
+                recursion(el);
             }
         }
         recursion(el);

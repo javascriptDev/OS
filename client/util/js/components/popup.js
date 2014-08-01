@@ -94,7 +94,6 @@ popup.prototype = {
     updataList: function (data) {
         this.addData(data);
         this.listC.innerHTML += template.compile(this.opt.listTpl)({list: data});
-
         var sum = 0;
         data.forEach(function (val) {
             sum += parseInt(val.value);

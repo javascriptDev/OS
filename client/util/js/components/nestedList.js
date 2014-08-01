@@ -52,7 +52,8 @@ NestedList.prototype = {
             item.dataChild = JSON.stringify(data[index].child);
             item.dataTpl = data[index].tpl;
         })
-        this.el.style.width = this.el.childNodes.length * me.itemWidth + 'px';
+        var len = this.el.childNodes.length;
+        this.el.style.width = len * me.itemWidth + len * (10 + 2) + 'px';
         this.c.scrollLeft = 9999;
     },
     render: function () {

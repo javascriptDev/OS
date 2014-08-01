@@ -1,8 +1,10 @@
 .g-itemContainer {
     float: left;
     overflow: scroll;
-    background-color: #eeeeee;
     height: 100%;
+    border: 1px solid #333;
+    position: relative;
+    margin-left: 5px;
 }
 
 .g-nestedList-inner {
@@ -22,6 +24,23 @@
 
 .nestedlist-item {
     position: relative;
+    padding: 4px 0;
+}
+
+.nestedlist-item:after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    top: 15px;
+    border-right: 1px solid red;
+    border-bottom: 1px solid red;
+    right: 10px;
 }
 
 .nested-selected {

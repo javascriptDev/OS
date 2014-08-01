@@ -64,17 +64,24 @@ NestedList.prototype = {
         this.el.onclick = function (e) {
             var target = e.target.className == 'nestedlist-item' ? e.target : e.target.offsetParent;
             if (target.className == 'nestedlist-item') {//还有下一层
+                var catgory = 'catgory-selected';
                 var items = target.dataItems,
                     child = target.dataChild;
                 var childData;
                 me.delNextEl(target.parentNode);
                 items && me.createItem(JSON.parse(items), target.dataTpl);
                 child && ( childData = JSON.parse(child)) && me.createItem(childData, childData.tpl);
-            } else if (target.className == 'list-item') {//最后一层
+
+                var el = target.parentNode.querySelector('.' + catgory);
+                if (target != el) {
+                    el && (el.className = el.className.replace(' ' + catgory, ''));
+                    target.className += ' ' + catgory;
+                }
+            } else if (target.className.indexOf('list-item') != -1) {//最后一层
                 if (target.className.indexOf('nested-selected') == -1) {
                     target.className += ' nested-selected';
                 } else {
-                    target.className -= ' nested-selected';
+                    target.className = target.className.replace(' nested-selected', '');
                 }
             }
         }

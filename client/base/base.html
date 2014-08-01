@@ -157,6 +157,8 @@ socket.on(events.loginSuccess, function (o) {
             },
             popup: new popup({
                 tpl: msj.tpl.popup,
+                listTpl: msj.tpl.popList,
+                listContainer: '.order-list-body',
                 baseColor: theme,
                 data: {list: [
                     {text: 'asd'},
@@ -170,6 +172,16 @@ socket.on(events.loginSuccess, function (o) {
                             cls: 'add',
                             events: {
                                 click: function (e) {
+                                    //this is popup object
+                                    var data = [];
+                                    Array.prototype.forEach.call(this.nestedList.el.querySelectorAll('.nested-selected'), function (item) {
+                                        data.push({
+                                            text: item.childNodes[0].innerHTML,
+                                            value: item.childNodes[1].innerHTML
+                                        })
+                                    })
+                                    console.log(data);
+                                    this.updataList(data, true);
 
                                 }
                             }
@@ -188,7 +200,7 @@ socket.on(events.loginSuccess, function (o) {
                     ]},
                 events: {
                     rendered: function () {
-                        new NestedList({
+                        this.nestedList = new NestedList({
                             tpl: msj.tpl.d,
                             data: [
                                 {
@@ -341,7 +353,7 @@ socket.on(events.loginSuccess, function (o) {
                                 }
                             ],
                             parent: this.el,
-                            height: '150px',
+                            height: '130px',
                             width: '400px'
                         }).render();
                     }

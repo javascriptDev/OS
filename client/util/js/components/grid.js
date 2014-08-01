@@ -533,7 +533,6 @@ Grid.prototype = {
                         }
                     })
                 })
-
             } else if (target.className.indexOf('list-item') == -1) {
                 return;
             }

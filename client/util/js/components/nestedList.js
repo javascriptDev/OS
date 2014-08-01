@@ -45,7 +45,6 @@ NestedList.prototype = {
                 width: me.itemWidth + 'px'
             }
         });
-
         this.el.appendChild(itemContainer);
         itemContainer.innerHTML = template.compile(tpl)({list: data});
         Array.prototype.forEach.call(itemContainer.childNodes, function (item, index) {
@@ -55,7 +54,6 @@ NestedList.prototype = {
         })
         this.el.style.width = this.el.childNodes.length * me.itemWidth + 'px';
         this.c.scrollLeft = 9999;
-
     },
     render: function () {
         this.opt.parent.appendChild(this.c);

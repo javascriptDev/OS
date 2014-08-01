@@ -20,10 +20,16 @@
     width: auto;
 }
 
-.nestedlist-item{
+.nestedlist-item {
     position: relative;
 }
-.nested-selected{
+
+.nested-selected {
     background: cornflowerblue;
     color: white;
+}
+
+.order-list-body {
+    height: 140px;
+    overflow-y: scroll;
 }

@@ -7,17 +7,21 @@ function popup(opt) {
     this.baseColor = opt.baseColor;
     var _data = opt.data || [];
     this.addData = function (data) {
-        _data = data;
+        _data.list[0].data = _data.list[0].data.concat(data);
     }
     this.getData = function () {
         return _data;
+    }
+    this.setSum = function (val) {
+        _data.list[0].price = val;
+    }
+    this.getSum = function () {
+        return _data.list[0].price;
     }
     this.setData = function (data) {
         _data = data;
     }
     this.init();
-
-
 }
 
 
@@ -59,9 +63,9 @@ popup.prototype = {
             document.body.appendChild(me.c);
             me.rendered = true;
         }())
+        this.listC = this.el.querySelector(this.opt.listContainer);
         this.show();
         me.opt.events.rendered && me.opt.events.rendered.call(this);
-
     },
     addButton: function () {
         var me = this, opt = me.opt, btn = opt.btn;
@@ -84,8 +88,19 @@ popup.prototype = {
 
     },
     update: function (data, isRender) {
-        this.setData(data);
+        data && this.setData(data);
         isRender && this.render();
+    },
+    updataList: function (data) {
+        this.addData(data);
+        this.listC.innerHTML += template.compile(this.opt.listTpl)({list: data});
+
+        var sum = 0;
+        data.forEach(function (val) {
+            sum += parseInt(val.value);
+        })
+        this.setSum(parseInt(this.getSum()) + sum);
+        this.el.querySelector('.fred').childNodes[1].innerText = this.getSum();
     },
     hide: function () {
 //        this.c.style.display = 'none';

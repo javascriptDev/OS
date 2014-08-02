@@ -401,7 +401,7 @@ socket.on( events.pay, function( data ) {
     }
 } )
 socket.on( events.changeList, function( data ) {
-    console.log( 'pay' );
+    console.log(data);
     if(data.success) {
        grid.update(null,true);
     }

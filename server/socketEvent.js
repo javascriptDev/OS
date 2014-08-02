@@ -147,14 +147,15 @@ function addEvent( io ) {
 				}, {"_id": new ObjectId( id )} );
 			} )
 			socket.on( event.changeList, function( data ) {
-				console.dir( data );
+
 				var id = new ObjectId( data._id );
 				data._id = id;
 				db.update( 'order', function( err, data ) {
 					if(!err) {
 						io.sockets.in( role.monitor );
 						io.sockets.in( role.base );
-						io.sockets.emit( event.pay, {id: id, success: true} );
+						io.sockets.emit( event.changeList, {id: id, success: true} );
+
 					} else {
 						io.sockets.emit( event.changeList, err );
 					}

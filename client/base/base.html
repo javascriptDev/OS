@@ -39,7 +39,7 @@
 <footer>
 </footer>
 <script>
-var socket = io.connect(msj.ip);
+var socket = io.connect( msj.ip );
 var role = msj.role, events = msj.et;
 var me = {
     role: role.base,
@@ -106,16 +106,16 @@ var bc = {
     origin: 'c-origin',
     darkBlue: 'c-darkblue'
 }
-var theme = localStorage.getItem('theme') || bc.darkRed;
+var theme = localStorage.getItem( 'theme' ) || bc.darkRed;
 
 //发送登陆事件
-socket.emit(events.login, me);
+socket.emit( events.login, me );
 //登陆成功回调
-socket.on(events.loginSuccess, function (o) {
-    if (o.id == me.id) {
-        console.log('login success');
+socket.on( events.loginSuccess, function( o ) {
+    if(o.id == me.id) {
+        console.log( 'login success' );
 
-        window.grid = new Grid({
+        window.grid = new Grid( {
             parent: '.right',
             title: '报表数据',
             baseColor: theme,
@@ -132,10 +132,10 @@ socket.on(events.loginSuccess, function (o) {
                     {
                         text: '付款',
                         id: 'g-pay',
-                        click: function (id) {
-                            socket.emit(events.pay, id, function () {
-                                console.log(arguments);
-                            });
+                        click: function( id ) {
+                            socket.emit( events.pay, id, function() {
+                                console.log( arguments );
+                            } );
                         },
                         require: 'id'
                     }
@@ -151,7 +151,7 @@ socket.on(events.loginSuccess, function (o) {
             page: {
                 count: 8
             },
-            popup: new popup({
+            popup: new popup( {
                 tpl: msj.tpl.popup,
                 listTpl: msj.tpl.popList,
                 listContainer: '.order-list-body',
@@ -167,16 +167,16 @@ socket.on(events.loginSuccess, function (o) {
                             text: '添加',
                             cls: 'add',
                             events: {
-                                click: function (e) {
+                                click: function( e ) {
                                     //this is popup object
                                     var data = [];
-                                    Array.prototype.forEach.call(this.nestedList.el.querySelectorAll('.nested-selected'), function (item) {
-                                        data.push({
+                                    Array.prototype.forEach.call( this.nestedList.el.querySelectorAll( '.nested-selected' ), function( item ) {
+                                        data.push( {
                                             text: item.childNodes[0].innerHTML,
                                             value: item.childNodes[1].innerHTML
-                                        })
-                                    })
-                                    this.updataList(data, true);
+                                        } )
+                                    } )
+                                    this.updataList( data, true );
                                 }
                             }
                         },
@@ -184,15 +184,24 @@ socket.on(events.loginSuccess, function (o) {
                             text: '取消',
                             cls: 'cancel',
                             events: {
-                                click: function (e) {
+                                click: function( e ) {
                                     this.hide();
+                                }
+                            }
+                        },
+                        {
+                            text: '提交数据',
+                            cls: 'pop-submit',
+                            events: {
+                                click: function( e ) {
+                                    socket.emit( events.changeList, unparseData( this.getData().list[0] ));
                                 }
                             }
                         }
                     ]},
                 events: {
-                    rendered: function () {
-                        this.nestedList = new NestedList({
+                    rendered: function() {
+                        this.nestedList = new NestedList( {
                             tpl: msj.tpl.d,
                             data: [
                                 {
@@ -347,21 +356,21 @@ socket.on(events.loginSuccess, function (o) {
                             parent: this.el,
                             height: '130px',
                             width: '400px'
-                        }).render();
+                        } ).render();
                     }
                 }
-            })
-        });
+            } )
+        } );
         init();
     }
-});
-socket.on(events.addDesk, function (desk) {
-    if (Object.prototype.toString.call(desk) == '[object Object]') {
+} );
+socket.on( events.addDesk, function( desk ) {
+    if(Object.prototype.toString.call( desk ) == '[object Object]') {
         desk = [desk];
     }
     var data = [];
-    for (var i = 0, len = desk.length; i < len; i++) {
-        (function (index) {
+    for( var i = 0, len = desk.length; i < len; i++ ) {
+        (function( index ) {
             var d = desk[index];
             var o = {did: 0, order: '', price: 0};
             o.did = d.dn;
@@ -369,81 +378,88 @@ socket.on(events.addDesk, function (desk) {
             o.statues = d.statues;
             o.id = d._id;
             var detail = d.data.list;
-            for (var j = 0, l = detail.length; j < l; j++) {
-                (function (jj) {
-                    o.price += parseInt(detail[jj].value);
-                }(j))
+            for( var j = 0, l = detail.length; j < l; j++ ) {
+                (function( jj ) {
+                    o.price += parseInt( detail[jj].value );
+                }( j ))
             }
-            data.push(o);
-        }(i))
+            data.push( o );
+        }( i ))
     }
-    grid.addData(data);
-});
-socket.on(events.pay, function (data) {
-    console.log('pay');
-    if (data.success) {
-        grid.updateSingleData(data.id, {
+    grid.addData( data );
+} );
+socket.on( events.pay, function( data ) {
+    console.log( 'pay' );
+    if(data.success) {
+        grid.updateSingleData( data.id, {
             statues: 'pay'
-        })
-        setTimeout(function () {
-            console.log(data.id);
-            grid.delData(data.id, true);
-        }, 3000);
+        } )
+        setTimeout( function() {
+            console.log( data.id );
+            grid.delData( data.id, true );
+        }, 3000 );
     }
-})
+} )
+socket.on( events.changeList, function( data ) {
+    console.log( 'pay' );
+    if(data.success) {
+       grid.update(null,true);
+    }
+} )
+
 // 菜单制作完成，删除菜单
-socket.on(events.makeOver, function (data) {
-    if (data.success) {
-        grid.updateSingleData(data.id, data.data, function () {
-            setTimeout(function () {
-                grid.delData(data.id, true);
-            }, 3000)
-        });
+socket.on( events.makeOver, function( data ) {
+    if(data.success) {
+        grid.updateSingleData( data.id, data.data, function() {
+            setTimeout( function() {
+                grid.delData( data.id, true );
+            }, 3000 )
+        } );
     }
-})
-window.left = new Tree({
+} )
+window.left = new Tree( {
     data: data,
     parent: '.left',
     baseColor: theme,
     isDrag: false,
-    leafClick: function (e) {
-        var name = e.target.getAttribute('data-name');
+    leafClick: function( e ) {
+        var name = e.target.getAttribute( 'data-name' );
         location.hash = 'page=' + name;
     }
-});
-window.onhashchange = function (e) {
+} );
+window.onhashchange = function( e ) {
     init();
 }
 function init() {
-    document.querySelector('nav').className = theme;
-    if (location.href.indexOf('#') == -1) {
+    document.querySelector( 'nav' ).className = theme;
+    if(location.href.indexOf( '#' ) == -1) {
         location.href = location.href + '#statues=' + pageName.realTime;
     }
-    var page = location.hash.split('=')[1];
+    var page = location.hash.split( '=' )[1];
     grid.page.ci = 0;
-    switch (page) {
+    switch(page) {
         case pageName.realTime:
-            getData('statues=begin', function (data) {
-                data && grid.update(data, function () {
+            getData( 'statues=begin', function( data ) {
+                data && grid.update( data, function() {
                     this.show();
-                });
-            }, true)
+                } );
+            }, true )
             break;
         case pageName.made:
-            getData('statues=made', function (data) {
-                data && grid.update(data, function () {
+            getData( 'statues=made', function( data ) {
+                data && grid.update( data, function() {
                     this.show();
-                });
-            }, true);
+                } );
+            }, true );
             break;
         case pageName.history:
-            getData('statues=end', function (data) {
-                data && grid.update(data, function () {
+            getData( 'statues=end', function( data ) {
+                data && grid.update( data, function() {
                     //this is grid
                     this.show();
 
-                });
-            }, true)
+                } );
+            }, true )
             break;
         case pageName.analysisHistogram:
             grid.hide();
@@ -457,24 +473,24 @@ function init() {
 }
 function initThemeSelect() {
     var html = []
-    for (var i in bc) {
-        html.push('<li class="' + bc[i] + '">' + i + '</li>');
+    for( var i in bc ) {
+        html.push( '<li class="' + bc[i] + '">' + i + '</li>' );
     }
-    var el = document.querySelector('.theme-ul');
-    el.innerHTML = html.join('');
+    var el = document.querySelector( '.theme-ul' );
+    el.innerHTML = html.join( '' );
     el.height = el.offsetHeight;
     el.style.display = 'none';
     el.style.left = el.parentNode.offsetLeft + 'px';
     el.style.top = '20px';
-    var ct = document.querySelector('.change-theme');
-    ct.onmouseover = function () {
+    var ct = document.querySelector( '.change-theme' );
+    ct.onmouseover = function() {
         el.style.display = 'block';
     }
-    ct.onmouseout = function (e) {
+    ct.onmouseout = function( e ) {
         el.style.display = 'none';
     }
-    el.onclick = function (e) {
-        localStorage.setItem('theme', e.target.className);
+    el.onclick = function( e ) {
+        localStorage.setItem( 'theme', e.target.className );
         el.style.display = 'none';
         location.reload();
     }

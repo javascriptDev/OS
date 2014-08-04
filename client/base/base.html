@@ -189,6 +189,15 @@ socket.on(events.loginSuccess, function (o) {
 							}
 						},
 						{
+							text: '提交数据',
+							cls: 'pop-submit',
+							events: {
+								click: function (e) {
+									socket.emit(events.changeList, unparseData(this.getData().list[0]));
+								}
+							}
+						},
+						{
 							text: '取消',
 							cls: 'cancel',
 							events: {
@@ -197,6 +206,7 @@ socket.on(events.loginSuccess, function (o) {
 								}
 							}
 						}
+
 					]},
 				events: {
 					rendered: function () {
@@ -363,6 +373,7 @@ socket.on(events.loginSuccess, function (o) {
 		init();
 	}
 });
+//接客
 socket.on(events.addDesk, function (desk) {
 	if (Object.prototype.toString.call(desk) == '[object Object]') {
 		desk = [desk];
@@ -387,6 +398,7 @@ socket.on(events.addDesk, function (desk) {
 	}
 	grid.addData(data);
 });
+//付款
 socket.on(events.pay, function (data) {
 	console.log('pay');
 	if (data.success) {
@@ -409,6 +421,17 @@ socket.on(events.makeOver, function (data) {
 		});
 	}
 })
+//修改菜单
+socket.on( events.changeList, function( data ) {
+	console.log('change list');
+	if(data.success) {
+		grid.popup.hide();
+		grid.update(null,true);
+
+	}
+} )
+
+
 window.left = new Tree({
 	data: data,
 	parent: '.left',

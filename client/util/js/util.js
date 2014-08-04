@@ -50,7 +50,8 @@ msj = {
         loginSuccess: 'ls',
         makeOver: 'mo',
         pay: 'pay',
-        changeList: 'changeList'
+        changeList: 'changeList',
+        oneOk: 'oneok'
 
     },
     tpl: {

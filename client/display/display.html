@@ -1,153 +1,159 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="browsermode" content="application">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <title></title>
-    <script src="client/util/js/lib/tpl.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="client/util/js/util.js"></script>
-    <script src="client/util/js/common.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<meta name="browsermode" content="application">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+	<title></title>
+	<script src="client/util/js/lib/tpl.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="client/util/js/util.js"></script>
+	<script src="client/util/js/common.js"></script>
 
-    <style type="text/css">
-        .c {
-            width: 1000px;
-            height: 400px;
-            border: 1px solid red;
-            padding: 10px;
-        }
+	<style type="text/css">
+		.c {
+			width: 1000px;
+			height: 400px;
+			border: 1px solid red;
+			padding: 10px;
+		}
 
-        .order-list {
-            width: 100px;
-            height: auto;
-            display: inline-block;
-            float: left;
-            border: 1px solid red;
-            border-radius: 10px;
-            margin: 10px;
-        }
+		.order-list {
+			width: 100px;
+			height: auto;
+			display: inline-block;
+			float: left;
+			border: 1px solid red;
+			border-radius: 10px;
+			margin: 10px;
+		}
 
-        .title {
-            border-radius: 10px;
-            background: yellowgreen;
-            color: white;;
-            height: 30px;
-            line-height: 30px;;
-        }
+		.title {
+			border-radius: 10px;
+			background: yellowgreen;
+			color: white;;
+			height: 30px;
+			line-height: 30px;;
+		}
 
-        .list-item {
-            position: relative;
+		.list-item {
+			position: relative;
 
-        }
+		}
 
-        .selected:after {
-            content: '';
-            width: 12px;
-            height: 6px;
-            border-left: 1px solid red;
-            border-bottom: 1px solid red;
-            -webkit-transform: rotate(-40deg);
-            position: absolute;
-            right: 10px;;
-            top: 0;
-        }
-    </style>
+		.selected:after {
+			content: '';
+			width: 12px;
+			height: 6px;
+			border-left: 1px solid red;
+			border-bottom: 1px solid red;
+			-webkit-transform: rotate(-40deg);
+			position: absolute;
+			right: 10px;;
+			top: 0;
+		}
+	</style>
 </head>
 <body>
 <div class="c">
 </div>
 <script>
-    var socket = io.connect(msj.ip);
-    var role = msj.role,
-            et = msj.et,
-            tpl = msj.tpl;
-    var me = {
-        role: role.monitor,
-        id: Math.random() * 1989
-    }
+	var socket = io.connect(msj.ip);
+	var role = msj.role,
+			et = msj.et,
+			tpl = msj.tpl;
+	var me = {
+		role: role.monitor,
+		id: Math.random() * 1989
+	}
 
-    //发送登陆事件
-    socket.emit(et.login, me);
-    //登陆成功回调
-    socket.on(et.loginSuccess, function (o) {
-        if (o.id == me.id) {
-            console.log('login success');
-            initPage();
-        }
-    })
+	//发送登陆事件
+	socket.emit(et.login, me);
+	//登陆成功回调
+	socket.on(et.loginSuccess, function (o) {
+		if (o.id == me.id) {
+			console.log('login success');
+			initPage();
+		}
+	})
 
-    var body = document.querySelector('.c');
-    socket.on(et.addDesk, function (desk) {
-        console.log(desk);
-        if (Object.prototype.toString.call(desk) == '[object Array]') {
-            desk.forEach(function (item) {
-                addDesk(item);
-            })
-        } else {
-            addDesk(desk);
-        }
-    })
-    // 菜单制作完成，删除菜单
-    socket.on(et.makeOver, function (data) {
-        if (data.success) {
-            var id = data.id;
-            Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (item) {
-                if (item.cdata._id == id) {
-                    item.parentNode.removeChild(item);
-                }
-            })
-        }
-    })
-    function addDesk(desk) {
-        var order = desk.data,
-                number = desk.dn,
-                statue = desk.statues;
+	var body = document.querySelector('.c');
+	socket.on(et.addDesk, function (desk) {
+		console.log(desk);
+		if (Object.prototype.toString.call(desk) == '[object Array]') {
+			desk.forEach(function (item) {
+				addDesk(item);
+			})
+		} else {
+			addDesk(desk);
+		}
+	})
+	// 菜单制作完成，删除菜单
+	socket.on(et.makeOver, function (data) {
+		if (data.success) {
+			var id = data.id;
+			Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (item) {
+				if (item.cdata._id == id) {
+					item.parentNode.removeChild(item);
+				}
+			})
+		}
+	})
+	function addDesk(desk) {
+		var order = desk.data,
+				number = desk.dn,
+				statue = desk.statues;
 
-        var list = document.createElement('div');
-        list.className = 'order-list';
-        var html = '<div class="title">' + number + ' 号桌订单</div>';
-        html += template.compile(tpl.c)(order);
-        list.innerHTML = html;
-        list.cdata = desk;
-        body.appendChild(list);
 
-        list.addEventListener('touchstart', function (e) {
-            var el = e.target.offsetParent;
+		var list = document.createElement('div');
+		list.className = 'order-list';
+		var html = '<div class="title">' + number + ' 号桌订单</div>';
+		html += template.compile(tpl.c)(order);
+		list.innerHTML = html;
+		list.cdata = desk;
+		body.appendChild(list);
 
-            if (el.className.indexOf('selected') == -1) {
-                el.className += ' selected';
-            } else {
-                el.className = 'list-item';
-            }
-            if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
-                list.cdata.statues = 'made';
-                socket.emit(et.makeOver, list.cdata);
-            } else {
+		list.addEventListener('touchstart', function (e) {
+			var el = e.target.offsetParent;
 
-            }
-        })
-    }
+			if (el.className.indexOf('selected') == -1) {
+				el.className += ' selected';
+			} else {
+				el.className = 'list-item';
+			}
+			if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
+				list.cdata.statues = 'made';
+				socket.emit(et.makeOver, list.cdata);
+			}
 
-    socket.on(et.pay, function (data) {
-        if (data.success) {
-            alert(data.dn + 'has pay');
-        }
-    })
+		})
+	}
 
-    function initPage() {
-        getData('statues=begin', function (data) {
-            console.log(data.list);
-            data.list.forEach(function (item) {
-                addDesk(item);
-            })
-        })
+	socket.on(et.pay, function (data) {
+		if (data.success) {
+			alert(data.dn + 'has pay');
+		}
+	})
 
-    }
+	socket.on(et.changeList, function (data) {
+
+
+	})
+
+
+	function initPage() {
+		getData('statues=begin', function (data) {
+			console.log(data.list);
+			data.list.forEach(function (item) {
+				addDesk(item);
+			})
+		})
+
+	}
 
 
 </script>

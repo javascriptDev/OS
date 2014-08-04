@@ -33,6 +33,7 @@ var role = {
     //终端，点菜器
     terminal: 'terminal'
 }
+var temData = [];
 
 //连接到服务器的成员
 var allMember = [];
@@ -147,7 +148,6 @@ function addEvent(io) {
                 }, {"_id": new ObjectId(id)});
             })
             socket.on(event.changeList, function (data) {
-
                 var id = new ObjectId(data._id);
                 data._id = id;
                 db.update('order', function (err, data) {
@@ -160,6 +160,10 @@ function addEvent(io) {
                         io.sockets.emit(event.changeList, err);
                     }
                 }, data, {"_id": id});
+
+            })
+
+            socket.on(event.oneOk, function (data) {
 
             })
 

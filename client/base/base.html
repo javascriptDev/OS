@@ -422,16 +422,14 @@ socket.on(events.makeOver, function (data) {
 	}
 })
 //修改菜单
-socket.on( events.changeList, function( data ) {
+socket.on(events.changeList, function (data) {
 	console.log('change list');
-	if(data.success) {
+	if (data.success) {
 		grid.popup.hide();
-		grid.update(null,true);
+		grid.update(null, true);
 
 	}
-} )
-
-
+})
 window.left = new Tree({
 	data: data,
 	parent: '.left',

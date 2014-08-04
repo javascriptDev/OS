@@ -54,6 +54,10 @@ msj = {
         oneOk: 'oneok'
 
     },
+    webServices: {
+        data: 'data',
+        memory: 'memory'
+    },
     tpl: {
         a: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class=list-item>" +

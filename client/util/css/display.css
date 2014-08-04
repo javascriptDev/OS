@@ -1,0 +1,42 @@
+.c {
+    width: 1000px;
+    height: 400px;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+.order-list {
+    width: 100px;
+    height: auto;
+    display: inline-block;
+    float: left;
+    border: 1px solid red;
+    border-radius: 10px;
+    margin: 10px;
+    position: relative;
+}
+
+.title {
+    border-radius: 10px;
+    background: yellowgreen;
+    color: white;;
+    height: 30px;
+    line-height: 30px;;
+}
+
+.list-item {
+    position: relative;
+
+}
+
+.selected:after {
+    content: '';
+    width: 12px;
+    height: 6px;
+    border-left: 1px solid red;
+    border-bottom: 1px solid red;
+    -webkit-transform: rotate(-40deg);
+    position: absolute;
+    right: 10px;;
+    top: 0;
+}

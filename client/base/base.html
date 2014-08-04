@@ -48,6 +48,7 @@
 <script>
 var socket = io.connect(msj.ip);
 var role = msj.role, events = msj.et;
+var ws = msj.webServices;
 var me = {
 	role: role.base,
 	id: Math.random() * 1989
@@ -193,7 +194,8 @@ socket.on(events.loginSuccess, function (o) {
 							cls: 'pop-submit',
 							events: {
 								click: function (e) {
-									socket.emit(events.changeList, unparseData(this.getData().list[0]));
+									console.log(this.changeList);
+									socket.emit(events.changeList, this.changeList);
 								}
 							}
 						},
@@ -423,13 +425,20 @@ socket.on(events.makeOver, function (data) {
 })
 //修改菜单
 socket.on(events.changeList, function (data) {
-	console.log('change list');
 	if (data.success) {
 		grid.popup.hide();
 		grid.update(null, true);
-
+	} else {
+		console.log(data.msg);
 	}
 })
+
+socket.on(events.oneOk, function (data) {
+	if (data.success) {
+		console.log(data);
+	}
+})
+
 window.left = new Tree({
 	data: data,
 	parent: '.left',
@@ -453,12 +462,13 @@ function init() {
 	switch (page) {
 		case pageName.realTime:
 			getData('statues=begin', function (data) {
+				console.log(data);
 				data && grid.update(data, function () {
 					this.show();
 				});
 				line && line.hide();
 				histogram && histogram.hide();
-			}, true)
+			}, true, ws.memory);
 			break;
 		case pageName.made:
 			getData('statues=made', function (data) {
@@ -467,18 +477,19 @@ function init() {
 				});
 				line && line.hide();
 				histogram && histogram.hide();
-			}, true);
+			}, true, ws.memory);
 
 			break;
 		case pageName.history:
 			getData('statues=end', function (data) {
+				console.log(data);
 				data && grid.update(data, function () {
 					//this is grid
 					this.show();
 				});
 				line && line.hide();
 				histogram && histogram.hide();
-			}, true)
+			}, true, ws.data)
 			break;
 		case pageName.analysisHistogram:
 			getData('statues=end', function (data) {

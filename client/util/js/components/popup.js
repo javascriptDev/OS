@@ -28,6 +28,7 @@ function popup(opt) {
             }
         })
     }
+    this.changeList = {id: '', data: []};
     this.init();
 }
 
@@ -109,8 +110,13 @@ popup.prototype = {
         isRender && this.render();
     },
     updataList: function (data, addOrDel, fn) {//true is add . false is del
+        var me = this;
         var sum = 0;
         if (addOrDel) {
+            data.forEach(function (item) {
+                item.type = 'add';
+                me.changeList.data.push(item);
+            })
             this.addData(data);
             this.listC.innerHTML += template.compile(this.opt.listTpl)({list: data});
             data.forEach(function (val) {
@@ -118,8 +124,9 @@ popup.prototype = {
             });
             this.setSum(parseInt(this.getSum()) + sum);
         } else {
+            data.type = 'del';
+            this.changeList.data.push(data)
             this.delData(data);
-//            this.listC.innerHTML = this.listC.innerHTML.replace(template.compile(this.opt.listTpl)({list: [ data]}), '');
             sum = this.getSum() - parseInt(data.value);
             this.setSum(parseInt(sum));
         }

@@ -14,48 +14,9 @@
 	<script src="client/util/js/util.js"></script>
 	<script src="client/util/js/common.js"></script>
 
+	<link href="client/util/css/display.css" rel="stylesheet    ">
 	<style type="text/css">
-		.c {
-			width: 1000px;
-			height: 400px;
-			border: 1px solid red;
-			padding: 10px;
-		}
 
-		.order-list {
-			width: 100px;
-			height: auto;
-			display: inline-block;
-			float: left;
-			border: 1px solid red;
-			border-radius: 10px;
-			margin: 10px;
-		}
-
-		.title {
-			border-radius: 10px;
-			background: yellowgreen;
-			color: white;;
-			height: 30px;
-			line-height: 30px;;
-		}
-
-		.list-item {
-			position: relative;
-
-		}
-
-		.selected:after {
-			content: '';
-			width: 12px;
-			height: 6px;
-			border-left: 1px solid red;
-			border-bottom: 1px solid red;
-			-webkit-transform: rotate(-40deg);
-			position: absolute;
-			right: 10px;;
-			top: 0;
-		}
 	</style>
 </head>
 <body>
@@ -83,7 +44,6 @@
 
 	var body = document.querySelector('.c');
 	socket.on(et.addDesk, function (desk) {
-		console.log(desk);
 		if (Object.prototype.toString.call(desk) == '[object Array]') {
 			desk.forEach(function (item) {
 				addDesk(item);
@@ -95,33 +55,39 @@
 	// 菜单制作完成，删除菜单
 	socket.on(et.makeOver, function (data) {
 		if (data.success) {
-			var id = data.id;
-			Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (item) {
-				if (item.cdata._id == id) {
-					item.parentNode.removeChild(item);
-				}
-			})
+//			var id = data.id;
+//			Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (item) {
+//				if (item.cdata._id == id) {
+//					item.parentNode.removeChild(item);
+//				}
+//			})
 		}
 	})
 	function addDesk(desk) {
 		var order = desk.data,
 				number = desk.dn,
-				statue = desk.statues;
+				statue = desk.statues,
+				_id = desk._id;
 
-
-		var list = document.createElement('div');
-		list.className = 'order-list';
 		var html = '<div class="title">' + number + ' 号桌订单</div>';
 		html += template.compile(tpl.c)(order);
-		list.innerHTML = html;
+
+		var list = msj.createEl('div', {
+			className: 'order-list',
+			innerHTML: html,
+			oid: _id
+		})
 		list.cdata = desk;
 		body.appendChild(list);
-
 		list.addEventListener('touchstart', function (e) {
 			var el = e.target.offsetParent;
-
 			if (el.className.indexOf('selected') == -1) {
 				el.className += ' selected';
+				socket.emit(et.oneOk, {
+					id: el.offsetParent.oid,
+					text: el.firstChild.innerHTML
+				});
+
 			} else {
 				el.className = 'list-item';
 			}
@@ -129,25 +95,26 @@
 				list.cdata.statues = 'made';
 				socket.emit(et.makeOver, list.cdata);
 			}
-
 		})
 	}
-
 	socket.on(et.pay, function (data) {
 		if (data.success) {
 			alert(data.dn + 'has pay');
 		}
 	})
-
 	socket.on(et.changeList, function (data) {
 
 
 	})
+	socket.on(et.oneOk, function (data) {
+		if (data.success) {
+			console.log(data);
+		}
+	});
 
 
 	function initPage() {
 		getData('statues=begin', function (data) {
-			console.log(data.list);
 			data.list.forEach(function (item) {
 				addDesk(item);
 			})

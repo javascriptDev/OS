@@ -169,7 +169,7 @@ Grid.prototype = {
         //模板
         var tpl =
             "<%for (var i=0;i<list.length;i++) {%>" +
-            "<div class='list-item'><div class='g-field line'></div>";
+            "<div class='list-item' data-id=<%=list[i]['id']%>><div class='g-field line'></div>";
         //生成模板开始
         this.fields.forEach(function (item) {
             //<----------------------------添加到模板-------------------------------------------------->
@@ -561,7 +561,11 @@ Grid.prototype = {
                 }
             }
             if (item) {
-                me.popup && me.popup.update({list: [me.getDataById(item.querySelector('.id').id)]}, 1);
+                console.log(item);
+                if (me.popup) {
+                    me.popup.changeList.id = item.dataset['id'];
+                    me.popup.update({list: [me.getDataById(item.querySelector('.id').id)]}, 1);
+                }
             }
         }
     },

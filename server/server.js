@@ -9,6 +9,11 @@ var ws = require('./webServices').ws;
 var se = require('./socketEvent');
 
 
+cache = {
+    begin: [],
+    made: []
+}
+
 var server = http.createServer(function (req, res) {
     //console.log(req.socket.remoteAddress);
     var url = req.url;

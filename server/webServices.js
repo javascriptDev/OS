@@ -9,7 +9,8 @@ var db = require('./db/dbHelper').help;
 var parse = require('url');
 
 var methods = {
-    data: 'data'
+    data: 'data',
+    memory: 'memory'
 
 
 
@@ -34,15 +35,17 @@ function webServices(req, res) {
         param = base[1];
 
     var data;
+    var params = {};
+    param && param.split('&').forEach(function (item) {
+        var s = item.split('=');
+        params[s[0]] = s[1];
+    })
     switch (method) {
         case methods.data:
-            var params = {};
-            param && param.split('&').forEach(function (item) {
-                var s = item.split('=');
-                params[s[0]] = s[1];
-            })
             getData(params);
             break;
+        case methods.memory:
+            getMemoryData(params);
         default :
             res.write('no data');
             res.end();
@@ -57,6 +60,15 @@ function webServices(req, res) {
             res.write(data);
             res.end();
         }, where || {})
+    }
+
+    function getMemoryData(where) {
+        res.setHeader('Access-Control-Allow-Methods', 'GET');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        var data = JSON.stringify(cache[where.statues]);
+        res.write(data);
+        res.end();
+
     }
 }
 

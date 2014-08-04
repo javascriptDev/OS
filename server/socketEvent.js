@@ -33,7 +33,6 @@ var role = {
     //终端，点菜器
     terminal: 'terminal'
 }
-var temData = [];
 
 //连接到服务器的成员
 var allMember = [];
@@ -44,7 +43,8 @@ var event = {
     loginSuccess: 'ls',
     makeOver: 'mo',
     pay: 'pay',
-    changeList: 'changeList'
+    changeList: 'changeList',
+    oneOk: 'oneok'
 }
 var status = {
     begin: 'begin',
@@ -63,6 +63,64 @@ function newGuid() {
 
     return guid;
 }
+
+function findDataById(id) {
+    var d = {};
+    for (var i = 0; i < cache.begin.length; i++) {
+        console.log(cache.begin[i]._id == id);
+        if (cache.begin[i]._id == id) {
+            d = cache.begin[i];
+            break;
+        }
+    }
+    return d;
+}
+
+//当厨房做好一个菜后。
+function updateOrder(id, name, fn) {
+    var result = findDataById(id);
+    var hasData = false;
+    var data = result.data && result.data.list || [];
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].text == name) {
+            data[i].statues = 'made';
+            break;
+        }
+    }
+    data.length > 0 && (hasData = true);
+    fn && fn(null, hasData);
+
+}
+
+//当 菜单发生变化时候
+function updateOrderList(id, data, fn) {
+    var result = findDataById(id);
+    var hasData = false;
+    var d = result.data && result.data.list;
+    if (d) {
+        hasData = true;
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            if (obj.type == 'add') {
+                d.push(obj);
+            } else if (obj.type == 'del') {
+                for (var j = 0; j < d.length; j++) {
+                    var obj1 = d[j];
+                    if (obj1.text == obj.text) {
+                        d.splice(j, 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    fn && fn(hasData);
+}
+
+function updateStatues() {
+
+}
+
 function addEvent(io) {
     io.on('connection', function (socket) {
             //  console.log(io.sockets.sockets.length);
@@ -82,47 +140,55 @@ function addEvent(io) {
             socket.on(event.addDesk, function (desk) {
                 db.add('order', desk, function (err, data) {
                     if (!err) {
-                        desk.id = data[0]._id;
                         var a = [role.base, role.monitor];
                         a.forEach(function (item) {
                             io.sockets.in(item);
                         })
-                        io.sockets.emit(event.addDesk, desk);
+                        cache.begin.push(data[0]);
+                        io.sockets.emit(event.addDesk, data[0]);
                     } else {
                         io.sockets.emit(event.addDesk, err);
                     }
                 });
-
 
             });
 
             //后厨按照菜单 制作好
             socket.on(event.makeOver, function (data) {
                 var id = data._id || data.id;
-                data._id = new ObjectId(id);
-                db.update('order', function (err, data) {
-                    if (!err) {
-                        var result = {
-                            success: true,
-                            id: id,
-                            data: {
-                                statues: 'made'
-                            }
-                        };
-                        if (err) {
-                            result = err;
+//                data._id = new ObjectId(id);
+//                db.update('order', function (err, data) {
+//                    if (!err) {
+//                        var result = {
+//                            success: true,
+//                            id: id,
+//                            data: {
+//                                statues: 'made'
+//                            }
+//                        };
+//                        if (err) {
+//                            result = err;
+//                        }
+//                        io.sockets.in(role.monitor);
+//                        io.sockets.in(role.base);
+//                        io.sockets.emit(event.makeOver, result)
+//                    } else {
+//                        io.sockets.emit(event.makeOver, err);
+//                    }
+//                }, data, {"_id": new ObjectId(id)});
+                updateStatues(id, data, function () {
+                    var result = {
+                        success: true,
+                        id: id,
+                        data: {
+                            statues: 'made'
                         }
-                        io.sockets.in(role.monitor);
-                        io.sockets.in(role.base);
-                        io.sockets.emit(event.makeOver, result)
-                    } else {
-                        io.sockets.emit(event.makeOver, err);
-                    }
-                }, data, {"_id": new ObjectId(id)});
-
-
+                    };
+                    io.sockets.in(role.monitor);
+                    io.sockets.in(role.base);
+                    io.sockets.emit(event.makeOver, result);
+                })
             });
-
             socket.on(event.pay, function (id) {
                 db.query('order', function (err, data) {
                     //data is a array
@@ -141,33 +207,48 @@ function addEvent(io) {
                             io.sockets.in(role.base);
                             io.sockets.emit(event.pay, result);
 
-                        }, data[0], {"_id": new ObjectId(id)});
+                        }, getData(), {"_id": new ObjectId(id)});
                     } else {
                         io.sockets.emit(event.pay, err);
                     }
                 }, {"_id": new ObjectId(id)});
             })
             socket.on(event.changeList, function (data) {
-                var id = new ObjectId(data._id);
-                data._id = id;
-                db.update('order', function (err, data) {
-                    if (!err) {
+//                var id = new ObjectId(data._id);
+//                data._id = id;
+//                db.update('order', function (err, data) {
+//                    if (!err) {
+//                        io.sockets.in(role.monitor);
+//                        io.sockets.in(role.base);
+//                        io.sockets.emit(event.changeList, {id: id, success: true});
+//                    } else {
+//                        io.sockets.emit(event.changeList, err);
+//                    }
+//                }, data, {"_id": id});
+                var id = data.id;
+                updateOrderList(id, data.data, function (hasData) {
+                    if (hasData) {
                         io.sockets.in(role.monitor);
                         io.sockets.in(role.base);
                         io.sockets.emit(event.changeList, {id: id, success: true});
-
                     } else {
-                        io.sockets.emit(event.changeList, err);
+                        io.sockets.in(role.monitor);
+                        io.sockets.in(role.base);
+                        io.sockets.emit(event.changeList, {id: id, success: false, msg: 'can not find data'});
                     }
-                }, data, {"_id": id});
-
+                })
             })
-
             socket.on(event.oneOk, function (data) {
-
+                var id = data.id,
+                    text = data.text;
+                updateOrder(id, text, function (hasData) {
+                    if (hasData) {
+                        io.sockets.in(role.monitor);
+                        io.sockets.in(role.base);
+                        io.sockets.emit(event.oneOk, {id: id, text: text, success: true});
+                    }
+                })
             })
-
-
             socket.on('disconnect', function (a) {
                 var a = '';
                 //客户端socket 断开，需要手动 从io中删除备份的socket

@@ -1,0 +1,18 @@
+.begin-time, .end-time {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.query-type{
+    margin:0 10px;
+}
+
+.query-btn{
+    width: 40px;
+
+}
+
+.query-btn:hover{
+    background: dodgerblue;
+    color: white;
+}

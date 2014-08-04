@@ -16,6 +16,7 @@ function parseData(data) {
         var o = {did: 0, order: '', price: 0};
         o.did = d.dn;
         o.id = d._id;
+        o.date = parseInt(o.id.substr(0, 8), 16);
         o.statues = d.statues;
         o.data = d.data.list;
         var detail = d.data.list;

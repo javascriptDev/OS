@@ -15,7 +15,7 @@ pie.prototype = {
         var canvas = document.createElement('canvas');
         canvas.width = this.w;
         canvas.height = this.h;
-        document.body.appendChild(canvas);
+
         this.ctx = canvas.getContext('2d');
         this.ctx.font = "Bolder 20px Arial";
         this.render();

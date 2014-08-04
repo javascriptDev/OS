@@ -1,37 +1,105 @@
 /**
- * Created by addison on 14-7-17.
+ * Created by a2014 on 14-7-17.
  */
-function Histogram(o) {
+function Base(o) {
     this.opt = o;
     this.data = o.data;
     this.label = o.label;
     this.x = o.label;
     this.w = o.width || 300;
     this.h = o.heiht || 400;
-    this.init();
 }
 
-Histogram.prototype = {
+Base.prototype = {
     init: function () {
-        var canvas = document.createElement('canvas');
-        canvas.width = this.w;
-        canvas.height = this.h;
-        document.body.appendChild(canvas);
-        this.ctx = canvas.getContext('2d');
+        var me = this;
+        this.el = msj.createEl('div', {
+            className: 'chart-c'
+        });
+        this.opt.isQuery && this.addQuery();
+        this.addMain();
+        this.addEvent();
+        return this;
+    },
+    addMain: function () {
+        var me = this;
+        this.main = msj.createEl('canvas', {
+            width: me.w,
+            height: me.h
+        })
 
+        this.el.appendChild(this.main);
+        this.ctx = this.main.getContext('2d');
         this.drawBase();
         this.drawData();
     },
-    drawBase: function () {
-        this.drawCoordinate();
-        this.drawLegend();
+    render: function () {
+        document.body.querySelector(this.opt.container).appendChild(this.el);
+    },
+    addQuery: function () {
+        this.beginTime = msj.createEl('div', {
+            className: 'begin-time',
+            innerHTML: '<label>开始时间</label><input type="date" class="begin-time-val">'
+        })
+
+        this.endTime = msj.createEl('div', {
+            className: 'end-time',
+            innerHTML: '<label>结束时间</label><input type="date" class="end-time-val">'
+        })
+
+        this.type = msj.createEl('select', {
+            className: 'query-type',
+            innerHTML: '<option value="year">年</option><option value="month">月</option><option value="day" selected="selected">日</option>'
+        })
+
+        this.query = msj.createEl('button', {
+            innerHTML: '查询',
+            className: 'query-btn'
+        })
+
+        this.queryEl = msj.createEl('div', {
+            className: 'chart-query'
+        })
+        this.queryEl.appendChild(this.beginTime);
+        this.queryEl.appendChild(this.endTime);
+        this.queryEl.appendChild(this.type);
+        this.queryEl.appendChild(this.query);
+
+        this.el.appendChild(this.queryEl);
+
 
     },
+    addEvent: function () {
+        var me = this;
+        this.query.onclick = function () {
+            var type = me.type.options[me.type.selectedIndex].value;
+            switch (type) {
+                case 'year':
+
+                    break;
+                case 'month':
+                    break;
+                case 'day':
+                    ;
+                    break;
+                default:
+                    return;
+                    break;
+            }
+
+        }
+
+    },
+    drawBase: function () {
+
+        this.drawCoordinate();
+        this.drawLegend();
+    },
     drawCoordinate: function () {
+        this.ctx.fillStyle='#000';
         this.drawX();
         this.drawY();
     },
-
     drawLegend: function () {
         var h = this.h,
             w = this.w,
@@ -39,14 +107,12 @@ Histogram.prototype = {
             c = this.ctx;
         c.fillRect(w - padding * 2, 10, 10, 10);
         c.fillText('单位:元', w - padding * 2 + 15, 20);
-
     },
     drawX: function () {
         var h = this.h,
             w = this.w,
             padding = 40,
             c = this.ctx;
-
         c.beginPath();
         //画轴
         c.moveTo(padding, h - padding);
@@ -100,6 +166,18 @@ Histogram.prototype = {
             c.fillText(num * i, padding - 20, h - padding - step * i, 20);
         }
     },
+    hide: function () {
+        this.el.style.display = 'none';
+    }, show: function () {
+        this.el.style.display = 'block';
+    },
+    reDraw: function (data, isReset) {
+        isReset && (this.data = data);
+        !isReset && (this.data = this.data.concat(data));
+        this.ctx.clearRect(0, 0, this.w, this.h);
+        this.drawBase();
+        this.drawData();
+    },
     drawData: function () {
         var h = this.h,
             w = this.w,
@@ -109,12 +187,16 @@ Histogram.prototype = {
         var XStep = ( w - padding * 2) / this.label.length;
         var YStep = (h - padding * 2) / this.data.length;
         var color = ['green', 'blue', 'red', 'pink', 'silver', 'black', 'origin'];
+        c.beginPath();
         this.data.forEach(function (num, index) {
             c.fillStyle = color[Math.floor(Math.random() * 1000) % (color.length - 1)];
-            c.fillRect(XStep * index + padding, h - padding, XStep, -num * me.factor);
+            var x = XStep * index + padding + YStep / 2, y = h - padding - num * me.factor;
+            c.fillRect(x, y, 3, 3);
+            c.lineTo(x, y);
+            c.stroke();
             c.fillStyle = '#e43e34';
             c.font = "Bold 15px Arial";
-            c.fillText(num, XStep * index + 10 + padding, h - padding - 20 - num * me.factor);
+            c.fillText(num, XStep * index + 3 + padding, h - padding - 20 - num * me.factor);
         })
     }
 }

@@ -6,17 +6,14 @@ function inherit(subclass, superclass) {
         },
         subclassProto = subclass.prototype,
         superclassProto = superclass.prototype;
-
     F.prototype = superclassProto;
     subclass.prototype = new F();
     subclass.prototype.constructor = subclass;
     subclass.superclass = superclassProto;
-
     if (superclassProto.constructor === Object.constructor) {
         superclassProto.constructor = superclass;
     }
     var subProtoMethod = Object.keys(subclassProto);
-
     Array.prototype.forEach.call(subProtoMethod, function (item) {
         if (subclassProto.hasOwnProperty(item)) {
             if (Object.prototype.toString.call(subclassProto[item]) == '[object Function]') {
@@ -25,6 +22,14 @@ function inherit(subclass, superclass) {
         }
     });
     return subclass;
+}
+function randomData(c) {
+    var a = [];
+    for (var i = 0; i < c; i++) {
+        a.push(Math.floor(Math.random() * 1000 % 100));
+    }
+
+    return a;
 }
 
 msj = {
@@ -92,7 +97,7 @@ msj = {
 
             "</div>" +
 
-            "<div class='order-list-body'>"+
+            "<div class='order-list-body'>" +
             "<%for (var j=0;j<(list[i].data&&list[i].data.length);j++) {%>" +
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item><%= list[i].data[j].text%></div>" +
@@ -100,7 +105,7 @@ msj = {
             "<div class=pop-list-item-del>X</div>" +
             "</div>" +
             "<%}%>" +
-            "</div>"+
+            "</div>" +
             "</div>" +
 
             "<div class='order-list-item-container fred'>" +

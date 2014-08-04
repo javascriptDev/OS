@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="client/util/js/util.js"></script>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="client/util/js/util.js"></script>
 
-    <script src="client/util/js/common.js"></script>
-    <script src="client/util/js/lib/tpl.js"></script>
-    <script src="client/util/js/components/popup.js"></script>
-    <script src="client/util/js/components/grid.js"></script>
-    <script src="client/util/js/components/tree.js"></script>
-    <script src="client/util/js/components/nestedList.js"></script>
+	<script src="client/util/js/common.js"></script>
+	<script src="client/util/js/lib/tpl.js"></script>
+	<script src="client/util/js/components/popup.js"></script>
+	<script src="client/util/js/components/grid.js"></script>
+	<script src="client/util/js/components/tree.js"></script>
+	<script src="client/util/js/components/nestedList.js"></script>
+	<script src="client/util/js/components/chart/base.js"></script>
 
-    <link href="client/util/css/base.css" rel="stylesheet">
-    <link href="client/util/css/grid.css" rel="stylesheet">
-    <link href="client/util/css/tree.css" rel="stylesheet">
-    <link href="client/util/css/pop.css" rel="stylesheet">
-    <link href="client/util/css/common.css" rel="stylesheet">
-    <link href="client/util/css/nestedList.css" rel="stylesheet">
+	<script src="client/util/js/components/chart/histogram.js"></script>
+	<script src="client/util/js/components/chart/line.js"></script>
+	<script src="client/util/js/components/chart/pie.js"></script>
+
+	<link href="client/util/css/base.css" rel="stylesheet">
+	<link href="client/util/css/grid.css" rel="stylesheet">
+	<link href="client/util/css/tree.css" rel="stylesheet">
+	<link href="client/util/css/pop.css" rel="stylesheet">
+	<link href="client/util/css/common.css" rel="stylesheet">
+	<link href="client/util/css/nestedList.css" rel="stylesheet">
+	<link href="client/util/css/chart/line.css" rel="stylesheet">
+
 </head>
 <body>
 <header>
-    <div class="header">addison system</div>
-    <nav class="">
-        <ul>
-            <li>点餐系统</li>
-            <li class="change-theme">更换主题
-                <ul class="theme-ul"></ul>
-            </li>
-        </ul>
-    </nav>
+	<div class="header">addison system</div>
+	<nav class="">
+		<ul>
+			<li>点餐系统</li>
+			<li class="change-theme">更换主题
+				<ul class="theme-ul"></ul>
+			</li>
+		</ul>
+	</nav>
 </header>
 <aside class="left">
 </aside>
@@ -42,69 +49,70 @@
 var socket = io.connect(msj.ip);
 var role = msj.role, events = msj.et;
 var me = {
-    role: role.base,
-    id: Math.random() * 1989
+	role: role.base,
+	id: Math.random() * 1989
 };
+var line, histogram, grid;
 var pageName = {
-    realTime: 'rt',
-    made: 'made',
-    history: 'history',
-    analysisHistogram: 'analysisHistogram',
-    analysisLine: 'analysisLine'
+	realTime: 'rt',
+	made: 'made',
+	history: 'history',
+	analysisHistogram: 'analysisHistogram',
+	analysisLine: 'analysisLine'
 }
 var data = [
-    {
-        node: '功能',
-        items: [
-            {
-                text: '当前账单',
-                name: pageName.realTime
-            },
-            {
-                text: '菜已做完',
-                name: pageName.made
-            },
-            {
-                text: '历史记录',
-                name: pageName.history
+	{
+		node: '功能',
+		items: [
+			{
+				text: '当前账单',
+				name: pageName.realTime
+			},
+			{
+				text: '菜已做完',
+				name: pageName.made
+			},
+			{
+				text: '历史记录',
+				name: pageName.history
 
-            }
-        ]
-    },
-    {
-        node: '统计',
-        items: [
-            {
-                text: '柱状图',
-                name: pageName.analysisHistogram
-            },
-            {
-                text: '折线图',
-                name: pageName.analysisLine
-            }
-        ]
-    },
-    {
-        node: '账户管理',
-        items: [
-            {
-                text: '个人资料',
-                name: pageName.analysisHistogram
-            },
-            {
-                text: '密码管理',
-                name: pageName.analysisLine
-            }
-        ]
-    }
+			}
+		]
+	},
+	{
+		node: '统计',
+		items: [
+			{
+				text: '柱状图',
+				name: pageName.analysisHistogram
+			},
+			{
+				text: '折线图',
+				name: pageName.analysisLine
+			}
+		]
+	},
+	{
+		node: '账户管理',
+		items: [
+			{
+				text: '个人资料',
+				name: pageName.analysisHistogram
+			},
+			{
+				text: '密码管理',
+				name: pageName.analysisLine
+			}
+		]
+	}
 ]
 
 var bc = {
-    lightBlue: 'c-lightblue',
-    darkRed: 'c-darkred',
-    silver: 'c-silver',
-    origin: 'c-origin',
-    darkBlue: 'c-darkblue'
+	lightBlue: 'c-lightblue',
+	darkRed: 'c-darkred',
+	silver: 'c-silver',
+	origin: 'c-origin',
+	darkBlue: 'c-darkblue'
 }
 var theme = localStorage.getItem('theme') || bc.darkRed;
 
@@ -112,372 +120,420 @@ var theme = localStorage.getItem('theme') || bc.darkRed;
 socket.emit(events.login, me);
 //登陆成功回调
 socket.on(events.loginSuccess, function (o) {
-    if (o.id == me.id) {
-        console.log('login success');
+	if (o.id == me.id) {
+		console.log('login success');
 
-        window.grid = new Grid({
-            parent: '.right',
-            title: '报表数据',
-            baseColor: theme,
-            fields: [
-                {en: 'did', cn: '桌号', sort: true},
-                {en: 'order', cn: '菜单', items: [
-                    {en: 'text', cn: '菜名'},
-                    {en: 'value', cn: '价钱'}
-                ]},
-                {en: 'price', cn: '总价', sum: true, sort: true},
-                {en: 'statues', cn: '状态'},
-                { en: 'id', cn: '', isHide: true},
-                {en: 'operate', cn: '操作', buttons: [
-                    {
-                        text: '付款',
-                        id: 'g-pay',
-                        click: function (id) {
-                            socket.emit(events.pay, id, function () {
-                                console.log(arguments);
-                            });
-                        },
-                        require: 'id'
-                    }
-                ]}
-            ],
-            data: {list: []},
-            isToolBar: false,
-            isTitle: false,
-            height: 500,
-            width: 1000,
-            //是否启用多选
-            isMulti: false,
-            page: {
-                count: 8
-            },
-            popup: new popup({
-                tpl: msj.tpl.popup,
-                listTpl: msj.tpl.popList,
-                listContainer: '.order-list-body',
-                baseColor: theme,
-                data: {list: [
-                    {text: 'asd'},
-                    {text: '333'}
-                ]},
-                btn: {
-                    parent: '.btn-c',
-                    buttons: [
-                        {
-                            text: '添加',
-                            cls: 'add',
-                            events: {
-                                click: function (e) {
-                                    //this is popup object
-                                    var data = [];
-                                    Array.prototype.forEach.call(this.nestedList.el.querySelectorAll('.nested-selected'), function (item) {
-                                        data.push({
-                                            text: item.childNodes[0].innerHTML,
-                                            value: item.childNodes[1].innerHTML
-                                        })
-                                    })
-                                    this.updataList(data, true);
-                                }
-                            }
-                        },
-                        {
-                            text: '取消',
-                            cls: 'cancel',
-                            events: {
-                                click: function (e) {
-                                    this.hide();
-                                }
-                            }
-                        }
-                    ]},
-                events: {
-                    rendered: function () {
-                        this.nestedList = new NestedList({
-                            tpl: msj.tpl.d,
-                            data: [
-                                {
-                                    text: '凉菜',
-                                    tpl: msj.tpl.e,
-                                    items: [
-                                        {text: '茴香花生米', price: '10'},
-                                        {text: '老醋花生米', price: '11'},
-                                        {text: '炝干豆丝', price: '10'},
-                                        {text: '炝土豆丝', price: '10'},
-                                        {text: '红油肚丝', price: '20'},
-                                        {text: '辣拌鸡胗', price: '24'},
-                                        {text: '拍黄瓜', price: '10'},
-                                        {text: '老虎菜', price: '10'},
-                                        {text: '大拉皮', price: '14'},
-                                        {text: '三河豆腐丝', price: '10'},
-                                        {text: '皮蛋豆腐', price: '8'},
-                                        {text: '辣根木耳', price: '12'},
-                                        {text: '炝金针蘑瓜丝', price: '18'},
-                                        {text: '肉丝拌粉条', price: '18'}
-                                    ]
-                                },
-                                {
-                                    text: '饺子',
-                                    tpl: msj.tpl.e,
-                                    child: [
-                                        {
-                                            text: '素馅水饺',
-                                            tpl: msj.tpl.e,
-                                            items: [
-                                                {text: '韭菜鸡蛋', price: '8'},
-                                                {text: '小白菜鸡蛋', price: '10'},
-                                                {text: '素三鲜(木耳,虾仁,鸡蛋)', price: '16'},
-                                                {text: '黄瓜鸡蛋', price: '10'},
-                                                {text: '西红柿鸡蛋', price: '12'},
-                                                {text: '青椒鸡蛋', price: '10'},
-                                                {text: '平菇玉米粒鸡蛋', price: '12'},
-                                                {text: '茴香鸡蛋', price: '10'}
-                                            ]
-                                        },
-                                        {
-                                            text: '猪肉水饺',
-                                            tpl: msj.tpl.e,
-                                            items: [
-                                                {text: '猪肉白菜', img: '', price: '8'},
-                                                {text: '猪肉芹菜', img: '', price: '10'},
-                                                {text: '猪肉酸菜', img: '', price: '10'},
-                                                {text: '猪肉茴香', img: '', price: '10'},
-                                                {text: '猪肉韭菜', price: '10'},
-                                                {text: '猪肉香菇', price: '12'},
-                                                {text: '猪肉青椒', price: '10'},
-                                                {text: '猪肉大葱', price: '12'},
-                                                {text: '肉三鲜(虾仁,鲜贝,猪肉)', price: '28'}
-                                            ]
-                                        },
-                                        {
-                                            text: '鸡肉水饺',
-                                            tpl: msj.tpl.e,
-                                            items: [
-                                                {text: '马蹄玉米粒', price: '18'},
-                                                {text: '鸡肉韭菜', price: '16'}
-                                            ]
-                                        },
-                                        {
-                                            text: '牛肉水饺',
-                                            tpl: msj.tpl.e,
-                                            items: [
-                                                {text: '牛肉萝卜', price: '16'},
-                                                {text: '牛肉胡萝卜', price: '16'},
-                                                {text: '牛肉韭菜', price: '18'},
-                                                {text: '牛肉大葱', price: '18'},
-                                                {text: '牛肉西红柿', price: '18'}
-                                            ]
-                                        },
-                                        {
-                                            text: '羊驴肉水饺',
-                                            tpl: msj.tpl.e,
-                                            items: [
-                                                {text: '羊肉胡萝卜', price: '22'},
-                                                {text: '羊肉香菜', price: '26'},
-                                                {text: '羊肉洋葱', price: '26'},
-                                                {text: '羊肉大葱', price: '26'},
-                                                {text: '驴肉葱花', price: '18'}
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    text: '干锅',
-                                    tpl: msj.tpl.e,
-                                    items: [
-                                        {text: '干锅娃娃菜', price: '18'},
-                                        {text: '干锅茶树菇', price: '24'},
-                                        {text: '干锅土豆片', price: '18'}
-                                    ]
-                                },
-                                {
-                                    text: '热菜',
-                                    tpl: msj.tpl.e,
-                                    items: [
-                                        {text: '爆炒圆白菜', price: '16'},
-                                        {text: '韭菜炒鸡蛋', price: '10'},
-                                        {text: '木耳炒白菜片', price: '10'},
-                                        {text: '青椒丝炒肉丝', price: '20'},
-                                        {text: '宫保鸡丁', price: '20'},
-                                        {text: '小炒肉', price: '20'},
-                                        {text: '杭椒牛柳', price: '38'},
-                                        {text: '干煸豆角', price: '18'},
-                                        {text: '炒肉木耳', price: '24'},
-                                        {text: '家常炖豆腐', price: '16'},
-                                        {text: '毛血旺', price: '26'},
-                                        {text: '鱼香茄子', price: '18'},
-                                        {text: '尖椒炒肉', price: '20'},
-                                        {text: '溜豆腐', price: '20'},
-                                        {text: '酱炖大豆腐', price: '18'},
-                                        {text: '滑子蘑炒肉', price: '22'},
-                                        {text: '杏鲍菇炒肉', price: '24'},
-                                        {text: '酸辣土豆丝', price: '12'},
-                                        {text: '苦瓜煎蛋', price: '16'},
-                                        {text: '啤酒地瓜条', price: '26'},
-                                        {text: '麻辣豆腐', price: '14'},
-                                        {text: '土豆片炖豆腐', price: '18'},
-                                        {text: '熘肝尖', price: '20'},
-                                        {text: '回锅肉', price: '32'},
-                                        {text: '红烧排骨', price: '48'},
-                                        {text: '溜肥肠', price: '38'},
-                                        {text: '尖椒护心肉', price: '38'},
-                                        {text: '小鸡炖蘑菇', price: '38'},
-                                        {text: '木须肉', price: '20'},
-                                        {text: '锅包肉', price: '32'},
-                                        {text: '酱腔骨', price: '48'},
-                                        {text: '尖椒干豆腐', price: '14'},
-                                        {text: '地三鲜', price: '18'},
-                                        {text: '鱼香肉丝', price: '18'},
-                                        {text: '乡村扒茄子', price: '18'},
-                                        {text: '酸菜粉', price: '16'},
-                                        {text: '芹菜粉', price: '16'},
-                                        {text: '京酱肉丝', price: '20'},
-                                        {text: '烧茄子', price: '16'},
-                                        {text: '红烧排骨土豆玉米', price: '48'},
-                                        {text: '大丰收', price: '68'},
-                                        {text: '溜肉段', price: '32'},
-                                        {text: '肉段烧茄子', price: '26'},
-                                        {text: '得莫利炖鱼', price: '48'},
-                                        {text: '红烧鲤鱼', price: '38'},
-                                        {text: '猪肉炖粉条', price: '28'},
-                                        {text: '糖醋里脊', price: '32'},
-                                        {text: '猪头酸菜炖粉条', price: '28'}
-                                    ]
-                                }
-                            ],
-                            parent: this.el,
-                            height: '130px',
-                            width: '400px'
-                        }).render();
-                    }
-                }
-            })
-        });
-        init();
-    }
+		grid = new Grid({
+			parent: '.right',
+			title: '报表数据',
+			baseColor: theme,
+			fields: [
+				{en: 'did', cn: '桌号', sort: true},
+				{en: 'order', cn: '菜单', items: [
+					{en: 'text', cn: '菜名'},
+					{en: 'value', cn: '价钱'}
+				]},
+				{en: 'price', cn: '总价', sum: true, sort: true},
+				{en: 'statues', cn: '状态'},
+				{ en: 'id', cn: '', isHide: true},
+				{en: 'operate', cn: '操作', buttons: [
+					{
+						text: '付款',
+						id: 'g-pay',
+						click: function (id) {
+							socket.emit(events.pay, id, function () {
+								console.log(arguments);
+							});
+						},
+						require: 'id'
+					}
+				]}
+			],
+			data: {list: []},
+			isToolBar: false,
+			isTitle: false,
+			height: 500,
+			width: 1000,
+			//是否启用多选
+			isMulti: false,
+			page: {
+				count: 8
+			},
+			popup: new popup({
+				tpl: msj.tpl.popup,
+				listTpl: msj.tpl.popList,
+				listContainer: '.order-list-body',
+				baseColor: theme,
+				data: {list: [
+					{text: 'asd'},
+					{text: '333'}
+				]},
+				btn: {
+					parent: '.btn-c',
+					buttons: [
+						{
+							text: '添加',
+							cls: 'add',
+							events: {
+								click: function (e) {
+									//this is popup object
+									var data = [];
+									Array.prototype.forEach.call(this.nestedList.el.querySelectorAll('.nested-selected'), function (item) {
+										data.push({
+											text: item.childNodes[0].innerHTML,
+											value: item.childNodes[1].innerHTML
+										})
+									})
+									this.updataList(data, true);
+								}
+							}
+						},
+						{
+							text: '取消',
+							cls: 'cancel',
+							events: {
+								click: function (e) {
+									this.hide();
+								}
+							}
+						}
+					]},
+				events: {
+					rendered: function () {
+						this.nestedList = new NestedList({
+							tpl: msj.tpl.d,
+							data: [
+								{
+									text: '凉菜',
+									tpl: msj.tpl.e,
+									items: [
+										{text: '茴香花生米', price: '10'},
+										{text: '老醋花生米', price: '11'},
+										{text: '炝干豆丝', price: '10'},
+										{text: '炝土豆丝', price: '10'},
+										{text: '红油肚丝', price: '20'},
+										{text: '辣拌鸡胗', price: '24'},
+										{text: '拍黄瓜', price: '10'},
+										{text: '老虎菜', price: '10'},
+										{text: '大拉皮', price: '14'},
+										{text: '三河豆腐丝', price: '10'},
+										{text: '皮蛋豆腐', price: '8'},
+										{text: '辣根木耳', price: '12'},
+										{text: '炝金针蘑瓜丝', price: '18'},
+										{text: '肉丝拌粉条', price: '18'}
+									]
+								},
+								{
+									text: '饺子',
+									tpl: msj.tpl.e,
+									child: [
+										{
+											text: '素馅水饺',
+											tpl: msj.tpl.e,
+											items: [
+												{text: '韭菜鸡蛋', price: '8'},
+												{text: '小白菜鸡蛋', price: '10'},
+												{text: '素三鲜(木耳,虾仁,鸡蛋)', price: '16'},
+												{text: '黄瓜鸡蛋', price: '10'},
+												{text: '西红柿鸡蛋', price: '12'},
+												{text: '青椒鸡蛋', price: '10'},
+												{text: '平菇玉米粒鸡蛋', price: '12'},
+												{text: '茴香鸡蛋', price: '10'}
+											]
+										},
+										{
+											text: '猪肉水饺',
+											tpl: msj.tpl.e,
+											items: [
+												{text: '猪肉白菜', img: '', price: '8'},
+												{text: '猪肉芹菜', img: '', price: '10'},
+												{text: '猪肉酸菜', img: '', price: '10'},
+												{text: '猪肉茴香', img: '', price: '10'},
+												{text: '猪肉韭菜', price: '10'},
+												{text: '猪肉香菇', price: '12'},
+												{text: '猪肉青椒', price: '10'},
+												{text: '猪肉大葱', price: '12'},
+												{text: '肉三鲜(虾仁,鲜贝,猪肉)', price: '28'}
+											]
+										},
+										{
+											text: '鸡肉水饺',
+											tpl: msj.tpl.e,
+											items: [
+												{text: '马蹄玉米粒', price: '18'},
+												{text: '鸡肉韭菜', price: '16'}
+											]
+										},
+										{
+											text: '牛肉水饺',
+											tpl: msj.tpl.e,
+											items: [
+												{text: '牛肉萝卜', price: '16'},
+												{text: '牛肉胡萝卜', price: '16'},
+												{text: '牛肉韭菜', price: '18'},
+												{text: '牛肉大葱', price: '18'},
+												{text: '牛肉西红柿', price: '18'}
+											]
+										},
+										{
+											text: '羊驴肉水饺',
+											tpl: msj.tpl.e,
+											items: [
+												{text: '羊肉胡萝卜', price: '22'},
+												{text: '羊肉香菜', price: '26'},
+												{text: '羊肉洋葱', price: '26'},
+												{text: '羊肉大葱', price: '26'},
+												{text: '驴肉葱花', price: '18'}
+											]
+										}
+									]
+								},
+								{
+									text: '干锅',
+									tpl: msj.tpl.e,
+									items: [
+										{text: '干锅娃娃菜', price: '18'},
+										{text: '干锅茶树菇', price: '24'},
+										{text: '干锅土豆片', price: '18'}
+									]
+								},
+								{
+									text: '热菜',
+									tpl: msj.tpl.e,
+									items: [
+										{text: '爆炒圆白菜', price: '16'},
+										{text: '韭菜炒鸡蛋', price: '10'},
+										{text: '木耳炒白菜片', price: '10'},
+										{text: '青椒丝炒肉丝', price: '20'},
+										{text: '宫保鸡丁', price: '20'},
+										{text: '小炒肉', price: '20'},
+										{text: '杭椒牛柳', price: '38'},
+										{text: '干煸豆角', price: '18'},
+										{text: '炒肉木耳', price: '24'},
+										{text: '家常炖豆腐', price: '16'},
+										{text: '毛血旺', price: '26'},
+										{text: '鱼香茄子', price: '18'},
+										{text: '尖椒炒肉', price: '20'},
+										{text: '溜豆腐', price: '20'},
+										{text: '酱炖大豆腐', price: '18'},
+										{text: '滑子蘑炒肉', price: '22'},
+										{text: '杏鲍菇炒肉', price: '24'},
+										{text: '酸辣土豆丝', price: '12'},
+										{text: '苦瓜煎蛋', price: '16'},
+										{text: '啤酒地瓜条', price: '26'},
+										{text: '麻辣豆腐', price: '14'},
+										{text: '土豆片炖豆腐', price: '18'},
+										{text: '熘肝尖', price: '20'},
+										{text: '回锅肉', price: '32'},
+										{text: '红烧排骨', price: '48'},
+										{text: '溜肥肠', price: '38'},
+										{text: '尖椒护心肉', price: '38'},
+										{text: '小鸡炖蘑菇', price: '38'},
+										{text: '木须肉', price: '20'},
+										{text: '锅包肉', price: '32'},
+										{text: '酱腔骨', price: '48'},
+										{text: '尖椒干豆腐', price: '14'},
+										{text: '地三鲜', price: '18'},
+										{text: '鱼香肉丝', price: '18'},
+										{text: '乡村扒茄子', price: '18'},
+										{text: '酸菜粉', price: '16'},
+										{text: '芹菜粉', price: '16'},
+										{text: '京酱肉丝', price: '20'},
+										{text: '烧茄子', price: '16'},
+										{text: '红烧排骨土豆玉米', price: '48'},
+										{text: '大丰收', price: '68'},
+										{text: '溜肉段', price: '32'},
+										{text: '肉段烧茄子', price: '26'},
+										{text: '得莫利炖鱼', price: '48'},
+										{text: '红烧鲤鱼', price: '38'},
+										{text: '猪肉炖粉条', price: '28'},
+										{text: '糖醋里脊', price: '32'},
+										{text: '猪头酸菜炖粉条', price: '28'}
+									]
+								}
+							],
+							parent: this.el,
+							height: '130px',
+							width: '400px'
+						}).render();
+					}
+				}
+			})
+		});
+		init();
+	}
 });
 socket.on(events.addDesk, function (desk) {
-    if (Object.prototype.toString.call(desk) == '[object Object]') {
-        desk = [desk];
-    }
-    var data = [];
-    for (var i = 0, len = desk.length; i < len; i++) {
-        (function (index) {
-            var d = desk[index];
-            var o = {did: 0, order: '', price: 0};
-            o.did = d.dn;
-            o.data = d.data.list;
-            o.statues = d.statues;
-            o.id = d._id;
-            var detail = d.data.list;
-            for (var j = 0, l = detail.length; j < l; j++) {
-                (function (jj) {
-                    o.price += parseInt(detail[jj].value);
-                }(j))
-            }
-            data.push(o);
-        }(i))
-    }
-    grid.addData(data);
+	if (Object.prototype.toString.call(desk) == '[object Object]') {
+		desk = [desk];
+	}
+	var data = [];
+	for (var i = 0, len = desk.length; i < len; i++) {
+		(function (index) {
+			var d = desk[index];
+			var o = {did: 0, order: '', price: 0};
+			o.did = d.dn;
+			o.data = d.data.list;
+			o.statues = d.statues;
+			o.id = d._id;
+			var detail = d.data.list;
+			for (var j = 0, l = detail.length; j < l; j++) {
+				(function (jj) {
+					o.price += parseInt(detail[jj].value);
+				}(j))
+			}
+			data.push(o);
+		}(i))
+	}
+	grid.addData(data);
 });
 socket.on(events.pay, function (data) {
-    console.log('pay');
-    if (data.success) {
-        grid.updateSingleData(data.id, {
-            statues: 'pay'
-        })
-        setTimeout(function () {
-            console.log(data.id);
-            grid.delData(data.id, true);
-        }, 3000);
-    }
+	console.log('pay');
+	if (data.success) {
+		grid.updateSingleData(data.id, {
+			statues: 'pay'
+		})
+		setTimeout(function () {
+			console.log(data.id);
+			grid.delData(data.id, true);
+		}, 3000);
+	}
 })
 // 菜单制作完成，删除菜单
 socket.on(events.makeOver, function (data) {
-    if (data.success) {
-        grid.updateSingleData(data.id, data.data, function () {
-            setTimeout(function () {
-                grid.delData(data.id, true);
-            }, 3000)
-        });
-    }
+	if (data.success) {
+		grid.updateSingleData(data.id, data.data, function () {
+			setTimeout(function () {
+				grid.delData(data.id, true);
+			}, 3000)
+		});
+	}
 })
 window.left = new Tree({
-    data: data,
-    parent: '.left',
-    baseColor: theme,
-    isDrag: false,
-    leafClick: function (e) {
-        var name = e.target.getAttribute('data-name');
-        location.hash = 'page=' + name;
-    }
+	data: data,
+	parent: '.left',
+	baseColor: theme,
+	isDrag: false,
+	leafClick: function (e) {
+		var name = e.target.getAttribute('data-name');
+		location.hash = 'page=' + name;
+	}
 });
 window.onhashchange = function (e) {
-    init();
+	init();
 }
 function init() {
-    document.querySelector('nav').className = theme;
-    if (location.href.indexOf('#') == -1) {
-        location.href = location.href + '#statues=' + pageName.realTime;
-    }
-    var page = location.hash.split('=')[1];
-    grid.page.ci = 0;
-    switch (page) {
-        case pageName.realTime:
-            getData('statues=begin', function (data) {
-                data && grid.update(data, function () {
-                    this.show();
-                });
-            }, true)
-            break;
-        case pageName.made:
-            getData('statues=made', function (data) {
-                data && grid.update(data, function () {
-                    this.show();
-                });
-            }, true);
-            break;
-        case pageName.history:
-            getData('statues=end', function (data) {
-                data && grid.update(data, function () {
-                    //this is grid
-                    this.show();
+	document.querySelector('nav').className = theme;
+	if (location.href.indexOf('#') == -1) {
+		location.href = location.href + '#statues=' + pageName.realTime;
+	}
+	var page = location.hash.split('=')[1];
+	grid.page.ci = 0;
+	switch (page) {
+		case pageName.realTime:
+			getData('statues=begin', function (data) {
+				data && grid.update(data, function () {
+					this.show();
+				});
+				line && line.hide();
+				histogram && histogram.hide();
+			}, true)
+			break;
+		case pageName.made:
+			getData('statues=made', function (data) {
+				data && grid.update(data, function () {
+					this.show();
+				});
+				line && line.hide();
+				histogram && histogram.hide();
+			}, true);
 
-                });
-            }, true)
-            break;
-        case pageName.analysisHistogram:
-            grid.hide();
-            break;
-        case pageName.analysisLine:
-            grid.hide();
-            break;
-        default :
-            break;
-    }
+			break;
+		case pageName.history:
+			getData('statues=end', function (data) {
+				data && grid.update(data, function () {
+					//this is grid
+					this.show();
+				});
+				line && line.hide();
+				histogram && histogram.hide();
+			}, true)
+			break;
+		case pageName.analysisHistogram:
+			getData('statues=end', function (data) {
+				console.log(data);
+
+				if (!histogram) {
+					histogram = new Histogram({
+
+						label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+						data: randomData(12),
+						title: 'asd',
+						height: 400,
+						width: 500,
+						container: '.right',
+						isQuery: true
+					})
+				} else {
+					histogram.reDraw(randomData(12), true);
+				}
+				histogram && histogram.show();
+				grid && grid.hide();
+				line && line.hide();
+
+
+			}, true)
+
+			break;
+		case pageName.analysisLine:
+			grid.hide();
+			if (!line) {
+				line = new Line({
+					container: '.right',
+					label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+					data: randomData(12),
+					title: 'asd',
+					height: 400,
+					width: 500,
+					isQuery: true
+
+				})
+			} else {
+				line.reDraw(randomData(12), true);
+			}
+
+			histogram && histogram.hide();
+			grid && grid.hide();
+			line && line.show();
+
+			break;
+		default :
+			break;
+	}
 }
 function initThemeSelect() {
-    var html = []
-    for (var i in bc) {
-        html.push('<li class="' + bc[i] + '">' + i + '</li>');
-    }
-    var el = document.querySelector('.theme-ul');
-    el.innerHTML = html.join('');
-    el.height = el.offsetHeight;
-    el.style.display = 'none';
-    el.style.left = el.parentNode.offsetLeft + 'px';
-    el.style.top = '20px';
-    var ct = document.querySelector('.change-theme');
-    ct.onmouseover = function () {
-        el.style.display = 'block';
-    }
-    ct.onmouseout = function (e) {
-        el.style.display = 'none';
-    }
-    el.onclick = function (e) {
-        localStorage.setItem('theme', e.target.className);
-        el.style.display = 'none';
-        location.reload();
-    }
+	var html = []
+	for (var i in bc) {
+		html.push('<li class="' + bc[i] + '">' + i + '</li>');
+	}
+	var el = document.querySelector('.theme-ul');
+	el.innerHTML = html.join('');
+	el.height = el.offsetHeight;
+	el.style.display = 'none';
+	el.style.left = el.parentNode.offsetLeft + 'px';
+	el.style.top = '20px';
+	var ct = document.querySelector('.change-theme');
+	ct.onmouseover = function () {
+		el.style.display = 'block';
+	}
+	ct.onmouseout = function (e) {
+		el.style.display = 'none';
+	}
+	el.onclick = function (e) {
+		localStorage.setItem('theme', e.target.className);
+		el.style.display = 'none';
+		location.reload();
+	}
 }
 initThemeSelect();
 </script>

@@ -13,9 +13,10 @@
     height: 20px;
     width: 100%;
     lineHeight: 20px;
-    textAlign: center;
+    text-align: center;
     display: inline-block;
-    position: relative
+    position: relative;
+    color: red;
 
 }
 

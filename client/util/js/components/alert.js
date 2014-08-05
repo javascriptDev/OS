@@ -19,11 +19,11 @@ alert.prototype = {
             className: 'alert-c ' + (opt.theme || 'blue')
         })
 
-        title && (this.title = msj.createEl('div', {
+        this.title = msj.createEl('div', {
                 className: 'alert-title',
-                innerHTML: title
+                innerHTML: title || '提示'
             }
-        ));
+        );
 
         this.close = msj.createEl('div', {
             className: 'alert-close',
@@ -39,20 +39,10 @@ alert.prototype = {
                 padding: '5px 10px'
             }
         }))
-        if (this.title) {
-            this.title.appendChild(this.close);
-            this.el.appendChild(this.title);
-        }
-        if (this.content) {
-            this.el.appendChild(this.content);
-            if (!this.title) {
-                this.content.appendChild(this.close);
-            }
-        }
-
-
+        this.title.appendChild(this.close);
+        this.el.appendChild(this.title);
+        this.el.appendChild(this.content);
         this.addEvent();
-
     },
     render: function () {
         document.body.appendChild(this.el);
@@ -61,7 +51,7 @@ alert.prototype = {
         this.show();
         setTimeout(function () {
             me.hide.call(me);
-        }, me.getOpt().timeout || 3000);
+        }, me.getOpt().time || 3000);
     },
     show: function () {
         this.el.style.opacity = 1;

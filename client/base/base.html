@@ -442,6 +442,7 @@ socket.on(events.changeList, function (data) {
 socket.on(events.oneOk, function (data) {
 	if (data.success) {
 		var d = grid.getDataById(data.one.id);
+		console.log(data.one.text);
 		for (var i = 0; i < d.data.length; i++) {
 			var obj = d.data[i];
 			if (obj.text == data.one.text && obj.statues != 'made') {

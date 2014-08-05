@@ -93,7 +93,8 @@
 			}
 			if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
 				list.cdata.statues = 'made';
-				socket.emit(et.makeOver, list.cdata);
+
+				socket.emit(et.makeOver, {id: el.offsetParent.oid});
 			}
 		})
 	}

@@ -155,40 +155,36 @@ function addEvent(io) {
             });
 
             //后厨按照菜单 制作好
-            socket.on(event.makeOver, function (data) {
-                var id = data._id || data.id;
-                data._id = new ObjectId(id);
-                db.update('order', function (err, data) {
+            socket.on(event.makeOver, function (o) {
+                var id = o.id;
+                db.query('order', function (err, data) {
+                    data[0].statues = 'made';
                     if (!err) {
-                        var result = {
-                            success: true,
-                            id: id,
-                            data: {
-                                statues: 'made'
+                        db.update('order', function (err, d) {
+                            if (!err) {
+                                var result = {
+                                    success: true,
+                                    id: id,
+                                    data: {
+                                        statues: 'made'
+                                    }
+                                };
+                                if (err) {
+                                    result = err;
+                                }
+                                io.sockets.in(role.monitor);
+                                io.sockets.in(role.base);
+                                io.sockets.emit(event.makeOver, result)
+                            } else {
+                                io.sockets.in(role.monitor);
+                                io.sockets.emit(event.makeOver, err);
                             }
-                        };
-                        if (err) {
-                            result = err;
-                        }
-                        io.sockets.in(role.monitor);
-                        io.sockets.in(role.base);
-                        io.sockets.emit(event.makeOver, result)
+                        }, data[0], {"_id": new ObjectId(id)});
                     } else {
-                        io.sockets.emit(event.makeOver, err);
+                        io.sockets.in(role.monitor);
+                        io.socket.emit(event.makeOver, err);
                     }
-                }, data, {"_id": new ObjectId(id)});
-//                updateStatues(id, data, function () {
-//                    var result = {
-//                        success: true,
-//                        id: id,
-//                        data: {
-//                            statues: 'made'
-//                        }
-//                    };
-//                    io.sockets.in(role.monitor);
-//                    io.sockets.in(role.base);
-//                    io.sockets.emit(event.makeOver, result);
-//                })
+                }, {"_id": new ObjectId(id)});
             });
             socket.on(event.pay, function (id) {
                 db.query('order', function (err, data) {
@@ -272,11 +268,17 @@ function addEvent(io) {
                                 item.statues = 'made';
                             }
                         })
-                        db.update('order', function (item) {
-                            io.sockets.in(role.monitor);
-                            io.sockets.in(role.base);
-                            data.statues = 'made';
-                            io.sockets.emit(event.oneOk, {success: true, one: data});
+                        db.update('order', function (err) {
+                            if (!err) {
+                                io.sockets.in(role.monitor);
+                                io.sockets.in(role.base);
+                                data.statues = 'made';
+                                io.sockets.emit(event.oneOk, {success: true, one: data});
+                            } else {
+                                io.sockets.in(role.monitor);
+                                io.sockets.emit(event.oneOk, {success: false, msg: err});
+
+                            }
                         }, result[0], {"_id": new ObjectId(id)});
                     } else {
                         io.sockets.emit(event.oneOk, {success: false, msg: 'no data'});

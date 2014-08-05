@@ -125,6 +125,8 @@ div {
 
 .g-child-field-container {
     height: 20px;
+    text-align: left;
+    padding: 3px 5px;
 }
 
 .g-child-field-container > div {
@@ -132,13 +134,33 @@ div {
 }
 
 .g-child-text {
-    width: 80%;
+    width: 75%;
     text-align: left;
-    padding-left: 20px;
 }
 
 .g-child-value {
-    width: 18%;
+    width: 10%;
+}
+
+.g-child-statues:not(:empty) {
+    width: 8%;
+    height: 10px;
+    color: transparent;
+    border-bottom: 1px solid red;
+    border-left: 1px solid red;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.g-child-statues:empty {
+    width: 8%;
+    height: 10px;
+    color: transparent;
+
+
 }
 
 .a-grid {
@@ -213,5 +235,6 @@ div {
     -o-transition: all .5s;
     transition: all .5s;
 }
+
 
 

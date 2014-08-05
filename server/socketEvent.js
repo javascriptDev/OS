@@ -261,6 +261,7 @@ function addEvent(io) {
 //                    }
 //                })
             })
+            //一道菜制作完毕,同步消息
             socket.on(event.oneOk, function (data) {
                 var id = data.id,
                     text = data.text;
@@ -274,8 +275,11 @@ function addEvent(io) {
                         db.update('order', function (item) {
                             io.sockets.in(role.monitor);
                             io.sockets.in(role.base);
-                            io.sockets.emit(event.changeList, {success: true, data: data.data});
+                            data.statues = 'made';
+                            io.sockets.emit(event.oneOk, {success: true, one: data});
                         }, result[0], {"_id": new ObjectId(id)});
+                    } else {
+                        io.sockets.emit(event.oneOk, {success: false, msg: 'no data'});
                     }
                 }, {"_id": new ObjectId(id)});
             })

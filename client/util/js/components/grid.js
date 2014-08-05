@@ -401,7 +401,6 @@ Grid.prototype = {
         }
     },
     updateSingleData: function (id, updataData, fn) {
-        // this.delData(data.id, false);
         this.data.list.forEach(function (item) {
             if (item.id == id) {
                 for (var i in updataData) {

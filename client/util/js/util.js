@@ -108,7 +108,9 @@ msj = {
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item><%= list[i].data[j].text%></div>" +
             "<div class=pop-list-item><%= list[i].data[j].value%></div>" +
+            "<%if(list[i].data[j].statues!='made') {%>" +
             "<div class=pop-list-item-del>X</div>" +
+            "<%}%>" +
             "</div>" +
             "<%}%>" +
             "</div>" +

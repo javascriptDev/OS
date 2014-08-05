@@ -133,7 +133,8 @@ socket.on(events.loginSuccess, function (o) {
 
 				{en: 'order', cn: '菜单', items: [
 					{en: 'text', cn: '菜名'},
-					{en: 'value', cn: '价钱'}
+					{en: 'value', cn: '价钱'},
+					{en: 'statues', cn: '状态'}
 				]},
 				{en: 'price', cn: '总价', sum: true, sort: true},
 				{en: 'time', cn: '时间', sort: true},
@@ -438,7 +439,15 @@ socket.on(events.changeList, function (data) {
 
 socket.on(events.oneOk, function (data) {
 	if (data.success) {
-		console.log(data);
+		var d = grid.getDataById(data.one.id);
+		for (var i = 0; i < d.data.length; i++) {
+			var obj = d.data[i];
+			if (obj.text == data.one.text && obj.statues != 'made') {
+				obj = data.one;
+				break;
+			}
+		}
+		grid.updateSingleData(data.one.id, d);
 	}
 })
 
@@ -465,7 +474,6 @@ function init() {
 	switch (page) {
 		case pageName.realTime:
 			getData('statues=begin', function (data) {
-				console.log(data);
 				data && grid.update(data, function () {
 					this.show();
 				});

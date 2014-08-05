@@ -68,7 +68,6 @@ function newGuid() {
 function findDataById(id) {
     var d = {};
     for (var i = 0; i < cache.begin.length; i++) {
-        console.log(cache.begin[i]._id == id);
         if (cache.begin[i]._id == id) {
             d = cache.begin[i];
             break;
@@ -125,8 +124,6 @@ function updateStatues(id) {
 
 function addEvent(io) {
     io.on('connection', function (socket) {
-            //  console.log(io.sockets.sockets.length);
-
             //登陆
             socket.on(event.login, function (member) {
                 socket.join(member.role);
@@ -137,7 +134,6 @@ function addEvent(io) {
                 });
 //                socket.emit(event.addDesk, deskArr)
             });
-
             //前端点餐
             socket.on(event.addDesk, function (desk) {
                 db.add('order', desk, function (err, data) {
@@ -189,6 +185,7 @@ function addEvent(io) {
                 }, 3000)
 
             });
+            //付款
             socket.on(event.pay, function (id) {
                 db.query('order', function (err, data) {
                     //data is a array
@@ -213,6 +210,7 @@ function addEvent(io) {
                     }
                 }, {"_id": new ObjectId(id)});
             })
+            //中途修改菜单
             socket.on(event.changeList, function (data) {
                 var id = new ObjectId(data.id);
                 db.query('order', function (err, d) {
@@ -274,14 +272,8 @@ function addEvent(io) {
                                 break;
                             }
                         }
-                        console.log('oneOK')
-//                        console.dir(result[0].data.list);
                         db.update('order', function (err, d) {
                             if (!err) {
-                                db.query('order', function (err, data) {
-                                    !err && console.dir(data[0].data.list);
-
-                                }, {"_id": new ObjectId(id)});
                                 io.sockets.in(role.monitor);
                                 io.sockets.in(role.base);
                                 data.stautes = 'made';

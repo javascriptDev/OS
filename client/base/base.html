@@ -13,6 +13,7 @@
 	<script src="client/util/js/components/tree.js"></script>
 	<script src="client/util/js/components/nestedList.js"></script>
 	<script src="client/util/js/components/chart/base.js"></script>
+	<script src="client/util/js/components/alert.js"></script>
 
 	<script src="client/util/js/components/chart/histogram.js"></script>
 	<script src="client/util/js/components/chart/line.js"></script>
@@ -22,6 +23,7 @@
 	<link href="client/util/css/grid.css" rel="stylesheet">
 	<link href="client/util/css/tree.css" rel="stylesheet">
 	<link href="client/util/css/pop.css" rel="stylesheet">
+	<link href="client/util/css/alert.css" rel="stylesheet">
 	<link href="client/util/css/common.css" rel="stylesheet">
 	<link href="client/util/css/nestedList.css" rel="stylesheet">
 	<link href="client/util/css/chart/line.css" rel="stylesheet">
@@ -443,11 +445,16 @@ socket.on(events.oneOk, function (data) {
 		for (var i = 0; i < d.data.length; i++) {
 			var obj = d.data[i];
 			if (obj.text == data.one.text && obj.statues != 'made') {
-				obj = data.one;
+				obj.statues = 'made';
 				break;
 			}
 		}
 		grid.updateSingleData(data.one.id, d);
+		new alert({
+					time: 3000,
+					text: d.did + '号桌,' + data.one.text + '已经做好'
+				}
+		).render();
 	}
 })
 

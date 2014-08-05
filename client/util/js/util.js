@@ -80,7 +80,11 @@ msj = {
             "</div>" +
             "<%}%>",
         c: "<%for (var i=0;i<list.length;i++) {%>" +
+            "<%if(list[i].statues=='made'){%>" +
+            "<div class='list-item selected'>" +
+            "<%}else{%>" +
             "<div class='list-item'>" +
+            "<%}%>" +
             "<div class=text><%=list[i].text%></div>" +
             "</div>" +
             "<%}%>",

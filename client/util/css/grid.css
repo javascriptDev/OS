@@ -83,9 +83,7 @@ div {
     vertical-align: top;
 }
 
-.blue {
-    background: #0078ff url(../img/gradient.png) repeat-x 0 -100px;
-}
+
 
 .red {
     background: #e03d4a;
@@ -180,7 +178,6 @@ div {
 }
 
 .item-selected {
-    /*background: #0078ff url(../img/gradient.png) repeat-x 0 -100px !important;*/
     color: red;
 }
 

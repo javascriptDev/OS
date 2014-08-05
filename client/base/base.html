@@ -130,12 +130,13 @@ socket.on(events.loginSuccess, function (o) {
 			baseColor: theme,
 			fields: [
 				{en: 'did', cn: '桌号', sort: true},
+				{en: 'time', cn: '时间', sort: true},
 				{en: 'order', cn: '菜单', items: [
 					{en: 'text', cn: '菜名'},
 					{en: 'value', cn: '价钱'}
 				]},
 				{en: 'price', cn: '总价', sum: true, sort: true},
-				{en: 'statues', cn: '状态'},
+				{en: 'statues', cn: '状态', isHide: true},
 				{ en: 'id', cn: '', isHide: true},
 				{en: 'operate', cn: '操作', buttons: [
 					{
@@ -389,6 +390,7 @@ socket.on(events.addDesk, function (desk) {
 			o.data = d.data.list;
 			o.statues = d.statues;
 			o.id = d._id;
+			o.time = d.date;
 			var detail = d.data.list;
 			for (var j = 0, l = detail.length; j < l; j++) {
 				(function (jj) {
@@ -468,16 +470,17 @@ function init() {
 				});
 				line && line.hide();
 				histogram && histogram.hide();
-			}, true, ws.memory);
+			}, true, ws.data);
 			break;
 		case pageName.made:
 			getData('statues=made', function (data) {
+				console.log(data);
 				data && grid.update(data, function () {
 					this.show();
 				});
 				line && line.hide();
 				histogram && histogram.hide();
-			}, true, ws.memory);
+			}, true, ws.data);
 
 			break;
 		case pageName.history:
@@ -492,29 +495,26 @@ function init() {
 			}, true, ws.data)
 			break;
 		case pageName.analysisHistogram:
-			getData('statues=end', function (data) {
-				console.log(data);
+//			console.log(data);
 
-				if (!histogram) {
-					histogram = new Histogram({
+			if (!histogram) {
+				histogram = new Histogram({
 
-						label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-						data: randomData(12),
-						title: 'asd',
-						height: 400,
-						width: 500,
-						container: '.right',
-						isQuery: true
-					})
-				} else {
-					histogram.reDraw(randomData(12), true);
-				}
-				histogram && histogram.show();
-				grid && grid.hide();
-				line && line.hide();
+					label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+					data: randomData(12),
+					title: 'asd',
+					height: 400,
+					width: 500,
+					container: '.right',
+					isQuery: true
+				})
+			} else {
+				histogram.reDraw(randomData(12), true);
+			}
+			histogram && histogram.show();
+			grid && grid.hide();
+			line && line.hide();
 
-
-			}, true)
 
 			break;
 		case pageName.analysisLine:

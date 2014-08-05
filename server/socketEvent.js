@@ -64,6 +64,7 @@ function newGuid() {
     return guid;
 }
 
+//缓存中才查找数据
 function findDataById(id) {
     var d = {};
     for (var i = 0; i < cache.begin.length; i++) {
@@ -117,7 +118,8 @@ function updateOrderList(id, data, fn) {
     fn && fn(hasData);
 }
 
-function updateStatues() {
+function updateStatues(id) {
+
 
 }
 
@@ -144,7 +146,6 @@ function addEvent(io) {
                         a.forEach(function (item) {
                             io.sockets.in(item);
                         })
-                        cache.begin.push(data[0]);
                         io.sockets.emit(event.addDesk, data[0]);
                     } else {
                         io.sockets.emit(event.addDesk, err);
@@ -156,38 +157,38 @@ function addEvent(io) {
             //后厨按照菜单 制作好
             socket.on(event.makeOver, function (data) {
                 var id = data._id || data.id;
-//                data._id = new ObjectId(id);
-//                db.update('order', function (err, data) {
-//                    if (!err) {
-//                        var result = {
-//                            success: true,
-//                            id: id,
-//                            data: {
-//                                statues: 'made'
-//                            }
-//                        };
-//                        if (err) {
-//                            result = err;
-//                        }
-//                        io.sockets.in(role.monitor);
-//                        io.sockets.in(role.base);
-//                        io.sockets.emit(event.makeOver, result)
-//                    } else {
-//                        io.sockets.emit(event.makeOver, err);
-//                    }
-//                }, data, {"_id": new ObjectId(id)});
-                updateStatues(id, data, function () {
-                    var result = {
-                        success: true,
-                        id: id,
-                        data: {
-                            statues: 'made'
+                data._id = new ObjectId(id);
+                db.update('order', function (err, data) {
+                    if (!err) {
+                        var result = {
+                            success: true,
+                            id: id,
+                            data: {
+                                statues: 'made'
+                            }
+                        };
+                        if (err) {
+                            result = err;
                         }
-                    };
-                    io.sockets.in(role.monitor);
-                    io.sockets.in(role.base);
-                    io.sockets.emit(event.makeOver, result);
-                })
+                        io.sockets.in(role.monitor);
+                        io.sockets.in(role.base);
+                        io.sockets.emit(event.makeOver, result)
+                    } else {
+                        io.sockets.emit(event.makeOver, err);
+                    }
+                }, data, {"_id": new ObjectId(id)});
+//                updateStatues(id, data, function () {
+//                    var result = {
+//                        success: true,
+//                        id: id,
+//                        data: {
+//                            statues: 'made'
+//                        }
+//                    };
+//                    io.sockets.in(role.monitor);
+//                    io.sockets.in(role.base);
+//                    io.sockets.emit(event.makeOver, result);
+//                })
             });
             socket.on(event.pay, function (id) {
                 db.query('order', function (err, data) {
@@ -207,47 +208,69 @@ function addEvent(io) {
                             io.sockets.in(role.base);
                             io.sockets.emit(event.pay, result);
 
-                        }, getData(), {"_id": new ObjectId(id)});
+                        }, data[0], {"_id": new ObjectId(id)});
                     } else {
                         io.sockets.emit(event.pay, err);
                     }
                 }, {"_id": new ObjectId(id)});
             })
             socket.on(event.changeList, function (data) {
-//                var id = new ObjectId(data._id);
-//                data._id = id;
-//                db.update('order', function (err, data) {
-//                    if (!err) {
+                var id = new ObjectId(data.id);
+                db.query('order', function (err, d) {
+                    if (!err) {
+                        var list = d[0].data.list;
+                        data.data.forEach(function (item) {
+                            if (item.type == 'add') {
+                                list.push(item);
+                            } else if (item.type == 'del') {
+                                for (var i = 0; i < list.length; i++) {
+                                    var obj = list[i];
+                                    if (obj.text == item.text) {
+                                        list.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        })
+                        db.update('order', function (err, data) {
+                            if (!err) {
+                                io.sockets.in(role.monitor);
+                                io.sockets.in(role.base);
+                                io.sockets.emit(event.changeList, {id: id, success: true});
+                            } else {
+                                io.sockets.emit(event.changeList, err);
+                            }
+                        }, d[0], {"_id": id});
+                    } else {
+
+                    }
+
+                }, {"_id": id});
+
+
+//                var id = data.id;
+//                updateOrderList(id, data.data, function (hasData) {
+//                    if (hasData) {
 //                        io.sockets.in(role.monitor);
 //                        io.sockets.in(role.base);
 //                        io.sockets.emit(event.changeList, {id: id, success: true});
 //                    } else {
-//                        io.sockets.emit(event.changeList, err);
+//                        io.sockets.in(role.monitor);
+//                        io.sockets.in(role.base);
+//                        io.sockets.emit(event.changeList, {id: id, success: false, msg: 'can not find data'});
 //                    }
-//                }, data, {"_id": id});
-                var id = data.id;
-                updateOrderList(id, data.data, function (hasData) {
-                    if (hasData) {
-                        io.sockets.in(role.monitor);
-                        io.sockets.in(role.base);
-                        io.sockets.emit(event.changeList, {id: id, success: true});
-                    } else {
-                        io.sockets.in(role.monitor);
-                        io.sockets.in(role.base);
-                        io.sockets.emit(event.changeList, {id: id, success: false, msg: 'can not find data'});
-                    }
-                })
+//                })
             })
             socket.on(event.oneOk, function (data) {
                 var id = data.id,
                     text = data.text;
-                updateOrder(id, text, function (hasData) {
-                    if (hasData) {
-                        io.sockets.in(role.monitor);
-                        io.sockets.in(role.base);
-                        io.sockets.emit(event.oneOk, {id: id, text: text, success: true});
-                    }
-                })
+//                updateOrder(id, text, function (hasData) {
+//                    if (hasData) {
+//                        io.sockets.in(role.monitor);
+//                        io.sockets.in(role.base);
+//                        io.sockets.emit(event.oneOk, {id: id, text: text, success: true});
+//                    }
+//                })
             })
             socket.on('disconnect', function (a) {
                 var a = '';

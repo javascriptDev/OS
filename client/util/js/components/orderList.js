@@ -80,10 +80,13 @@ Ol.prototype = {
     },
     submit: function (e) {
         var me = this;
+        var date = new Date().toLocaleString();
+        console.log(date);
         this.opt.submit && this.opt.submit({
             data: me.data,
             dn: me.deskNumber.value || 0,
-            statues: 'begin'
+            statues: 'begin',
+            date: date
         });
         this.data.list = [];
         this.c.innerHTML = '';

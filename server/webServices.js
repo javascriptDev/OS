@@ -44,8 +44,7 @@ function webServices(req, res) {
         case methods.data:
             getData(params);
             break;
-        case methods.memory:
-            getMemoryData(params);
+
         default :
             res.write('no data');
             res.end();
@@ -62,14 +61,13 @@ function webServices(req, res) {
         }, where || {})
     }
 
-    function getMemoryData(where) {
-        res.setHeader('Access-Control-Allow-Methods', 'GET');
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        var data = JSON.stringify(cache[where.statues]);
-        res.write(data);
-        res.end();
-
-    }
+//    function getMemoryData(where) {
+//        res.setHeader('Access-Control-Allow-Methods', 'GET');
+//        res.setHeader('Access-Control-Allow-Origin', '*');
+//        var data = JSON.stringify(cache[where.statues]);
+//        res.write(data);
+//        res.end();
+//    }
 }
 
 

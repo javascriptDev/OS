@@ -13,10 +13,13 @@ function parseData(data) {
     for (var i = 0, len = data.length; i < len; i++) {
 
         var d = data[i];
+//        var time = new Date(parseInt(d._id.substr(0, 8), 16));
         var o = {did: 0, order: '', price: 0};
         o.did = d.dn;
         o.id = d._id;
         o.statues = d.statues;
+        console.log(d);
+        o.time = d.date;
         o.data = d.data.list;
         var detail = d.data.list;
         for (var j = 0, l = detail.length; j < l; j++) {

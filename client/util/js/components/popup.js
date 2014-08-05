@@ -75,7 +75,7 @@ popup.prototype = {
         me.opt.events.rendered && me.opt.events.rendered.call(this);
         this.listC.onclick = function (e) {
             var tar = e.target;
-            if (tar.className = 'pop-list-item-del') {
+            if (tar.className == 'pop-list-item-del') {
                 me.updataList({
                     text: tar.offsetParent.childNodes[0].innerHTML,
                     value: tar.offsetParent.childNodes[1].innerHTML
@@ -133,7 +133,6 @@ popup.prototype = {
         this.el.querySelector('.fred').childNodes[1].innerText = this.getSum();
         fn && fn();
     },
-
     hide: function () {
         this.c.style.webkitTransform = 'scale(0)'
     },

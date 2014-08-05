@@ -236,13 +236,13 @@ function addEvent(io) {
                             if (!err) {
                                 io.sockets.in(role.monitor);
                                 io.sockets.in(role.base);
-                                io.sockets.emit(event.changeList, {id: id, success: true});
+                                io.sockets.emit(event.changeList, {id: id, success: true, data: data.data});
                             } else {
                                 io.sockets.emit(event.changeList, err);
                             }
                         }, d[0], {"_id": id});
                     } else {
-
+                        io.sockets.emit(event.changeList, err);
                     }
 
                 }, {"_id": id});
@@ -264,13 +264,20 @@ function addEvent(io) {
             socket.on(event.oneOk, function (data) {
                 var id = data.id,
                     text = data.text;
-//                updateOrder(id, text, function (hasData) {
-//                    if (hasData) {
-//                        io.sockets.in(role.monitor);
-//                        io.sockets.in(role.base);
-//                        io.sockets.emit(event.oneOk, {id: id, text: text, success: true});
-//                    }
-//                })
+                db.query('order', function (err, result) {
+                    if (!err) {
+                        result[0].data.list.forEach(function (item) {
+                            if (item.text == text && item.statues != 'made') {//防止重样菜
+                                item.statues = 'made';
+                            }
+                        })
+                        db.update('order', function (item) {
+                            io.sockets.in(role.monitor);
+                            io.sockets.in(role.base);
+                            io.sockets.emit(event.changeList, {success: true, data: data.data});
+                        }, result[0], {"_id": new ObjectId(id)});
+                    }
+                }, {"_id": new ObjectId(id)});
             })
             socket.on('disconnect', function (a) {
                 var a = '';

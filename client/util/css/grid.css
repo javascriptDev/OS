@@ -180,24 +180,38 @@ div {
 
 [data-type=asc]:after {
     content: '';
-    width: 10px;
-    height: 10px;
-    border-left: 1px solid red;
-    border-bottom: 1px solid red;
+    border: 10px solid transparent;
+    border-bottom: 10px solid red;
     position: absolute;
     right: 10px;
-    -webkit-transform: rotate(135deg);
+    -webkit-transform: roate(0deg);
+    -moz-transform: roate(0deg);
+    -ms-transform: roate(0deg);
+    -o-transform: roate(0deg);
+    transform: roate(0deg);
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
 }
 
 [data-type=desc]:after {
     content: '';
-    width: 10px;
-    height: 10px;
-    border-left: 1px solid red;
-    border-bottom: 1px solid red;
+    border: 10px solid transparent;
+    border-bottom: 10px solid red;
     position: absolute;
     right: 10px;
-    -webkit-transform: rotate(-45deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
 }
 
 

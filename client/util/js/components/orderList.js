@@ -80,13 +80,18 @@ Ol.prototype = {
     },
     submit: function (e) {
         var me = this;
-        var date = new Date().toLocaleString();
-        console.log(date);
+        var date = new Date();
+        var d = date.getFullYear() + '/' +
+            date.getMonth() + '/' +
+            date.getDate() + ' ' +
+            date.getHours() + ':' +
+            (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
+            (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
         this.opt.submit && this.opt.submit({
             data: me.data,
             dn: me.deskNumber.value || 0,
             statues: 'begin',
-            date: date
+            date: d
         });
         this.data.list = [];
         this.c.innerHTML = '';

@@ -18,7 +18,6 @@ function parseData(data) {
         o.did = d.dn;
         o.id = d._id;
         o.statues = d.statues;
-        console.log(d);
         o.time = d.date;
         o.data = d.data.list;
         var detail = d.data.list;

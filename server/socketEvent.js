@@ -153,38 +153,41 @@ function addEvent(io) {
                 });
 
             });
-
             //后厨按照菜单 制作好
             socket.on(event.makeOver, function (o) {
                 var id = o.id;
-                db.query('order', function (err, data) {
-                    data[0].statues = 'made';
-                    if (!err) {
-                        db.update('order', function (err, d) {
-                            if (!err) {
-                                var result = {
-                                    success: true,
-                                    id: id,
-                                    data: {
-                                        statues: 'made'
+                setTimeout(function () {
+                    db.query('order', function (err, data) {
+                        data[0].statues = 'made';
+                        if (!err) {
+                            db.update('order', function (err, d) {
+                                if (!err) {
+                                    var result = {
+                                        success: true,
+                                        id: id,
+                                        data: {
+                                            statues: 'made'
+                                        }
+                                    };
+                                    if (err) {
+                                        result = err;
                                     }
-                                };
-                                if (err) {
-                                    result = err;
+                                    io.sockets.in(role.monitor);
+                                    io.sockets.in(role.base);
+                                    io.sockets.emit(event.makeOver, result)
+                                } else {
+                                    io.sockets.in(role.monitor);
+                                    io.sockets.emit(event.makeOver, err);
                                 }
-                                io.sockets.in(role.monitor);
-                                io.sockets.in(role.base);
-                                io.sockets.emit(event.makeOver, result)
-                            } else {
-                                io.sockets.in(role.monitor);
-                                io.sockets.emit(event.makeOver, err);
-                            }
-                        }, data[0], {"_id": new ObjectId(id)});
-                    } else {
-                        io.sockets.in(role.monitor);
-                        io.socket.emit(event.makeOver, err);
-                    }
-                }, {"_id": new ObjectId(id)});
+                            }, data[0], {"_id": new ObjectId(id)});
+                        } else {
+                            io.sockets.in(role.monitor);
+                            io.socket.emit(event.makeOver, err);
+                        }
+                    }, {"_id": new ObjectId(id)});
+
+                }, 3000)
+
             });
             socket.on(event.pay, function (id) {
                 db.query('order', function (err, data) {
@@ -263,16 +266,25 @@ function addEvent(io) {
                     text = data.text;
                 db.query('order', function (err, result) {
                     if (!err) {
-                        result[0].data.list.forEach(function (item) {
-                            if (item.text == text && item.statues != 'made') {//防止重样菜
-                                item.statues = 'made';
+                        var dd = result[0].data.list;
+                        for (var i = 0; i < dd.length; i++) {
+                            var o = dd[i];
+                            if (o.text == text && o.statues != 'made') {//防止重样菜
+                                result[0].data.list[i].statues = 'made';
+                                break;
                             }
-                        })
-                        db.update('order', function (err) {
+                        }
+                        console.log('oneOK')
+//                        console.dir(result[0].data.list);
+                        db.update('order', function (err, d) {
                             if (!err) {
+                                db.query('order', function (err, data) {
+                                    !err && console.dir(data[0].data.list);
+
+                                }, {"_id": new ObjectId(id)});
                                 io.sockets.in(role.monitor);
                                 io.sockets.in(role.base);
-                                data.statues = 'made';
+                                data.stautes = 'made';
                                 io.sockets.emit(event.oneOk, {success: true, one: data});
                             } else {
                                 io.sockets.in(role.monitor);
@@ -280,6 +292,7 @@ function addEvent(io) {
 
                             }
                         }, result[0], {"_id": new ObjectId(id)});
+
                     } else {
                         io.sockets.emit(event.oneOk, {success: false, msg: 'no data'});
                     }

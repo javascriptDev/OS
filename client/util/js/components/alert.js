@@ -39,8 +39,18 @@ alert.prototype = {
                 padding: '5px 10px'
             }
         }))
-        this.title && this.el.appendChild(this.title);
-        this.content && this.el.appendChild(this.content);
+        if (this.title) {
+            this.title.appendChild(this.close);
+            this.el.appendChild(this.title);
+        }
+        if (this.content) {
+            this.el.appendChild(this.content);
+            if (!this.title) {
+                this.content.appendChild(this.close);
+            }
+        }
+
+
         this.addEvent();
 
     },

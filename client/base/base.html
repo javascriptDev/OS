@@ -451,7 +451,7 @@ socket.on(events.oneOk, function (data) {
 		}
 		grid.updateSingleData(data.one.id, d);
 		new alert({
-					time: 3000,
+					time: 5000,
 					text: d.did + '号桌,' + data.one.text + '已经做好'
 				}
 		).render();

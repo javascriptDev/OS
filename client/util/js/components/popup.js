@@ -144,5 +144,6 @@ popup.prototype = {
     },
     refreshChangeList: function () {
         this.changeList = {id: '', data: []};
+        return this;
     }
 }

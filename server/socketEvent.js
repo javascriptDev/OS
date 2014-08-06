@@ -204,6 +204,7 @@ function addEvent(io) {
                         })
                         db.update('order', function (err, d) {
                             if (!err) {
+                                console.log(data);
                                 io.sockets.emit(event.changeList, {id: id, success: true, data: data.data});
                             } else {
                                 io.sockets.emit(event.changeList, err);

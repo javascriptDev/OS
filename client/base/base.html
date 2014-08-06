@@ -212,7 +212,6 @@ socket.on(events.loginSuccess, function (o) {
 								}
 							}
 						}
-
 					]},
 				events: {
 					rendered: function () {
@@ -428,10 +427,10 @@ socket.on(events.makeOver, function (data) {
 })
 //修改菜单
 socket.on(events.changeList, function (data) {
+	console.log('cl');
 	if (data.success) {
-		grid.popup.refreshChangeList();
-		grid.popup.hide();
-		grid.update(null, true);
+		grid.popup.refreshChangeList().hide();
+		grid.update();
 	} else {
 		console.log(data.msg);
 	}

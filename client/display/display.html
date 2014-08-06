@@ -42,7 +42,6 @@
 			initPage();
 		}
 	})
-
 	var body = document.querySelector('.c');
 	socket.on(et.addDesk, function (desk) {
 		if (Object.prototype.toString.call(desk) == '[object Array]') {
@@ -107,14 +106,36 @@
 		}
 	})
 	//todo:菜单改变是,厨房相应更新信息
-	socket.on(et.changeList, function (data) {
-		console.log('chagelist');
-		console.log(data);
-
-	})
+	socket.on(et.changeList, function (result) {
+		console.log(1);
+		if (result.success) {
+			var data = result.data,
+					id = result.id;
+			Array.prototype.forEach.call(document.querySelectorAll('.order-list'), function (list) {
+				if (list.cdata._id == id) {
+					var source = list.cdata, sourceData = source.data.list;
+					data.forEach(function (d, index) {
+						if (d.type == 'add') {
+							sourceData.push(d);
+						} else if (d.type == 'del') {
+							for (var i = 0; i < sourceData.length; i++) {
+								if (sourceData[i].text == d.text) {
+									sourceData.splice(i, 1);
+									break;
+								}
+							}
+						}
+					})
+					list.cdata = source;
+					var html = '<div class="title">' + source + ' 号桌订单</div>';
+					html += template.compile(tpl.c)(source.data);
+					list.innerHTML = html;
+				}
+			})
+		}
+	});
 	socket.on(et.oneOk, function (data) {
 		if (data.success) {
-			console.log(data);
 		}
 	});
 

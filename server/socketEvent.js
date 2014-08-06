@@ -184,6 +184,8 @@ function addEvent(io) {
             //中途修改菜单
             socket.on(event.changeList, function (data) {
                 var id = new ObjectId(data.id);
+                io.sockets.in(role.base);
+                io.sockets.in(role.monitor);
                 db.query('order', function (err, d) {
                     if (!err) {
                         var list = d[0].data.list;
@@ -200,10 +202,8 @@ function addEvent(io) {
                                 }
                             }
                         })
-                        db.update('order', function (err, data) {
+                        db.update('order', function (err, d) {
                             if (!err) {
-                                io.sockets.in(role.monitor);
-                                io.sockets.in(role.base);
                                 io.sockets.emit(event.changeList, {id: id, success: true, data: data.data});
                             } else {
                                 io.sockets.emit(event.changeList, err);
@@ -214,20 +214,6 @@ function addEvent(io) {
                     }
 
                 }, {"_id": id});
-
-
-//                var id = data.id;
-//                updateOrderList(id, data.data, function (hasData) {
-//                    if (hasData) {
-//                        io.sockets.in(role.monitor);
-//                        io.sockets.in(role.base);
-//                        io.sockets.emit(event.changeList, {id: id, success: true});
-//                    } else {
-//                        io.sockets.in(role.monitor);
-//                        io.sockets.in(role.base);
-//                        io.sockets.emit(event.changeList, {id: id, success: false, msg: 'can not find data'});
-//                    }
-//                })
             })
             //一道菜制作完毕,同步消息
             socket.on(event.oneOk, function (data) {
@@ -290,6 +276,7 @@ function addEvent(io) {
                 var a = '';
                 //客户端socket 断开，需要手动 从io中删除备份的socket
             });
+
         }
     )
 }

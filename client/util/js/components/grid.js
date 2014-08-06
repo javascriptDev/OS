@@ -560,7 +560,6 @@ Grid.prototype = {
                 }
             }
             if (item) {
-                console.log(item);
                 if (me.popup) {
                     me.popup.changeList.id = item.dataset['id'];
                     me.popup.update({list: [me.getDataById(item.querySelector('.id').id)]}, 1);

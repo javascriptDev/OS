@@ -28,7 +28,7 @@ function popup(opt) {
             }
         })
     }
-    this.changeList = {id: '', data: []};
+    this.refreshChangeList();
     this.init();
 }
 
@@ -141,5 +141,8 @@ popup.prototype = {
     },
     destroy: function () {
 
+    },
+    refreshChangeList: function () {
+        this.changeList = {id: '', data: []};
     }
 }

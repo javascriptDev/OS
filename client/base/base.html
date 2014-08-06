@@ -117,7 +117,7 @@ var bc = {
 	origin: 'c-origin',
 	darkBlue: 'c-darkblue'
 }
-var theme = localStorage.getItem('theme') || bc.darkRed;
+var theme = localStorage.getItem('theme') || bc.darkBlue;
 
 //发送登陆事件
 socket.emit(events.login, me);
@@ -199,7 +199,6 @@ socket.on(events.loginSuccess, function (o) {
 							cls: 'pop-submit',
 							events: {
 								click: function (e) {
-									console.log(this.changeList);
 									socket.emit(events.changeList, this.changeList);
 								}
 							}
@@ -408,13 +407,11 @@ socket.on(events.addDesk, function (desk) {
 });
 //付款
 socket.on(events.pay, function (data) {
-	console.log('pay');
 	if (data.success) {
 		grid.updateSingleData(data.id, {
 			statues: 'pay'
 		})
 		setTimeout(function () {
-			console.log(data.id);
 			grid.delData(data.id, true);
 		}, 3000);
 	}
@@ -432,17 +429,16 @@ socket.on(events.makeOver, function (data) {
 //修改菜单
 socket.on(events.changeList, function (data) {
 	if (data.success) {
+		grid.popup.refreshChangeList();
 		grid.popup.hide();
 		grid.update(null, true);
 	} else {
 		console.log(data.msg);
 	}
 })
-
 socket.on(events.oneOk, function (data) {
 	if (data.success) {
 		var d = grid.getDataById(data.one.id);
-		console.log(data.one.text);
 		for (var i = 0; i < d.data.length; i++) {
 			var obj = d.data[i];
 			if (obj.text == data.one.text && obj.statues != 'made') {
@@ -452,13 +448,11 @@ socket.on(events.oneOk, function (data) {
 		}
 		grid.updateSingleData(data.one.id, d);
 		new alert({
-					time: 5000,
-					text: d.did + '号桌,' + data.one.text + '已经做好'
-				}
-		).render();
+			time: 5000,
+			text: d.did + '号桌,' + data.one.text + '已经做好'
+		}).render();
 	}
 })
-
 window.left = new Tree({
 	data: data,
 	parent: '.left',
@@ -491,7 +485,6 @@ function init() {
 			break;
 		case pageName.made:
 			getData('statues=made', function (data) {
-				console.log(data);
 				data && grid.update(data, function () {
 					this.show();
 				});
@@ -502,7 +495,6 @@ function init() {
 			break;
 		case pageName.history:
 			getData('statues=end', function (data) {
-				console.log(data);
 				data && grid.update(data, function () {
 					//this is grid
 					this.show();
@@ -512,7 +504,6 @@ function init() {
 			}, true, ws.data)
 			break;
 		case pageName.analysisHistogram:
-//			console.log(data);
 
 			if (!histogram) {
 				histogram = new Histogram({

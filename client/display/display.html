@@ -31,6 +31,7 @@
 		role: role.monitor,
 		id: Math.random() * 1989
 	}
+	var isOver = false;
 
 	//发送登陆事件
 	socket.emit(et.login, me);
@@ -61,6 +62,7 @@
 					item.parentNode.removeChild(item);
 				}
 			})
+			isOver = false;
 		}
 	})
 	function addDesk(desk) {
@@ -83,19 +85,20 @@
 			var el = e.target.offsetParent;
 			if (el.className.indexOf('selected') == -1) {
 				el.className += ' selected';
+				if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
+					list.cdata.statues = 'made';
+					isOver = true;
+				}
 				socket.emit(et.oneOk, {
 					id: el.offsetParent.oid,
-					text: el.firstChild.innerHTML
+					text: el.firstChild.innerHTML,
+					isOver: isOver
 				});
 
 			} else {
 				el.className = 'list-item';
 			}
-			if (list.querySelectorAll('.selected').length == list.querySelectorAll('.list-item').length) {
-				list.cdata.statues = 'made';
 
-				socket.emit(et.makeOver, {id: el.offsetParent.oid});
-			}
 		})
 	}
 	socket.on(et.pay, function (data) {

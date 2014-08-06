@@ -150,41 +150,12 @@ function addEvent(io) {
 
             });
             //后厨按照菜单 制作好
-            socket.on(event.makeOver, function (o) {
-                var id = o.id;
-                setTimeout(function () {
-                    db.query('order', function (err, data) {
-                        data[0].statues = 'made';
-                        if (!err) {
-                            db.update('order', function (err, d) {
-                                if (!err) {
-                                    var result = {
-                                        success: true,
-                                        id: id,
-                                        data: {
-                                            statues: 'made'
-                                        }
-                                    };
-                                    if (err) {
-                                        result = err;
-                                    }
-                                    io.sockets.in(role.monitor);
-                                    io.sockets.in(role.base);
-                                    io.sockets.emit(event.makeOver, result)
-                                } else {
-                                    io.sockets.in(role.monitor);
-                                    io.sockets.emit(event.makeOver, err);
-                                }
-                            }, data[0], {"_id": new ObjectId(id)});
-                        } else {
-                            io.sockets.in(role.monitor);
-                            io.socket.emit(event.makeOver, err);
-                        }
-                    }, {"_id": new ObjectId(id)});
+            function makeOver(data, id, fn) {
+                db.update('order', function (err, d) {
+                    fn && fn(err, d);
+                }, data, {"_id": new ObjectId(id)});
+            }
 
-                }, 3000)
-
-            });
             //付款
             socket.on(event.pay, function (id) {
                 db.query('order', function (err, data) {
@@ -261,7 +232,9 @@ function addEvent(io) {
             //一道菜制作完毕,同步消息
             socket.on(event.oneOk, function (data) {
                 var id = data.id,
-                    text = data.text;
+                    text = data.text,
+                    isOver = data.isOver;
+
                 db.query('order', function (err, result) {
                     if (!err) {
                         var dd = result[0].data.list;
@@ -278,10 +251,33 @@ function addEvent(io) {
                                 io.sockets.in(role.base);
                                 data.stautes = 'made';
                                 io.sockets.emit(event.oneOk, {success: true, one: data});
+                                if (isOver) {
+                                    result[0].statues = 'made';
+                                    makeOver(result[0], id, function (err) {
+                                        if (!err) {
+                                            var result = {
+                                                success: true,
+                                                id: id,
+                                                data: {
+                                                    statues: 'made'
+                                                }
+                                            };
+                                            if (err) {
+                                                result = err;
+                                            }
+                                            io.sockets.in(role.monitor);
+                                            io.sockets.in(role.base);
+                                            io.sockets.emit(event.makeOver, result)
+                                        } else {
+                                            io.sockets.in(role.monitor);
+                                            io.sockets.emit(event.makeOver, err);
+                                        }
+                                    });
+                                }
+
                             } else {
                                 io.sockets.in(role.monitor);
                                 io.sockets.emit(event.oneOk, {success: false, msg: err});
-
                             }
                         }, result[0], {"_id": new ObjectId(id)});
 

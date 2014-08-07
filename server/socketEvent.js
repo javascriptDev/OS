@@ -273,6 +273,7 @@ function addEvent(io) {
                     }
                 }, {"_id": new ObjectId(id)});
             })
+            //断开连接
             socket.on('disconnect', function (a) {
                 var a = '';
                 //客户端socket 断开，需要手动 从io中删除备份的socket

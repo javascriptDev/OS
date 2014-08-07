@@ -149,6 +149,15 @@ msj = {
                 dom[i] = o[i];
             }
         }
+    },
+    getDate: function (t) {
+        var date = new Date(t);
+        return date.getFullYear() + '/' +
+            date.getMonth() + '/' +
+            date.getDate() + ' ' +
+            date.getHours() + ':' +
+            (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
+            (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
     }
 
 

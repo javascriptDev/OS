@@ -51,11 +51,13 @@
 var socket = io.connect(msj.ip);
 var role = msj.role, events = msj.et;
 var ws = msj.webServices;
+
 var me = {
 	role: role.base,
 	id: Math.random() * 1989
 };
 var line, histogram, grid;
+//页面枚举
 var pageName = {
 	realTime: 'rt',
 	made: 'made',
@@ -63,6 +65,7 @@ var pageName = {
 	analysisHistogram: 'analysisHistogram',
 	analysisLine: 'analysisLine'
 }
+//左侧菜单初始化数据
 var data = [
 	{
 		node: '功能',
@@ -109,7 +112,7 @@ var data = [
 		]
 	}
 ]
-
+//主题枚举
 var bc = {
 	lightBlue: 'c-lightblue',
 	darkRed: 'c-darkred',
@@ -435,6 +438,7 @@ socket.on(events.changeList, function (data) {
 		console.log(data.msg);
 	}
 })
+//一个菜完成
 socket.on(events.oneOk, function (data) {
 	if (data.success) {
 		var d = grid.getDataById(data.one.id);
@@ -452,6 +456,8 @@ socket.on(events.oneOk, function (data) {
 		}).render();
 	}
 })
+
+//初始化左侧导航
 window.left = new Tree({
 	data: data,
 	parent: '.left',
@@ -462,9 +468,13 @@ window.left = new Tree({
 		location.hash = 'page=' + name;
 	}
 });
+
+//处理功能模块切换
 window.onhashchange = function (e) {
 	init();
 }
+
+
 function init() {
 	document.querySelector('nav').className = theme;
 	if (location.href.indexOf('#') == -1) {
@@ -506,10 +516,9 @@ function init() {
 
 			if (!histogram) {
 				histogram = new Histogram({
-
 					label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
 					data: randomData(12),
-					title: 'asd',
+					title: '流水报表',
 					height: 400,
 					width: 500,
 					container: '.right',
@@ -550,6 +559,8 @@ function init() {
 			break;
 	}
 }
+
+//主题切换
 function initThemeSelect() {
 	var html = []
 	for (var i in bc) {

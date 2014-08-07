@@ -18,7 +18,7 @@ function parseData(data) {
         o.did = d.dn;
         o.id = d._id;
         o.statues = d.statues;
-        o.time = d.date;
+        o.time = msj.getDate(d.date);
         o.data = d.data.list;
         var detail = d.data.list;
         for (var j = 0, l = detail.length; j < l; j++) {

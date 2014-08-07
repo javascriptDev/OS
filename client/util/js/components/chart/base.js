@@ -16,9 +16,8 @@ Base.prototype = {
         this.el = msj.createEl('div', {
             className: 'chart-c'
         });
-        this.opt.isQuery && this.addQuery();
+        this.opt.isQuery && (this.addQuery(), this.addEvent())
         this.addMain();
-        this.addEvent();
         return this;
     },
     addMain: function () {
@@ -72,31 +71,39 @@ Base.prototype = {
     addEvent: function () {
         var me = this;
         this.query.onclick = function () {
-            var type = me.type.options[me.type.selectedIndex].value;
-            switch (type) {
-                case 'year':
-
-                    break;
-                case 'month':
-                    break;
-                case 'day':
-                    ;
-                    break;
-                default:
-                    return;
-                    break;
-            }
-
+            me.reDraw(me.queryData());
         }
+    },
+    queryData: function () {
+        var me = this;
+        var type = me.type.options[me.type.selectedIndex].value;
+        var bt = this.beginTime.value,
+            et = this.endTime.value;
+        switch (type) {
+            case 'year':
 
+
+                break;
+            case 'month':
+                ;
+                break;
+            case 'day':
+
+                ;
+                break;
+            default:
+                return;
+                break;
+        }
+        this.label = [];
+        this.data = [];
     },
     drawBase: function () {
-
         this.drawCoordinate();
         this.drawLegend();
     },
     drawCoordinate: function () {
-        this.ctx.fillStyle='#000';
+        this.ctx.fillStyle = '#000';
         this.drawX();
         this.drawY();
     },
@@ -168,7 +175,8 @@ Base.prototype = {
     },
     hide: function () {
         this.el.style.display = 'none';
-    }, show: function () {
+    },
+    show: function () {
         this.el.style.display = 'block';
     },
     reDraw: function (data, isReset) {

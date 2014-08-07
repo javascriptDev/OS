@@ -32,6 +32,12 @@
     cursor: pointer;
 }
 .blue {
-    background: rgb(34, 178, 244);
+   background: linear-gradient(to bottom,#549ad0 0%,#3e76c0 100%);
+    background: -o-linear-gradient(top,#549ad0 0%,#3e76c0 100%);
+    background: -ms-linear-gradient(top,#549ad0 0%,#3e76c0 100%);
+    background-color: #32608f;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.42);
+    font-family: Arial,"Helvetica Neue","Helvetica",Tahoma,Verdana,sans-serif;
+    border-radius: 5px;
     color: #ffffff;
 }

@@ -63,10 +63,7 @@ Base.prototype = {
         this.queryEl.appendChild(this.endTime);
         this.queryEl.appendChild(this.type);
         this.queryEl.appendChild(this.query);
-
         this.el.appendChild(this.queryEl);
-
-
     },
     addEvent: function () {
         var me = this;
@@ -81,7 +78,6 @@ Base.prototype = {
             et = this.endTime.value;
         switch (type) {
             case 'year':
-
 
                 break;
             case 'month':

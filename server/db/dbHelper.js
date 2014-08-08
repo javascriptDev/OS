@@ -12,17 +12,6 @@ var client = require( 'mongodb' ).MongoClient;
 
 var address = 'mongodb://127.0.0.1:27017/os';
 
-//var a = {
-//    dbName: 'os',
-//    collections: [
-//        {
-//            name: 'order'
-//        }
-//
-//    ]
-//}
-
-
 function add( table, data, fn ) {
 	client.connect( address, function( err, db ) {
 		db.collection( table ).insert( data, function( err, result ) {

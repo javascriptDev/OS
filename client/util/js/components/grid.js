@@ -140,7 +140,7 @@ Grid.prototype = {
         var me = this;
         this.titleEl = msj.createEl('div', {
             className: 'g-title ' + me.baseColor
-        })
+        });
         this.titleEl.innerHTML = this.title;
         this.el.appendChild(this.titleEl);
     },

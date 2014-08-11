@@ -33,7 +33,7 @@ function randomData(c) {
 }
 
 msj = {
-    ip: 'http://192.168.165.166',
+    ip: 'http://192.168.165.221',
 //    ip: 'http://192.168.1.101',
 
     role: {
@@ -75,7 +75,12 @@ msj = {
         b: "<%for (var i=0;i<list.length;i++) {%>" +
             "<div class='list-item ol-list-item'>" +
             "<div class=ol-text><%=list[i].text%></div>" +
+            '<div class=add-one>+</div>' +
+            '<div class="ol-count"><input value="<%= list[i].count%>"></div>' +
+            '<div class=subtract-one>-</div>' +
             "<div class=ol-price><%=list[i].value%></div>" +
+            "<div class=ol-sum><%=list[i].sum%></div>" +
+
             "<div class=ol-del data-id=<%=list[i].id%> >X</div>" +
             "</div>" +
             "<%}%>",

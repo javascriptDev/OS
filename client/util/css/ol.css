@@ -37,6 +37,8 @@
 
 .close {
     float: right;
+    width: 30px;
+
     margin-right: 10px;
     display: inline-block;
 }
@@ -48,27 +50,46 @@
     text-align: center;
 }
 
-.ol-text, .ol-price, .ol-del {
+.ol-text, .ol-price, .ol-del, .ol-count, .ol-sum {
     display: inline-block;
-    border-bottom: 1px solid darkolivegreen;
-
 }
 
 .ol-del {
     color: red;
-    width: 9%;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    float: right;
 }
 
 .ol-text {
-    width: 70%;
+    width: 45%;
 }
 
 .ol-price {
-    width: 20%;
+    width: 30px;
+}
+
+.ol-sum {
+    width: 40px;
 }
 
 .ol-list-item {
     width: 100%;
+    border-bottom: 1px solid darkolivegreen;
+}
+
+.add-one, .subtract-one {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid cornflowerblue;
+}
+
+.ol-count input {
+    width: 30px;
 }
 
 .d-n {

@@ -42,7 +42,7 @@ tab.prototype = {
         })
         //默认选中第一个
         this.switchTab(0)
-        me.tabWrapper.style.height = window.screen.height-150 + 'px';
+        me.tabWrapper.style.height = window.screen.height - 150 + 'px';
         document.body.appendChild(this.el);
 
     },
@@ -87,9 +87,12 @@ tab.prototype = {
                             if (me.ol) {
                                 var el = e.target.offsetParent;
                                 if (el.className.indexOf('list-item') != -1) {
+                                    var price = el.querySelector('.price').innerHTML;
                                     var data = {
                                         text: el.querySelector('.text').innerHTML,
-                                        value: el.querySelector('.price').innerHTML
+                                        value: price,
+                                        count: 1,
+                                        sum: price
                                     }
                                     me.ol.reRender(data);
                                 }

@@ -187,11 +187,24 @@ Grid.prototype = {
                 });
                 tpl += '</div>';
             } else if (item.items) {//重表
+
+
+                //迭代重表
                 tpl += "<div class='g-field " + item.en + "'> <%=list[i]['" + item.en + "']%>";
+                //创建重表表头
+                tpl += "<div class=g-child-field-container>";
+                item.items.forEach(function (f) {
+                    if (f.en != 'statues') {
+                        tpl += "<div class='g-child-field g-child-" + f.en + " '>" + f.cn + "</div>"
+                    }
+                })
+                tpl += '</div>';
+
                 tpl += "<%for (var j=0;j<(list[i]['data']&&list[i]['data'].length)||0;j++) {%>";
-                tpl += '<div class="g-child-field-container">';
+
+                tpl += '<div class="g-child-item-container">';
                 item.items.forEach(function (child, index) {
-                    tpl += '<div class="g-child-field g-child-' + child.en + '"><%= list[i]["data"][j]["' + item.items[index].en + '"]%></div>'
+                    tpl += '<div class="g-child-' + child.en + '"><%= list[i]["data"][j]["' + item.items[index].en + '"]%></div>'
                 })
                 tpl += '</div>';
                 tpl += "<%}%>";
@@ -293,6 +306,10 @@ Grid.prototype = {
             dom.firstChild.innerHTML = '总计';
         }, function added(dom) {
             dom.removeChild(dom.querySelector('.operate'));
+            Array.prototype.forEach.call(dom.querySelectorAll('.g-child-field-container'), function (el) {
+                el.parentNode.removeChild(el);
+            })
+
         }, this.body);
     },
 
@@ -426,6 +443,7 @@ Grid.prototype = {
         //
         this.controls.info && this.setInfo();
         added && added(el);
+
     },
     createPagingBar: function (i) {
         var div = document.createElement('div');

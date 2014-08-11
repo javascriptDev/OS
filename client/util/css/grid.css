@@ -2,7 +2,7 @@ div {
     box-sizing: border-box;
 }
 
-.g-field {
+.g-field{
     display: inline-table;
     width: 16%;
     text-align: center;
@@ -121,23 +121,31 @@ div {
     text-align: center;
 }
 
-.g-child-field-container {
+.g-child-item-container, {
     height: 20px;
     text-align: left;
     padding: 3px 5px;
 }
 
-.g-child-field-container > div {
+.g-child-item-container > div,.g-child-field-container >div {
     display: inline-block;
 }
 
+
 .g-child-text {
-    width: 75%;
+    width: 50%;
     text-align: left;
+   word-break: break-all;
+}
+.g-child-count{
+    width:30px;
+}
+.g-child-sum{
+    width: 40px;
 }
 
 .g-child-value {
-    width: 10%;
+    width: 40px;
 }
 
 .g-child-statues:not(:empty) {

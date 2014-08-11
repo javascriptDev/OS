@@ -71,21 +71,17 @@ Base.prototype = {
             me.reDraw(me.queryData());
         }
     },
-    queryData: function () {
+        queryData: function () {
         var me = this;
         var type = me.type.options[me.type.selectedIndex].value;
         var bt = this.beginTime.value,
             et = this.endTime.value;
         switch (type) {
             case 'year':
-
                 break;
             case 'month':
-                ;
                 break;
             case 'day':
-
-                ;
                 break;
             default:
                 return;

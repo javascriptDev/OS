@@ -23,7 +23,7 @@ function parseData(data) {
         var detail = d.data.list;
         for (var j = 0, l = detail.length; j < l; j++) {
 //            o.order += detail[j].text + ':' + parseInt(detail[j].value) + '\r\n,';
-            o.price += parseInt(detail[j].value);
+            o.price += parseInt(detail[j].sum);
         }
         result.push(o);
     }

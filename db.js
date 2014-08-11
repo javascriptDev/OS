@@ -80,8 +80,6 @@ var update = {
     addArray: 'push a o to list'
 }
 
-
-
 function find() {
     client.connect(address, function (err, db) {
         if (!err) {
@@ -92,12 +90,6 @@ function find() {
         }
     })
 }
-
 var a = 'a=[1,2,3,4]';
-
-
 find();
-
-
-//query:
 

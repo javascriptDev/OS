@@ -21,7 +21,6 @@ function addScrollEvent(el, o) {
         sx = e.touches[0].pageX;
         sy = e.touches[0].pageY;
         var y = parseInt(el.style.webkitTransform.split(',')[1]);
-
         if (!isNaN(y)) {
             beginY = y;
         } else {
@@ -30,7 +29,6 @@ function addScrollEvent(el, o) {
         bt = new Date().getTime();
         queue.add({x: 0, y: beginY, direction: 'y', timeStamp: bt});
         queue.start(el);
-
     }, false);
 
     el.addEventListener('touchmove', function (e) {
@@ -43,7 +41,6 @@ function addScrollEvent(el, o) {
         if (isMove) {
             var x = e.touches[0].pageX,
                 y = e.touches[0].pageY;
-
             //判断上边界超出
             if (parseInt(el.style.webkitTransform.split(',')[1]) > 0) {
                 state = 'up';
@@ -52,14 +49,12 @@ function addScrollEvent(el, o) {
                 //  moveY = -(queue.el.offsetHeight - el.parentNode.offsetHeight.offsetHeight);
                 state = 'down'
                 moveY = beginY + (y - sy)
-
             } else {
                 moveY = beginY + (y - sy);
             }
             queue.add({x: 0, y: moveY, direction: 'y', timeStamp: new Date().getTime()});
         }
     }, false);
-
     el.addEventListener('touchend', function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -76,9 +71,7 @@ function addScrollEvent(el, o) {
             queue.add({x: 0, y: moveY, direction: 'y', timeStamp: et });
             state = '';
         }
-        //console.dir(queue.queueBak);
         queue.slowDown();
-
         if (et - bt < 80) {
             tapFn && tapFn(e);
         }

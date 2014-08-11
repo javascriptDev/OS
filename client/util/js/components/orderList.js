@@ -17,12 +17,16 @@ Ol.prototype = {
 
         this.c = div.querySelector('.list-inner');
         this.scrollC = div.querySelector('.ol-scroller');
-        this.el = div;
-        this.title = div.querySelector('.title');
-        this.subBtn = div.querySelector('.submit');
-        this.close = div.querySelector('.close');
-        this.deskNumber = div.querySelector('.d-n');
+        this.el = div
+        this.classCollection = {
+            title: 'title',
+            submit: 'submit',
+            close: 'close',
+            addOne: 'add-one',
+            subtractOne: 'subtract-one'
 
+        }
+        this.deskNumber = div.querySelector('.d-n');
         this.addEvent()
         this.render();
         this.hide();
@@ -55,18 +59,61 @@ Ol.prototype = {
             }
         });
     },
+    subtractOneEvent: function (text) {
+        var me = this;
+        this.data.list.forEach(function (item, index) {
+            if (item.text == text) {
+                if (item.count > 1) {
+                    item.count--;
+                    item.sum = item.value * item.count;
+                    me.render();
+                } else {
+                    me.data.list.splice(index, 1);
+                    me.render();
+                    return;
+                }
+            }
+        })
+    },
+    addOneEvent: function (text) {
+        this.data.list.forEach(function (item) {
+            if (item.text == text) {
+                item.count++;
+                item.sum = item.value * item.count;
+            }
+        })
+        this.render();
+    },
     addEvent: function () {
         var me = this;
-        this.subBtn.onclick = function (e) {
-            me.submit.call(me, e);
-        }
-        this.title.onclick = function () {
-            me.show();
-        }
-        this.close.onclick = function (e) {
-            e.stopPropagation();
-            me.hide();
-        }
+        this.el.addEventListener('touchstart', function (e) {
+            var target = e.touches[0].target,
+                className = target.className;
+            var cc = me.classCollection;
+            switch (className) {
+                case cc.addOne:
+                    var text = target.parentNode.firstChild.innerText;
+                    me.addOneEvent(text);
+                    break;
+                case cc.subtractOne:
+                    var text = target.parentNode.firstChild.innerText;
+                    me.subtractOneEvent(text);
+                    break;
+                case cc.close:
+                    e.stopPropagation();
+                    me.hide();
+                    break;
+                case cc.submit:
+                    me.submit.call(me, e);
+                    break;
+                case cc.title:
+                    me.show();
+                    break;
+                default:
+                    return;
+                    break
+            }
+        })
     },
     show: function () {
         this.animate(this.el, 0)
@@ -88,6 +135,8 @@ Ol.prototype = {
             statues: 'begin',
             date: date
         });
+
+
         this.data.list = [];
         this.c.innerHTML = '';
         this.deskNumber.value = '';

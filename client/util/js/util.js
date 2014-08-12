@@ -81,7 +81,7 @@ msj = {
             "<div class=ol-price><%=list[i].value%></div>" +
             "<div class=ol-sum><%=list[i].sum%></div>" +
 
-            "<div class=ol-del data-id=<%=list[i].id%> >X</div>" +
+//            "<div class=ol-del data-id=<%=list[i].id%> >X</div>" +
             "</div>" +
             "<%}%>",
         c: "<%for (var i=0;i<list.length;i++) {%>" +

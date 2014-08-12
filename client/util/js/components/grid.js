@@ -261,12 +261,10 @@ Grid.prototype = {
                 return newData.list[currentIndex];
             }
         });
-
         var data = {list: pageData || []};
         var html = '';
         (data.list.length > 0) && (html = template.compile(this.tpl)(data));
         this.contentEl.innerHTML = html;
-
         //设置行号
         this.setLineNumber();
         this.sumField.length > 0 ? this.setSum(pageData) : null;
@@ -278,7 +276,6 @@ Grid.prototype = {
         var index = this.page.ci;
         var countPerPage = this.page.count;
         Array.prototype.forEach.call(this.contentEl.querySelectorAll('.line'), function (line, i) {
-
             line.innerHTML = index * countPerPage + i + 1;
         })
     },

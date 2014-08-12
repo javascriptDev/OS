@@ -50,7 +50,7 @@ popup.prototype = {
         this.el = msj.createEl('div', {
                 className: 'popup-body',
                 style: {
-                    width: opt.width || '400px',
+                    width: opt.width || '700px',
                     height: opt.height || '500px',
                     margin: '40px auto',
                     background: 'white'

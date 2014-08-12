@@ -36,16 +36,12 @@
 		role: role.terminal,
 		id: Math.random() * 1989
 	}
-
 	socket.emit(ne.login, me);
-
 	socket.on(ne.loginSuccess, function (o) {
 		if (o.id == me.id) {
 			console.log(me);
 		}
 	})
-
-
 	var data = [
 		{
 			tab: '素馅饺子',
@@ -211,8 +207,6 @@
 			]}
 		}
 	]
-
-
 	var tab = new tab({
 		tab: data,
 		ol: new Ol({tpl: tpl.b,

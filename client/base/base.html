@@ -192,7 +192,9 @@ socket.on(events.loginSuccess, function (o) {
 									Array.prototype.forEach.call(this.nestedList.el.querySelectorAll('.nested-selected'), function (item) {
 										data.push({
 											text: item.childNodes[0].innerHTML,
-											value: item.childNodes[1].innerHTML
+											value: item.childNodes[1].innerHTML,
+											count: 1,
+											sum: item.childNodes[1].innerHTML * 1
 										})
 									})
 									this.updataList(data, true);
@@ -401,7 +403,7 @@ socket.on(events.addDesk, function (desk) {
 			var detail = d.data.list;
 			for (var j = 0, l = detail.length; j < l; j++) {
 				(function (jj) {
-					o.price += parseInt(detail[jj].value);
+					o.price += parseInt(detail[jj].sum);
 				}(j))
 			}
 			data.push(o);

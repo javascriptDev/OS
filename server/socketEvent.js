@@ -184,11 +184,13 @@ function addEvent(io) {
             //中途修改菜单
             socket.on(event.changeList, function (data) {
                 var id = new ObjectId(data.id);
+                var did = 0;
                 io.sockets.in(role.base);
                 io.sockets.in(role.monitor);
                 db.query('order', function (err, d) {
                     if (!err) {
                         var list = d[0].data.list;
+                        did = d[0].dn;
                         data.data.forEach(function (item) {
                             if (item.type == 'add') {
                                 list.push(item);
@@ -204,8 +206,7 @@ function addEvent(io) {
                         })
                         db.update('order', function (err, d) {
                             if (!err) {
-                                console.log(data);
-                                io.sockets.emit(event.changeList, {id: id, success: true, data: data.data});
+                                io.sockets.emit(event.changeList, {id: id, did: did, success: true, data: data.data});
                             } else {
                                 io.sockets.emit(event.changeList, err);
                             }

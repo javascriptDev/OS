@@ -460,7 +460,6 @@ socket.on(events.oneOk, function (data) {
 		}).render();
 	}
 })
-
 //初始化左侧导航
 window.left = new Tree({
 	data: data,
@@ -472,13 +471,10 @@ window.left = new Tree({
 		location.hash = 'page=' + name;
 	}
 });
-
 //处理功能模块切换
 window.onhashchange = function (e) {
 	init();
 }
-
-
 function init() {
 	document.querySelector('nav').className = theme;
 	if (location.href.indexOf('#') == -1) {
@@ -560,7 +556,6 @@ function init() {
 			break;
 	}
 }
-
 //主题切换
 function initThemeSelect() {
 	var html = []

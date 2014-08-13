@@ -8,16 +8,12 @@
 	<meta name="browsermode" content="application">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-	<title></title>
+	<title>厨房专用</title>
 	<script src="client/util/js/lib/tpl.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="client/util/js/util.js"></script>
 	<script src="client/util/js/common.js"></script>
-
 	<link href="client/util/css/display.css" rel="stylesheet    ">
-	<style type="text/css">
-
-	</style>
 </head>
 <body>
 <div class="c">
@@ -32,7 +28,6 @@
 		id: Math.random() * 1989
 	}
 	var isOver = false;
-
 	//发送登陆事件
 	socket.emit(et.login, me);
 	//登陆成功回调
@@ -128,7 +123,6 @@
 						}
 					})
 					list.cdata = source;
-
 					var html = '<div class="title">' + result.did + ' 号桌订单</div>';
 					html += template.compile(tpl.c)(source.data);
 					list.innerHTML = html;
@@ -140,18 +134,13 @@
 		if (data.success) {
 		}
 	});
-
-
 	function initPage() {
 		getData('statues=begin', function (data) {
 			data.list.forEach(function (item) {
 				addDesk(item);
 			})
 		}, false, msj.webServices.data)
-
 	}
-
-
 </script>
 </body>
 </html>

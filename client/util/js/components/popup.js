@@ -22,11 +22,14 @@ function popup(opt) {
         _data = data;
     }
     this.delData = function (data) {
-        _data.list[0].data.forEach(function (d, index) {
+        this.getDataList().forEach(function (d, index) {
             if (d.text == data.text && d.value == data.value) {
                 _data.list[0].data.splice(index, 1);
             }
         })
+    }
+    this.getDataList = function () {
+        return _data.list[0].data;
     }
     this.refreshChangeList();
     this.init();
@@ -82,8 +85,53 @@ popup.prototype = {
                 }, false, function () {
                     tar.offsetParent.parentNode.removeChild(tar.offsetParent);
                 });
+            } else if (tar.className.indexOf('add-one') != -1) {
+                me.addOne(tar.parentNode.parentNode.firstChild.innerText, function (count) {
+                    console.log(count);
+                    tar.nextElementSibling.querySelector('input').value = count;
+                });
+            } else if (tar.className.indexOf('subtract-one') != -1) {
+                var isMade = tar.getAttribute('data-statues') == '' ? false : true;
+                !isMade && me.subtractOne(tar.parentNode.parentNode.firstChild.innerText, function (count) {
+                    if (count) {
+                        tar.parentNode.querySelector('input').value = count;
+                    } else {
+                        tar.parentNode.parentNode.parentNode.removeChild(tar.parentNode.parentNode);
+                    }
+                });
             }
         }
+    },
+    addOne: function (text, cb) {
+        var me = this;
+        var count = 0;
+        var data = me.getDataList();
+        for (var i = 0, len = data.length; i < len; i++) {
+            if (data[i].text == text) {
+                var o = {
+                    count: ++data[i].count,
+                    type: 'alter',
+                    text: text
+                }
+                me.changeList.data.push(o);
+                count = o.count;
+                break;
+            }
+        }
+        cb && cb(count);
+    },
+    subtractOne: function (text, cb) {
+        var me = this;
+        var count = 0;
+        var data = me.changeList.data;
+        for (var i = 0, len = data.length; i < len; i++) {
+            if (data[i].text == text) {
+                if (data[i].count < 2) {
+                    data[i].splice(i, 1);
+                }
+            }
+        }
+        cb && cb(count);
     },
     addButton: function () {
         var me = this, opt = me.opt, btn = opt.btn;

@@ -107,8 +107,11 @@ msj = {
             "<div class=order-list>" +
             "<div class='order-list-item-container list-field'>" +
             "<div class=pop-list-item>菜名</div>" +
-            "<div class=pop-list-item>单价</div>" +
             "<div class=pop-list-item>操作</div>" +
+            "<div class=pop-list-item>单价</div>" +
+            "<div class=pop-list-item>总价</div>" +
+            "<div class=pop-list-item>取消</div>" +
+
 
             "</div>" +
 
@@ -116,7 +119,13 @@ msj = {
             "<%for (var j=0;j<(list[i].data&&list[i].data.length);j++) {%>" +
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item><%= list[i].data[j].text%></div>" +
+            "<div class='pop-list-item addSubtract'>" +
+            "<div class='pop-list-item add-one'>+</div>" +
+            "<div class='pop-list-item count-val'><input value='<%= list[i].data[j].count%>'></div>" +
+            "<div class='pop-list-item subtract-one' data-statues='<%=list[i].data[j].statues%>'>-</div>" +
+            "</div>" +
             "<div class=pop-list-item><%= list[i].data[j].value%></div>" +
+            "<div class='pop-list-item sum'><%= list[i].data[j].sum%></div>" +
             "<%if(list[i].data[j].statues!='made') {%>" +
             "<div class=pop-list-item-del>X</div>" +
             "<%}%>" +
@@ -135,7 +144,13 @@ msj = {
         popList: "<%for (var j=0;j<list.length;j++) {%>" +
             "<div class=order-list-item-container>" +
             "<div class=pop-list-item><%= list[j].text%></div>" +
+            "<div class='pop-list-item addSubtract'>" +
+            "<div class='pop-list-item add-one'>+</div>" +
+            "<div class='pop-list-item count-val'><input value='<%= list[j].count%>'></div>" +
+            "<div class='pop-list-item subtract-one' data-statues='<%=list[j].statues%>'>-</div>" +
+            "</div>" +
             "<div class=pop-list-item><%= list[j].value%></div>" +
+            "<div class='pop-list-item sum'><%= list[j].sum%></div>" +
             "<div class=pop-list-item-del>X</div>" +
             "</div>" +
             "<%}%>"

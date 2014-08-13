@@ -202,6 +202,16 @@ function addEvent(io) {
                                         break;
                                     }
                                 }
+                            } else if (item.type == 'alter') {
+                                for (var i = 0; i < list.length; i++) {
+                                    var obj = list[i];
+                                    if (obj.text == item.text) {
+                                        for (var k in item) {
+                                            obj[k] = item[k];
+                                        }
+                                        break;
+                                    }
+                                }
                             }
                         })
                         db.update('order', function (err, d) {

@@ -52,7 +52,6 @@ function request(url, cb) {
             }
         }
     }
-
     if (!xhr) {
         alert('Giving up :( Cannot create an XMLHTTP instance');
         return false;
@@ -63,6 +62,5 @@ function request(url, cb) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             cb && cb(JSON.parse(xhr.responseText));
         }
-
     }
 }

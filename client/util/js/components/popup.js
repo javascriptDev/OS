@@ -116,8 +116,6 @@ popup.prototype = {
             if (list[i].text == text) {
                 var count = ++list[i].count ,
                     sum = count * list[i].value;
-                console.log(data);
-                console.log(list[i].value);
                 data.price = parseInt(data.price) + parseInt(list[i].value);
                 list[i].sum = sum;
                 var o = {
@@ -135,17 +133,26 @@ popup.prototype = {
     },
     subtractOne: function (text, cb) {
         var me = this;
-        var count = 0;
+        var result = 0;
         var sum = 0;
-        var data = me.changeList.data;
-        for (var i = 0, len = data.length; i < len; i++) {
-            if (data[i].text == text) {
-                if (data[i].count < 2) {
-                    data[i].splice(i, 1);
+        var data = me.getDataList(),
+            list = data.data;
+        for (var i = 0, len = list.length; i < len; i++) {
+            if (list[i].text == text) {
+                if (list[i].count < 2) {
+                    list.splice(i, 1);
+
+                } else {
+                    var count = --list[i].count ,
+                        sum = count * list[i].value;
+                    data.price = parseInt(data.price) - parseInt(list[i].value);
+                    list[i].sum = sum;
+                    result = count;
                 }
+                break;
             }
         }
-        cb && cb(count, sum);
+        cb && cb(result, sum);
     },
     addButton: function () {
         var me = this, opt = me.opt, btn = opt.btn;

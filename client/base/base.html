@@ -399,7 +399,7 @@ socket.on(events.addDesk, function (desk) {
 			o.data = d.data.list;
 			o.statues = d.statues;
 			o.id = d._id;
-			o.time = d.date;
+			o.time = msj.getDate(d.date);
 			var detail = d.data.list;
 			for (var j = 0, l = detail.length; j < l; j++) {
 				(function (jj) {
@@ -434,8 +434,8 @@ socket.on(events.makeOver, function (data) {
 })
 //修改菜单
 socket.on(events.changeList, function (data) {
-	console.log('cl');
 	if (data.success) {
+		console.log(data);
 		grid.popup.refreshChangeList().hide();
 		grid.update();
 	} else {

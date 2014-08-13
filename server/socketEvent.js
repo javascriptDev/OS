@@ -122,6 +122,7 @@ function updateStatues(id) {
 
 }
 
+//添加订阅事件
 function addEvent(io) {
     io.on('connection', function (socket) {
             //登陆
@@ -155,7 +156,6 @@ function addEvent(io) {
                     fn && fn(err, d);
                 }, data, {"_id": new ObjectId(id)});
             }
-
             //付款
             socket.on(event.pay, function (id) {
                 db.query('order', function (err, data) {
@@ -289,7 +289,6 @@ function addEvent(io) {
                 var a = '';
                 //客户端socket 断开，需要手动 从io中删除备份的socket
             });
-
         }
     )
 }

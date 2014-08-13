@@ -29,7 +29,7 @@ function popup(opt) {
         })
     }
     this.getDataList = function () {
-        return _data.list[0].data;
+        return _data.list[0];
     }
     this.refreshChangeList();
     this.init();
@@ -86,15 +86,19 @@ popup.prototype = {
                     tar.offsetParent.parentNode.removeChild(tar.offsetParent);
                 });
             } else if (tar.className.indexOf('add-one') != -1) {
-                me.addOne(tar.parentNode.parentNode.firstChild.innerText, function (count) {
-                    console.log(count);
+                me.addOne(tar.parentNode.parentNode.firstChild.innerText, function (count, sum) {
                     tar.nextElementSibling.querySelector('input').value = count;
+                    tar.parentNode.nextElementSibling.nextElementSibling.innerHTML = sum;
+                    me.el.querySelector('.order-sum').innerHTML = me.getDataList().price;
                 });
             } else if (tar.className.indexOf('subtract-one') != -1) {
                 var isMade = tar.getAttribute('data-statues') == '' ? false : true;
-                !isMade && me.subtractOne(tar.parentNode.parentNode.firstChild.innerText, function (count) {
+                !isMade && me.subtractOne(tar.parentNode.parentNode.firstChild.innerText, function (count, sum) {
                     if (count) {
                         tar.parentNode.querySelector('input').value = count;
+                        tar.parentNode.nextElementSibling.nextElementSibling.innerHTML = sum;
+                        me.el.querySelector('.order-sum').innerHTML = me.getDataList().price;
+
                     } else {
                         tar.parentNode.parentNode.parentNode.removeChild(tar.parentNode.parentNode);
                     }
@@ -104,25 +108,35 @@ popup.prototype = {
     },
     addOne: function (text, cb) {
         var me = this;
-        var count = 0;
-        var data = me.getDataList();
-        for (var i = 0, len = data.length; i < len; i++) {
-            if (data[i].text == text) {
+        var result = 0;
+
+        var data = me.getDataList(),
+            list = data.data;
+        for (var i = 0, len = list.length; i < len; i++) {
+            if (list[i].text == text) {
+                var count = ++list[i].count ,
+                    sum = count * list[i].value;
+                console.log(data);
+                console.log(list[i].value);
+                data.price = parseInt(data.price) + parseInt(list[i].value);
+                list[i].sum = sum;
                 var o = {
-                    count: ++data[i].count,
+                    count: count,
                     type: 'alter',
-                    text: text
+                    text: text,
+                    sum: sum
                 }
                 me.changeList.data.push(o);
-                count = o.count;
+                result = o.count;
                 break;
             }
         }
-        cb && cb(count);
+        cb && cb(result, sum);
     },
     subtractOne: function (text, cb) {
         var me = this;
         var count = 0;
+        var sum = 0;
         var data = me.changeList.data;
         for (var i = 0, len = data.length; i < len; i++) {
             if (data[i].text == text) {
@@ -131,7 +145,7 @@ popup.prototype = {
                 }
             }
         }
-        cb && cb(count);
+        cb && cb(count, sum);
     },
     addButton: function () {
         var me = this, opt = me.opt, btn = opt.btn;

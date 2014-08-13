@@ -136,7 +136,7 @@ msj = {
 
             "<div class='order-list-item-container fred'>" +
             "<div class=pop-list-item>总价</div>" +
-            "<div class='pop-list-item '><%=list[i].price%></div>" +
+            "<div class='pop-list-item order-sum'><%=list[i].price%></div>" +
             "</div>" +
             "<div class=btn-c></div>" +
             "</div>" +

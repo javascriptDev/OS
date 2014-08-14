@@ -141,7 +141,6 @@ popup.prototype = {
             if (list[i].text == text) {
                 if (list[i].count < 2) {
                     list.splice(i, 1);
-
                 } else {
                     var count = --list[i].count ,
                         sum = count * list[i].value;

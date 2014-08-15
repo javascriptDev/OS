@@ -28,16 +28,21 @@
 	}
 
 	var login = q('.btnitem');
+	function generateToken() {
+
+	}
 
 	login.onclick = function (e) {
 		var name = q('.name').value,
 				pwd = q('.pwd').value;
-		request(msj.ip + ':8000/!ws?' + msj.webServices.login + '/uname=' + name + '&' + 'pwd=' + pwd, 'post', function (data) {
-			console.log(data);
+		var url = msj.ip + ':8000/!ws?' + msj.webServices.login + '/uname=' + name + '&' + 'pwd=' + pwd;
+		request(url, 'post', function (data) {
 			if (data.success) {
 				location.href = msj.ip + ':8000/!b';
+			} else {
+				alert('登陆失败')
 			}
-		});
+		}, {token: ''});
 	}
 </script>
 </body>

@@ -17,6 +17,11 @@
 		<div class="item">
 			<span class="pwd-icon"></span><input type="password" class="pwd"/>
 		</div>
+		<div class="item">
+			<span class="pwd-icon"></span>
+			<input type="text" class="ac" placeholder="验证码"/>
+			<canvas class="authCode" width="80" height="40"></canvas>
+		</div>
 		<div class="item btnitem">
 			登陆
 		</div>
@@ -28,11 +33,13 @@
 	}
 
 	var login = q('.btnitem');
-	function generateToken() {
-
+	function generateToken(date) {
+		return date;
 	}
 	login.onclick = function (e) {
 		if (baseCheck()) {
+			var name = q('.name').value,
+					pwd = q('.pwd').value;
 			var date = new Date().getTime();
 			var headers = {
 				time: date,
@@ -60,6 +67,18 @@
 			return false;
 		}
 	}
+
+	function generateAuthCode() {
+		var c = q('.authCode').getContext('2d');
+		c.fillStyle = 'red';
+		c.font = "20px Verdana";
+		c.fillText("我是验证码", 0, 30);
+	}
+	function initForm() {
+		generateAuthCode();
+	}
+	initForm();
+
 </script>
 </body>
 </html>

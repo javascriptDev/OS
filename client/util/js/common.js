@@ -56,12 +56,13 @@ function request(url, method, cb, headers) {
         alert('Giving up :( Cannot create an XMLHTTP instance');
         return false;
     }
+
+    xhr.open(method || 'get', url);
     if (headers) {
         for (var h in headers) {
             xhr.setRequestHeader(h, headers[h]);
         }
     }
-    xhr.open(method || 'get', url);
     xhr.send();
     xhr.onreadystatechange = function (e) {
         if (xhr.readyState == 4 && xhr.status == 200) {

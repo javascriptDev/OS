@@ -49,12 +49,14 @@ function webServices(req, res) {
                 origin = req.socket.remoteAddress,
                 cookie = headers.cookie,
                 ua = headers['user-agent'],
-                token = headers.token;
+                token = headers.token,
+                time = headers.time;
             login(params, {
                 origin: origin,
                 cookie: cookie,
                 ua: ua,
-                token: token
+                token: token,
+                time: time
             });
             break;
         default :
@@ -64,7 +66,6 @@ function webServices(req, res) {
     }
     function getData(where) {
         db.query('order', function (err, data) {
-
             res.setHeader('Access-Control-Allow-Methods', 'GET');
             res.setHeader('Access-Control-Allow-Origin', '*');
             var data = JSON.stringify(data);
@@ -76,6 +77,7 @@ function webServices(req, res) {
     function login(params, client) {
         if (isSafe(client)) { //安全性检测
             if (isPass(params)) {//账户验证
+                console.log(client);
                 res.write(JSON.stringify({success: true}));
                 res.end();
             } else {
@@ -89,7 +91,6 @@ function webServices(req, res) {
         var cookie = client.cookie,
             ua = client.ua,
             token = client.token;
-        
         return true;
     }
 
@@ -100,7 +101,6 @@ function webServices(req, res) {
     }
 
     function generateCookie() {
-
     }
 
 //    function getMemoryData(where) {

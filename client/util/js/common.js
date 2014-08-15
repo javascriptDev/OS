@@ -2,7 +2,7 @@
  * Created by a2014 on 14-7-25.
  */
 function getData(params, fn, needParse, method) {
-    request(msj.ip + ':8000/!ws?' + method + '/' + params,'', function (data) {
+    request(msj.ip + ':8000/!ws?' + method + '/' + params, '', function (data) {
         var param = data;
         needParse && (param = parseData(param));
         fn && fn({list: param || []});
@@ -37,7 +37,7 @@ function unparseData(data) {
     o._id = data.id;
     return o;
 }
-function request(url, method, cb) {
+function request(url, method, cb, headers) {
     var xhr;
     if (window.XMLHttpRequest) { // Mozilla, Safari,...
         xhr = new XMLHttpRequest();
@@ -55,6 +55,11 @@ function request(url, method, cb) {
     if (!xhr) {
         alert('Giving up :( Cannot create an XMLHTTP instance');
         return false;
+    }
+    if (headers) {
+        for (var h in headers) {
+            xhr.setRequestHeader(h, headers[h]);
+        }
     }
     xhr.open(method || 'get', url);
     xhr.send();

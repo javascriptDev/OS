@@ -31,18 +31,34 @@
 	function generateToken() {
 
 	}
-
 	login.onclick = function (e) {
+		if (baseCheck()) {
+			var date = new Date().getTime();
+			var headers = {
+				time: date,
+				token: generateToken(date)
+			};
+			var url = msj.ip + ':8000/!ws?' + msj.webServices.login + '/uname=' + name + '&' + 'pwd=' + pwd;
+			request(url, 'post', function (data) {
+				if (data.success) {
+					location.href = msj.ip + ':8000/!b';
+				} else {
+					alert('登陆失败')
+				}
+			}, headers);
+		} else {
+			console.log('some filed is null');
+		}
+	}
+
+	function baseCheck() {
 		var name = q('.name').value,
 				pwd = q('.pwd').value;
-		var url = msj.ip + ':8000/!ws?' + msj.webServices.login + '/uname=' + name + '&' + 'pwd=' + pwd;
-		request(url, 'post', function (data) {
-			if (data.success) {
-				location.href = msj.ip + ':8000/!b';
-			} else {
-				alert('登陆失败')
-			}
-		}, {token: ''});
+		if (name != '' && pwd != '') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 </script>
 </body>

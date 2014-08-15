@@ -41,7 +41,7 @@
     background-image: -moz-linear-gradient(top, #ff9150, #ff672e);
 }
 
-.user-icon, .pwd-icon {
+.user-icon, .pwd-icon,.auth-icon {
     float: left;
     display: block;
     margin-left: 15px;
@@ -61,6 +61,12 @@
     background-position: -1px -1px;
     width: 13px;
     height: 13px;
+}
+
+.auth-icon {
+    width: 13px;
+    height: 13px;
+    background-position: -20px -1px;
 }
 
 .btnitem {

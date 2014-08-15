@@ -13,7 +13,9 @@
             return '#' + result;
         }
     </script>
-    <script src="../js/components/chart/chart/line.js"></script>
+	<script src="../js/util.js"></script>
+	<script src="../js/components/chart/base.js"></script>
+    <script src="../js/components/chart/line.js"></script>
     <script src="../js/components/chart/histogram.js"></script>
     <script src="../js/components/chart/pie.js"></script>
 </head>
@@ -26,25 +28,19 @@
         for (var i = 0; i < c; i++) {
             a.push(Math.floor(Math.random() * 1000 % 100));
         }
-
         return a;
     }
-
-
     new Histogram({
-
         label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
         data: data(12),
         title: 'asd',
         height: 400,
         width: 500
     })
-
     new Line({
-
         label: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
         data: data(12),
-        title: 'asd',
+        title: 'ee',
         height: 400,
         width: 500
     })

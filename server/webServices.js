@@ -46,7 +46,7 @@ function webServices(req, res) {
             break;
         case methods.login:
             var headers = req.headers,
-                origin = headers.origin,
+                origin = req.socket.remoteAddress,
                 cookie = headers.cookie,
                 ua = headers['user-agent'],
                 token = headers.token;
@@ -56,8 +56,9 @@ function webServices(req, res) {
                 ua: ua,
                 token: token
             });
+            break;
         default :
-            res.write('no data');
+            res.write(JSON.stringify({data: 'no'}));
             res.end();
             break;
     }
@@ -75,10 +76,10 @@ function webServices(req, res) {
     function login(params, client) {
         if (isSafe(client)) { //安全性检测
             if (isPass(params)) {//账户验证
-                res.write(JSON.stringify({success: 1}));
+                res.write(JSON.stringify({success: true}));
                 res.end();
             } else {
-                res.write(JSON.stringify({success: 0}));
+                res.write(JSON.stringify({success: false}));
                 res.end();
             }
         }
@@ -88,12 +89,14 @@ function webServices(req, res) {
         var cookie = client.cookie,
             ua = client.ua,
             token = client.token;
-
+        
+        return true;
     }
 
     function isPass(params) {
         var name = params.uname,
             pwd = params.pwd;
+        return true;
     }
 
     function generateCookie() {

@@ -33,6 +33,7 @@
 		var name = q('.name').value,
 				pwd = q('.pwd').value;
 		request(msj.ip + ':8000/!ws?' + msj.webServices.login + '/uname=' + name + '&' + 'pwd=' + pwd, 'post', function (data) {
+			console.log(data);
 			if (data.success) {
 				location.href = msj.ip + ':8000/!b';
 			}

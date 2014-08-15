@@ -78,8 +78,9 @@
     margin-left: 110px;
     width: 200px;
 }
-.ac{
-    width:120px !important;
+
+.ac {
+    width: 120px !important;
     display: inline-block;
     float: left;
 }
@@ -87,12 +88,14 @@
 input:focus {
     outline: none;
 }
-.authCode{
+
+.authCode {
     position: absolute;
     right: 0px;
 }
-::-webkit-input-placeholder{
-    color:dodgerblue;
+
+::-webkit-input-placeholder {
+    color: dodgerblue;
 }
 
 input {

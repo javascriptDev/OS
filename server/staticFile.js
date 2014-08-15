@@ -37,13 +37,13 @@ function staticFile(req, res) {
 
     var filePath = url;
     var ct = 'text/html';
-    if (url == '/' || url == enter.base) {
+    if (url == enter.base) {
         filePath = 'client/base/base.html';
     } else if (url == enter.display) {
         filePath = 'client/display/display.html';
     } else if (url == enter.front) {
         filePath = 'client/front/front.html';
-    } else if (url == enter.login) {
+    } else if (url == '/' || url == enter.login) {
         filePath = 'client/login.html';
     } else { //其他正常路径的js css html
         var fileType = filePath.split('.')[1];

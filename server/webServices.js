@@ -10,7 +10,8 @@ var parse = require('url');
 
 var methods = {
     data: 'data',
-    memory: 'memory'
+    memory: 'memory',
+    login: 'login'
 
 
 
@@ -33,7 +34,6 @@ function webServices(req, res) {
         base = parse.parse(url).query.split('/'),
         method = base[0],
         param = base[1];
-
     var data;
     var params = {};
     param && param.split('&').forEach(function (item) {
@@ -44,7 +44,18 @@ function webServices(req, res) {
         case methods.data:
             getData(params);
             break;
-
+        case methods.login:
+            var headers = req.headers,
+                origin = headers.origin,
+                cookie = headers.cookie,
+                ua = headers['user-agent'],
+                token = headers.token;
+            login(params, {
+                origin: origin,
+                cookie: cookie,
+                ua: ua,
+                token: token
+            });
         default :
             res.write('no data');
             res.end();
@@ -59,6 +70,34 @@ function webServices(req, res) {
             res.write(data);
             res.end();
         }, where || {})
+    }
+
+    function login(params, client) {
+        if (isSafe(client)) { //安全性检测
+            if (isPass(params)) {//账户验证
+                res.write(JSON.stringify({success: 1}));
+                res.end();
+            } else {
+                res.write(JSON.stringify({success: 0}));
+                res.end();
+            }
+        }
+    }
+
+    function isSafe(client) {
+        var cookie = client.cookie,
+            ua = client.ua,
+            token = client.token;
+
+    }
+
+    function isPass(params) {
+        var name = params.uname,
+            pwd = params.pwd;
+    }
+
+    function generateCookie() {
+
     }
 
 //    function getMemoryData(where) {

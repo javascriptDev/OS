@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bd {
+    background: url('../img/bg.jpg') no-repeat;
+    background-size: cover;
+    padding: 170px 0;
+}
+
+.login-wrap {
+    background: url('../img/tp.png') no-repeat top center;
+    width: 260px;
+    margin: 0 auto;
+    padding-top: 105px;
+}
+
+.item {
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    border: 1px solid #7a7a7a;
+    width: 250px;
+    clear: both;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.item input {
+    border: 0;
+    width: 200px;
+    background: transparent;
+    margin-left: 15px;
+    color: #fff;
+    font-weight: bold
+}
+
+.btnitem {
+    background-image: -moz-linear-gradient(top, #ff9150, #ff672e);
+}
+
+.user-icon, .pwd-icon {
+    float: left;
+    display: block;
+    margin-left: 15px;
+    margin-top: 13px;
+    background: #000;
+    rgba: 0 0 0 0.5;
+    background: url('../img/icon.png') no-repeat;
+}
+
+.user-icon {
+    background-position: -20px -1px;
+    width: 14px;
+    height: 14px;
+}
+
+.pwd-icon {
+    background-position: -1px -1px;
+    width: 13px;
+    height: 13px;
+}
+
+.btnitem {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B5B5B5), to(#B5B5B5), color-stop(.6, #999999));
+    border: none;
+    color: #ddd;
+}
+
+.btnitem:hover {
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#878787), to(#878787), color-stop(.6, #5E5E5E));
+    color: white;
+}
+
+.btnitem input {
+    margin-left: 110px;
+    width: 200px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input {
+    height: 20px;
+    line-height: 20px;
+    margin: 10px 0;
+}

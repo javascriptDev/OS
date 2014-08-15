@@ -56,7 +56,8 @@ msj = {
     },
     webServices: {
         data: 'data',
-        memory: 'memory'
+        memory: 'memory',
+        login:'login'
     },
     tpl: {
         a: "<%for (var i=0;i<list.length;i++) {%>" +

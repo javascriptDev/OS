@@ -19,7 +19,8 @@ function staticFile(req, res) {
     var enter = {
         base: '/!b',
         display: '/!d',
-        front: '/!f'
+        front: '/!f',
+        login: '/!l'
     }
     var mime = {
         js: 'application/x-javascript',
@@ -42,6 +43,8 @@ function staticFile(req, res) {
         filePath = 'client/display/display.html';
     } else if (url == enter.front) {
         filePath = 'client/front/front.html';
+    } else if (url == enter.login) {
+        filePath = 'client/login.html';
     } else { //其他正常路径的js css html
         var fileType = filePath.split('.')[1];
         if (url == '/socket.io/socket.io.js') {

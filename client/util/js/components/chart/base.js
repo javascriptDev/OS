@@ -71,7 +71,7 @@ Base.prototype = {
             me.reDraw(me.queryData());
         }
     },
-        queryData: function () {
+    queryData: function () {
         var me = this;
         var type = me.type.options[me.type.selectedIndex].value;
         var bt = this.beginTime.value,

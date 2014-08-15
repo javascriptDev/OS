@@ -2,7 +2,6 @@
  * Created by a2014 on 14-7-17.
  */
 function pie(o) {
-
     this.opt = o;
     this.data = o.data;
     this.w = o.width || 300;
